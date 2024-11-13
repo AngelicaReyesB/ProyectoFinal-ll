@@ -18,11 +18,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 public class PrincipalControlador implements ServiciosEmpresa {
 
-    @Getter
     private final BookYourStay bookYourStay;
-    @Getter
     private final Sesion sesion;
     private static PrincipalControlador INSTANCIA;
 
@@ -41,14 +40,14 @@ public class PrincipalControlador implements ServiciosEmpresa {
 
     private void inicializarValores(){
         try {
-            sesion.setCliente(bookYourStay.listarClientes());
+            sesion.setClientes(bookYourStay.listarClientes());
             sesion.setAlojamientos(bookYourStay.listarAlojamientos());
         } catch (Exception e) {
             System.out.println("Error al inicializar el valor de Sesión");
         }
     }
 
-    public FXMLLoader navegarVentana(String nombreArchivoFxml, String tituloVentana){
+    public void navegarVentana(String nombreArchivoFxml, String tituloVentana){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(nombreArchivoFxml));
             Parent root = loader.load();
@@ -59,11 +58,9 @@ public class PrincipalControlador implements ServiciosEmpresa {
             stage.setTitle(tituloVentana);
             stage.setMaximized(true);
             stage.show();
-            return loader;
 
         }catch (Exception e){
             e.printStackTrace();
-            return  null;
         }
 
     }
@@ -188,7 +185,7 @@ public class PrincipalControlador implements ServiciosEmpresa {
     }
 
     @Override
-    public Cliente listarClientes() throws Exception {
+    public ArrayList<Cliente> listarClientes() throws Exception {
         return bookYourStay.listarClientes();
     }
 

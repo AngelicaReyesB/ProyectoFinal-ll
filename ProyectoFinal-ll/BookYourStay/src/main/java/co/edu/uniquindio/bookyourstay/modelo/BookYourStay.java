@@ -158,7 +158,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
             if(cliente.getPassword().equals(password)){
                 return cliente;
             }else {
-                throw new Exception("Datos de ingres son incorrectos");
+                throw new Exception("Los datos de ingreso son incorrectos");
             }
         } else {
             throw new Exception("El usuario no existe");
@@ -221,8 +221,8 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
     }
 
     @Override
-    public Cliente listarClientes() throws Exception {
-        return new ArrayList<Cliente>(clientes);
+    public ArrayList<Cliente> listarClientes() throws Exception {
+        return new ArrayList<>(clientes);
     }
 
     @Override

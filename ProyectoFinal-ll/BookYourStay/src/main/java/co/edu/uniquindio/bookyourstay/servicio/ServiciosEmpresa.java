@@ -31,7 +31,7 @@ public interface ServiciosEmpresa {
     ArrayList<Alojamiento> listarAlojamientos(TipoAlojamiento tipoAlejamiento) throws Exception;
     ArrayList<Alojamiento> listarAlojamientos(TipoCiudad tipoCiudad) throws Exception;
     ArrayList<Alojamiento> listarAlojamientos(String nombreAlojamiento) throws Exception;
-    Cliente listarClientes() throws Exception;
+    ArrayList<Cliente> listarClientes() throws Exception;
     List<Reserva> listarReservasCliente(String cedulaCliente) throws Exception;
     //List<Alojamiento> buscarAlojamiento(String ciudad, TipoAlojamiento tipoAlejamiento, float precioMaximo) throws Exception;
     Reserva realizarReserva(Cliente cliente, Alojamiento alojamiento, LocalDate fechaInicio, LocalDate fechaFin, int numHuespedes, Factura factura) throws Exception;

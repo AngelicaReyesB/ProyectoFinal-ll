@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="center" prefHeight="669.0" prefWidth="1274.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="center" prefHeight="669.0" prefWidth="1274.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.bookyourstay.controlador.PanelAdministradorControlador">
 
     <HBox spacing="10" style="-fx-background-color: #009900; -fx-min-height: 102.0;">
         <ImageView fitHeight="47.0" fitWidth="196.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
@@ -26,7 +26,7 @@
 
         <HBox alignment="CENTER_RIGHT" spacing="10" HBox.hgrow="ALWAYS">
             <fx:include source="barraBusquedas.fxml" />
-            <Button fx:id="btnCerrarSesion" minHeight="40.0" minWidth="110.0" style="-fx-background-color: #006600; -fx-text-fill: white;" text="Cerrar Sesion">
+            <Button fx:id="btnCerrarSesion" minHeight="40.0" minWidth="110.0" onAction="#cerrarSesion" style="-fx-background-color: #006600; -fx-text-fill: white;" text="Cerrar Sesion">
                 <HBox.margin>
                     <Insets left="24.0" right="24.0" />
                 </HBox.margin>
@@ -70,7 +70,7 @@
                     <Insets top="80.0" />
                 </GridPane.margin>
             </Label>
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="146.0" style="-fx-background-color: #006600;" text="Crear" textAlignment="CENTER" textFill="WHITE" GridPane.rowIndex="1">
+            <Button fx:id="btnCrearAlojamientos" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#crearAlojamientos" prefHeight="40.0" prefWidth="146.0" style="-fx-background-color: #006600;" text="Crear" textAlignment="CENTER" textFill="WHITE" GridPane.rowIndex="1">
                 <font>
                     <Font size="14.0" />
                 </font>
@@ -78,7 +78,7 @@
                     <Insets left="30.0" right="30.0" />
                 </GridPane.margin>
             </Button>
-            <Button alignment="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="158.0" style="-fx-background-color: #006600;" text="Crear" textFill="WHITE" GridPane.rowIndex="3">
+            <Button fx:id="btnCrearOfertas" alignment="CENTER" mnemonicParsing="false" onAction="#crearOfertas" prefHeight="40.0" prefWidth="158.0" style="-fx-background-color: #006600;" text="Crear" textFill="WHITE" GridPane.rowIndex="3">
                 <GridPane.margin>
                     <Insets left="30.0" right="30.0" />
                 </GridPane.margin>
@@ -90,12 +90,12 @@
 
         <TableView fx:id="TableAlojamientos" prefHeight="376.0" prefWidth="955.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
             <columns>
-                <TableColumn prefWidth="128.79998779296875" text="Nombre" />
-                <TableColumn prefWidth="114.39999389648438" text="Ciudad" />
-                <TableColumn prefWidth="89.5999755859375" text="Capacidad" />
-                <TableColumn prefWidth="127.20001220703125" text="Valor" />
-                <TableColumn prefWidth="235.20001220703125" text="Servicios" />
-                <TableColumn prefWidth="237.60002441406255" text="Imagen" />
+                <TableColumn fx:id="colNombre" prefWidth="150.4000107049942" text="Nombre" />
+                <TableColumn fx:id="colCiudad" prefWidth="92.79999542236328" text="Ciudad" />
+                <TableColumn fx:id="colCapacidad" prefWidth="147.20001220703125" text="Capacidad" />
+                <TableColumn fx:id="colValorNoche" prefWidth="117.5999755859375" text="Valor" />
+                <TableColumn fx:id="colServicios" prefWidth="189.60000610351562" text="Servicios" />
+                <TableColumn fx:id="colImagen" prefWidth="247.19997558593752" text="Imagen" />
             </columns>
             <HBox.margin>
                 <Insets left="20.0" />
@@ -107,7 +107,7 @@
     </HBox>
    <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
       <children>
-         <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="194.0" style="-fx-background-color: #006600;" text="Alojamientos Populares" textAlignment="CENTER" textFill="WHITE">
+         <Button fx:id="btnAlojamientosPopulares" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="194.0" style="-fx-background-color: #006600;" text="Alojamientos Populares" textAlignment="CENTER" textFill="WHITE">
             <font>
                <Font size="14.0" />
             </font>
@@ -115,7 +115,7 @@
                <Insets right="24.0" />
             </HBox.margin>
          </Button>
-         <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="162.0" style="-fx-background-color: #006600;" text="Alojamientos rentables" textAlignment="CENTER" textFill="WHITE">
+         <Button fx:id="btnAlojaientosRentables" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="162.0" style="-fx-background-color: #006600;" text="Alojamientos rentables" textAlignment="CENTER" textFill="WHITE">
             <font>
                <Font size="14.0" />
             </font>
@@ -123,7 +123,7 @@
                <Insets right="24.0" />
             </HBox.margin>
          </Button>
-         <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="146.0" style="-fx-background-color: #006600;" text="Ver estadisticas" textAlignment="CENTER" textFill="WHITE">
+         <Button fx:id="btnVerEstadisticas" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="146.0" style="-fx-background-color: #006600;" text="Ver estadisticas" textAlignment="CENTER" textFill="WHITE">
             <font>
                <Font size="14.0" />
             </font>
