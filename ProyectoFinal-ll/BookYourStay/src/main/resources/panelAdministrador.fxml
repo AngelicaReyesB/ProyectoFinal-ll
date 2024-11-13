@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="center" prefHeight="669.0" prefWidth="1274.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+
+    <HBox spacing="10" style="-fx-background-color: #009900; -fx-min-height: 102.0;">
+        <ImageView fitHeight="47.0" fitWidth="196.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+            <Image url="@Img/Logo.png" />
+            <HBox.margin>
+                <Insets left="32.0" right="20.0" top="28.0" />
+            </HBox.margin>
+        </ImageView>
+
+        <HBox alignment="CENTER_RIGHT" spacing="10" HBox.hgrow="ALWAYS">
+            <fx:include source="barraBusquedas.fxml" />
+            <Button fx:id="btnCerrarSesion" minHeight="40.0" minWidth="110.0" style="-fx-background-color: #006600; -fx-text-fill: white;" text="Cerrar Sesion">
+                <HBox.margin>
+                    <Insets left="24.0" right="24.0" />
+                </HBox.margin>
+            </Button>
+        </HBox>
+    </HBox>
+
+    <Label contentDisplay="CENTER" prefHeight="34.0" prefWidth="1234.0" style="-fx-font-weight: BOLD;" text="Bienvenido a la gestión de BookYourStay" VBox.vgrow="ALWAYS">
+        <VBox.margin>
+            <Insets bottom="16.0" right="40.0" top="16.0" />
+        </VBox.margin>
+        <font>
+            <Font size="23.0" />
+        </font>
+    </Label>
+
+    <HBox prefHeight="380.0" prefWidth="1194.0" spacing="30.0" VBox.vgrow="ALWAYS">
+        <GridPane prefHeight="326.0" prefWidth="179.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="ALWAYS" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints vgrow="ALWAYS" />
+                <RowConstraints vgrow="ALWAYS" />
+                <RowConstraints maxHeight="133.5999755859375" minHeight="107.19999694824219" prefHeight="133.5999755859375" vgrow="ALWAYS" />
+                <RowConstraints maxHeight="84.80000305175781" minHeight="58.4000244140625" prefHeight="58.4000244140625" vgrow="ALWAYS" />
+            </rowConstraints>
+            <HBox.margin>
+                <Insets left="15.0" right="15.0" />
+            </HBox.margin>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="202.0" style="-fx-font-weight: BOLD; -fx-font-size: 16;" text="ALOJAMIENTOS" textAlignment="CENTER">
+                <font>
+                    <Font size="24.0" />
+                </font>
+            </Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="202.0" style="-fx-font-weight: BOLD; -fx-font-size: 16;" text="OFERTAS" textAlignment="CENTER" GridPane.rowIndex="2">
+                <font>
+                    <Font size="24.0" />
+                </font>
+                <GridPane.margin>
+                    <Insets top="80.0" />
+                </GridPane.margin>
+            </Label>
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="146.0" style="-fx-background-color: #006600;" text="Crear" textAlignment="CENTER" textFill="WHITE" GridPane.rowIndex="1">
+                <font>
+                    <Font size="14.0" />
+                </font>
+                <GridPane.margin>
+                    <Insets left="30.0" right="30.0" />
+                </GridPane.margin>
+            </Button>
+            <Button alignment="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="158.0" style="-fx-background-color: #006600;" text="Crear" textFill="WHITE" GridPane.rowIndex="3">
+                <GridPane.margin>
+                    <Insets left="30.0" right="30.0" />
+                </GridPane.margin>
+                <font>
+                    <Font size="14.0" />
+                </font>
+            </Button>
+        </GridPane>
+
+        <TableView fx:id="TableAlojamientos" prefHeight="376.0" prefWidth="955.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn prefWidth="128.79998779296875" text="Nombre" />
+                <TableColumn prefWidth="114.39999389648438" text="Ciudad" />
+                <TableColumn prefWidth="89.5999755859375" text="Capacidad" />
+                <TableColumn prefWidth="127.20001220703125" text="Valor" />
+                <TableColumn prefWidth="235.20001220703125" text="Servicios" />
+                <TableColumn prefWidth="237.60002441406255" text="Imagen" />
+            </columns>
+            <HBox.margin>
+                <Insets left="20.0" />
+            </HBox.margin>
+        </TableView>
+      <VBox.margin>
+         <Insets left="40.0" right="40.0" />
+      </VBox.margin>
+    </HBox>
+   <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
+      <children>
+         <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="194.0" style="-fx-background-color: #006600;" text="Alojamientos Populares" textAlignment="CENTER" textFill="WHITE">
+            <font>
+               <Font size="14.0" />
+            </font>
+            <HBox.margin>
+               <Insets right="24.0" />
+            </HBox.margin>
+         </Button>
+         <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="162.0" style="-fx-background-color: #006600;" text="Alojamientos rentables" textAlignment="CENTER" textFill="WHITE">
+            <font>
+               <Font size="14.0" />
+            </font>
+            <HBox.margin>
+               <Insets right="24.0" />
+            </HBox.margin>
+         </Button>
+         <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="40.0" prefWidth="146.0" style="-fx-background-color: #006600;" text="Ver estadisticas" textAlignment="CENTER" textFill="WHITE">
+            <font>
+               <Font size="14.0" />
+            </font>
+         </Button>
+      </children>
+      <VBox.margin>
+         <Insets right="40.0" />
+      </VBox.margin>
+   </HBox>
+
+    <VBox.margin>
+        <Insets bottom="24.0" left="24.0" right="24.0" />
+    </VBox.margin>
+
+    <padding>
+        <Insets bottom="40.0" />
+    </padding>
+</VBox>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+    <HBox alignment="CENTER_RIGHT" style="-fx-background-color: #009900; -fx-min-height: 102.0;">
+        <HBox alignment="CENTER_LEFT">
+            <ImageView fitHeight="64.0" fitWidth="200.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                <Image url="@Img/Logo.png" />
+                <HBox.margin>
+                    <Insets left="32.0" right="860.0" />
+                </HBox.margin>
+            </ImageView>
+        </HBox>
+        <Button fx:id="btnRegresar" alignment="CENTER" minHeight="40.0" minWidth="150.0" onAction="#irInicio" style="-fx-background-color: #006600; -fx-text-fill: white;" text="Regresar">
+            <HBox.margin>
+                <Insets left="24.0" right="24.0" />
+            </HBox.margin></Button>
+    </HBox>
+
+    <HBox prefHeight="906.0" prefWidth="1290.0">
+
+        <VBox alignment="CENTER" prefHeight="858.0" prefWidth="698.0" spacing="30.0" style="-fx-padding: 32; -fx-background-color: #d8dbe2;">
+            <ImageView fx:id="imagenEvento" fitHeight="435.0" fitWidth="438.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+
+            </ImageView>
+            <VBox maxHeight="250.0" maxWidth="438.0" style="-fx-background-color: #C0C0C0; -fx-text-fill: white;">
+                <children>
+                    <Label fx:id="nombreAlojamiento" alignment="CENTER" contentDisplay="CENTER" prefHeight="100.0" prefWidth="440.0">
+                        <font>
+                            <Font name="Broadway" size="24.0" />
+                        </font></Label>
+                    <Label fx:id="ciudadAlojamiento" alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="440.0" />
+                    <Label fx:id="direccionAlojamiento" alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="440.0" />
+                </children>
+                <padding>
+                    <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />
+                </padding>
+                <HBox.margin>
+                    <Insets />
+                </HBox.margin>
+            </VBox>
+            <HBox.margin>
+                <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
+            </HBox.margin>
+        </VBox>
+
+
+
+        <VBox alignment="CENTER" prefHeight="858.0" prefWidth="794.0" style="-fx-padding: 32; -fx-background-color: #d8dbe2;">
+            <Label alignment="CENTER" prefHeight="30.0" prefWidth="238.0" style="-fx-background-color: #d8dbe2; -fx-font-weight: BOLD;" text="DATOS DE RESERVA">
+                <font>
+                    <Font size="20.0" />
+                </font>
+                <VBox.margin>
+                    <Insets bottom="20.0" />
+                </VBox.margin></Label>
+         <GridPane prefHeight="134.0" prefWidth="61.0">
+           <columnConstraints>
+             <ColumnConstraints hgrow="SOMETIMES" maxWidth="1000.0" minWidth="10.0" prefWidth="613.6000457763672" />
+             <ColumnConstraints hgrow="SOMETIMES" maxWidth="1000.0" minWidth="10.0" prefWidth="613.5999542236326" />
+           </columnConstraints>
+           <rowConstraints>
+             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+           </rowConstraints>
+            <VBox.margin>
+               <Insets left="150.0" right="150.0" />
+            </VBox.margin>
+            <children>
+               <Label prefHeight="18.0" prefWidth="164.0" style="-fx-font-weight: bold;" text="Fecha Entrada: " />
+               <Label prefHeight="18.0" prefWidth="165.0" style="-fx-font-weight: bold;" text="Fecha Salida: " GridPane.rowIndex="1" />
+               <Label prefHeight="18.0" prefWidth="165.0" style="-fx-font-weight: bold; -fx-font-weight: bold;" text="Cantidad de Huespedes:" GridPane.rowIndex="2" />
+               <DatePicker GridPane.columnIndex="1" />
+               <DatePicker GridPane.columnIndex="1" GridPane.rowIndex="1" />
+               <ComboBox prefHeight="26.0" prefWidth="170.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            </children>
+         </GridPane>
+
+            <Label alignment="CENTER" prefHeight="48.0" prefWidth="809.0" style="-fx-background-color: #d8dbe2; -fx-font-weight: BOLD; -fx-font-size: 15;" text="INFORMACIÓN DE PAGO">
+                <font>
+                    <Font size="14.0" />
+                </font>
+                <VBox.margin>
+                    <Insets left="32.0" right="32.0" top="32.0" />
+                </VBox.margin></Label>
+            <GridPane alignment="CENTER" hgap="10.0" prefHeight="262.0" prefWidth="375.0" style="-fx-text-fill: white;" vgap="10.0">
+
+                <Label alignment="CENTER" prefHeight="18.0" prefWidth="116.0" style="-fx-font-weight: bold;" text="Subtotal" textAlignment="RIGHT" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                <Label fx:id="verSubtotal" disable="true" minHeight="30.0" minWidth="256" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                <Label alignment="CENTER" prefHeight="18.0" prefWidth="116.0" style="-fx-font-weight: BOLD;" text="Descuento" textAlignment="RIGHT" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                <Label fx:id="verDescuento" disable="true" minHeight="30.0" minWidth="256" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                <Label alignment="CENTER" prefHeight="18.0" prefWidth="116.0" style="-fx-font-weight: BOLD;" text="Total" textAlignment="RIGHT" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                <Label fx:id="verTotal" disable="true" minHeight="30.0" minWidth="256" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <Button fx:id="btnPagar" disable="true" minHeight="30.0" minWidth="124.0" onAction="#confirmaReserva" style="-fx-background-color: #006600; -fx-text-fill: white;" text="Pagar" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                <VBox.margin>
+                    <Insets />
+                </VBox.margin>
+                <padding>
+                    <Insets bottom="16.0" top="16.0" />
+                </padding>
+                <columnConstraints>
+                    <ColumnConstraints />
+                    <ColumnConstraints />
+                    <ColumnConstraints />
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                </rowConstraints>
+            </GridPane>
+
+            <HBox.margin>
+                <Insets bottom="24.0" right="24.0" top="24.0" />
+            </HBox.margin></VBox>
+    </HBox>
+
+
+</VBox>

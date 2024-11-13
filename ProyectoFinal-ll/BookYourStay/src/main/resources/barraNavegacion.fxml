@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox spacing="10" style="-fx-background-color: #009900; -fx-min-height: 102.0;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1">
+    <ImageView fitHeight="47.0" fitWidth="196.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+        <Image url="@Img/Logo.png" />
+        <HBox.margin>
+            <Insets left="32.0" top="28.0" />
+        </HBox.margin>
+    </ImageView>
+
+    <HBox alignment="CENTER_RIGHT" prefHeight="102.0" prefWidth="1319.0" spacing="10">
+        <fx:include source="barraBusquedas.fxml" />
+        <Button fx:id="btnRegistrase" minHeight="40.0" minWidth="150.0" style="-fx-background-color: #006600; -fx-text-fill: white;" text="Registrarse">
+            <HBox.margin>
+                <Insets left="24.0" right="24.0" />
+            </HBox.margin>
+        </Button>
+        <HBox.margin>
+            <Insets left="316" />
+        </HBox.margin>
+    </HBox>
+</HBox>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0" spacing="24.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.UniEventos.controlador.ActivarCuentaControlador">
+    <VBox alignment="CENTER" maxWidth="480.0" prefHeight="320.0" spacing="24.0" style="-fx-background-color: #d8dbe2;">
+        <Label style="-fx-font-weight: bold;" text="APRECIADO USUARIO:" />
+        <Label prefWidth="360.0" text="Ingrese su codigo de activacion de cuenta, el cual fue enviado a su correo." textAlignment="CENTER" wrapText="true">
+            <VBox.margin>
+                <Insets />
+            </VBox.margin></Label>
+        <TextField fx:id="codigoActivacion" alignment="CENTER" maxWidth="360.0" minHeight="30.0" prefHeight="30.0" promptText="Ingrese código de activación" />
+        <Button id="btnActivarCuenta" minHeight="40.0" minWidth="130.0" onAction="#activarCuenta" style="-fx-background-color: #006600; -fx-text-fill: white;" text="Activar cuenta" />
+    </VBox>
+</VBox>
