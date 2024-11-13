@@ -6,7 +6,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0" spacing="24.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.UniEventos.controlador.ActivarCuentaControlador">
+<VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0" spacing="24.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.bookyourstay.controlador.ActivarCuentaControlador">
     <VBox alignment="CENTER" maxWidth="480.0" prefHeight="320.0" spacing="24.0" style="-fx-background-color: #d8dbe2;">
         <Label style="-fx-font-weight: bold;" text="APRECIADO USUARIO:" />
         <Label prefWidth="360.0" text="Ingrese su codigo de activacion de cuenta, el cual fue enviado a su correo." textAlignment="CENTER" wrapText="true">

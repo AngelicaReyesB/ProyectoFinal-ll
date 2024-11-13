@@ -221,8 +221,8 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
     }
 
     @Override
-    public ArrayList<Cliente> listarClientes() throws Exception {
-        return new ArrayList<>(clientes);
+    public Cliente listarClientes() throws Exception {
+        return new ArrayList<Cliente>(clientes);
     }
 
     @Override

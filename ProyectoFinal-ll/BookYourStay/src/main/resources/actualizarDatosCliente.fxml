@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="center" prefHeight="783.0" prefWidth="1526.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="center" prefHeight="783.0" prefWidth="1526.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.bookyourstay.controlador.ActualizarDatosClienteControlador">
     <HBox style="-fx-background-color: #009900; -fx-min-height: 102.0;">
         <HBox alignment="CENTER_LEFT">
             <ImageView fitHeight="64.0" fitWidth="200.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
