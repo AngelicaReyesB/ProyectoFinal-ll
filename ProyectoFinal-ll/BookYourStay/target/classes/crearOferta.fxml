@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="559.0" prefWidth="1022.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="559.0" prefWidth="1022.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.bookyourstay.controlador.CrearOfertaControlador">
     <Label alignment="CENTER" prefHeight="30.0" prefWidth="1277.0" style="-fx-background-color: #009900; -fx-font-weight: BOLD;" text="OFERTA DE ALOJAMIENTOS" textFill="WHITE">
         <font>
             <Font size="20.0" />

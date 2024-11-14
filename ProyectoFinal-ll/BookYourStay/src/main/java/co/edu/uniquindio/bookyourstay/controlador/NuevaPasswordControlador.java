@@ -1,4 +1,19 @@
 package co.edu.uniquindio.bookyourstay.controlador;
 
-public class NuevaPasswordControlador {
+import co.edu.uniquindio.bookyourstay.controlador.observador.Observable;
+import javafx.fxml.Initializable;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class NuevaPasswordControlador implements Observable, Initializable {
+    @Override
+    public void notificar() {
+
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    }
 }

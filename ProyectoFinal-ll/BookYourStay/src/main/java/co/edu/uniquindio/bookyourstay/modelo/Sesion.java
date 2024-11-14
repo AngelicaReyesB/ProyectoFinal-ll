@@ -18,6 +18,14 @@ public class Sesion implements Serializable {
     private ArrayList<Cliente> clientes;
     private List<Alojamiento> alojamientos;
     private boolean administrador;
+    private static Sesion INSTANCIA;
+
+    public static Sesion getInstancia() {
+        if (INSTANCIA == null) {
+            INSTANCIA = new Sesion();
+        }
+        return INSTANCIA;
+    }
 
     public Sesion (){
         cliente = null;

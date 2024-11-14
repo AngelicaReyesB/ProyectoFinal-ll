@@ -33,43 +33,43 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
             clientes = new ArrayList<>();
             alojamientos = new ArrayList<>();
             facturas = new ArrayList<>();
-            cargarDatosEmpresa();
+            //cargarDatosEmpresa();
         }catch ( Exception e){
             System.out.println(e.getMessage());
         }
     }
 
-    @Override
-    public void cargarDatosEmpresa() throws Exception {
-        try {
-            ArrayList<Cliente> clientesCargados = persistencia.cargarClientes();
-            ArrayList<Alojamiento> alojamientosCargados = persistencia.cargarAlojamientos();
-            ArrayList<Factura> facturasCargados = persistencia.cargarFacturas();
-
-            if (!clientesCargados.isEmpty()) {
-                clientes.addAll(clientesCargados);
-            }
-            if (!alojamientosCargados.isEmpty()) {
-                alojamientos.addAll(alojamientosCargados);
-            }
-            if (!facturasCargados.isEmpty()) {
-                facturas.addAll(facturasCargados);
-            }
-        }catch (Exception e){
-            throw new Exception(e.getMessage());
-        }
-    }
-
-    @Override
-    public void guardarDatosEmpresa() throws Exception {
-        try {
-            persistencia.guardarAlojamientos(alojamientos);
-            persistencia.guardarClientes(clientes);
-            persistencia.guardarFacturas(facturas);
-        }catch (Exception e){
-            throw new Exception(e.getMessage());
-        }
-    }
+    //@Override
+    //    public void cargarDatosEmpresa() throws Exception {
+    //        try {
+    //            ArrayList<Cliente> clientesCargados = persistencia.cargarClientes();
+    //            ArrayList<Alojamiento> alojamientosCargados = persistencia.cargarAlojamientos();
+    //            ArrayList<Factura> facturasCargados = persistencia.cargarFacturas();
+    //
+    //            if (!clientesCargados.isEmpty()) {
+    //                clientes.addAll(clientesCargados);
+    //            }
+    //            if (!alojamientosCargados.isEmpty()) {
+    //                alojamientos.addAll(alojamientosCargados);
+    //            }
+    //            if (!facturasCargados.isEmpty()) {
+    //                facturas.addAll(facturasCargados);
+    //            }
+    //        }catch (Exception e){
+    //            throw new Exception(e.getMessage());
+    //        }
+    //    }
+    //
+    //    @Override
+    //    public void guardarDatosEmpresa() throws Exception {
+    //        try {
+    //            persistencia.guardarAlojamientos(alojamientos);
+    //            persistencia.guardarClientes(clientes);
+    //            persistencia.guardarFacturas(facturas);
+    //        }catch (Exception e){
+    //            throw new Exception(e.getMessage());
+    //        }
+    //    }
 
     @Override
     public Cliente registrarCliente(String cedula, String nombre, String telefono, String email, String password) throws Exception {
@@ -109,8 +109,8 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
                     .codigoActivacion(codigoActivacion)
                     .build();
             clientes.add(cliente);
-            guardarDatosEmpresa();
-
+            //guardarDatosEmpresa();
+            System.out.println("Código de activación generado para el usuario " + nombre + ": " + codigoActivacion);
 
         } catch(Exception e){
             throw new Exception("No se puede agregar el nuevo cliente");
@@ -200,7 +200,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
             cliente.setPassword(password);
         }
 
-        guardarDatosEmpresa();
+        //guardarDatosEmpresa();
         return cliente;
     }
 
@@ -249,7 +249,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         if(usuarioEncontrado != null){
             if(usuarioEncontrado.getCodigoActivacion().equals(codigoActivacion)){
                 usuarioEncontrado.setEstadoCuenta(true);
-                guardarDatosEmpresa();
+                //guardarDatosEmpresa();
                 return true;
             }else {
                 throw new Exception("El código de activación no coincide");
@@ -273,21 +273,40 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
     }
 
     @Override
-    public Alojamiento crearAlojamiento(String nombre, String descripcion, String imagen, LocalDate fechaEstancia, float valorNoche, int numHuespedes, List<String> serviciosIncluidos, TipoAlojamiento tipoAlojamiento, TipoCiudad tipoCiudad) throws Exception {
+    public Alojamiento crearAlojamiento(
+            String nombre, String descripcion, String imagen, LocalDate fechaEstancia,
+            float valorNoche, int numHuespedes, List<String> serviciosIncluidos,
+            TipoAlojamiento tipoAlojamiento, TipoCiudad tipoCiudad, boolean activo) throws Exception {
+
         try {
-            if (nombre.isEmpty() || descripcion.isEmpty() || imagen == null || fechaEstancia == null || valorNoche <- 0 || numHuespedes<- 0||
-                    serviciosIncluidos.isEmpty() || tipoAlojamiento == null || tipoCiudad == null) {
+            // Verifica si algún campo es inválido o está vacío
+            if (nombre.isEmpty() || descripcion.isEmpty() || imagen == null || fechaEstancia == null
+                    || valorNoche < 0 || numHuespedes < 0 || serviciosIncluidos.isEmpty()
+                    || tipoAlojamiento == null || tipoCiudad == null) {
                 throw new Exception("Todos los campos son obligatorios");
             }
+
+            // Llama al método para obtener la creación específica de alojamiento
             CreacionAlojamiento creacionAlojamiento = crearAlojamiento(tipoAlojamiento);
-            Alojamiento alojamiento = creacionAlojamiento.crearOrdenAlojamiento(nombre, descripcion, imagen, fechaEstancia, valorNoche, numHuespedes, serviciosIncluidos, tipoAlojamiento, tipoCiudad);
+
+            // Crea el alojamiento con todos los parámetros, incluyendo `activo`
+            Alojamiento alojamiento = creacionAlojamiento.crearOrdenAlojamiento(
+                    nombre, descripcion, imagen, fechaEstancia, valorNoche, numHuespedes,
+                    serviciosIncluidos, tipoAlojamiento, tipoCiudad);
+
+            // Establece el estado de disponibilidad según el parámetro `activo`
+            alojamiento.setActivo(activo);
+
+            // Agrega el nuevo alojamiento a la lista y guarda los cambios
             alojamientos.add(alojamiento);
-            guardarDatosEmpresa();
+           // guardarDatosEmpresa();
+
             return alojamiento;
         } catch (Exception e) {
-            throw new Exception("No se pudo crear el alojamiento" + e.getMessage());
+            throw new Exception("No se pudo crear el alojamiento: " + e.getMessage());
         }
     }
+
 
     @Override
     public Alojamiento obtenerAlojamiento(String codigo) throws Exception {
@@ -315,7 +334,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
             alojamientoEncontrado.setHabitaciones(alojamiento.getHabitaciones());
             alojamientoEncontrado.setCostoAseoMantenimiento(alojamiento.getCostoAseoMantenimiento());
 
-            guardarDatosEmpresa();
+            //guardarDatosEmpresa();
         }
         return alojamientoEncontrado;
     }
@@ -324,7 +343,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
     public ArrayList<Alojamiento> listarAlojamientos() throws Exception {
         ArrayList<Alojamiento> alojamientosActivos = new ArrayList<>();
         for (Alojamiento alojamiento: alojamientos){
-            if(alojamiento.isDisponible()){
+            if(alojamiento.isActivo()){
                 alojamientosActivos.add(alojamiento);
             }
         }
@@ -437,7 +456,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
             throw new Exception("El número de huéspedes excede la capacidad del alojamiento.");
         }
 
-        if (!alojamiento.isDisponible()) {
+        if (!alojamiento.isActivo()) {
             throw new Exception("El alojamiento no está disponible para las fechas solicitadas.");
         }
 
@@ -461,7 +480,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
                 .build();
 
         cliente.getBilleteraVirtual().setMontoTotal(cliente.getBilleteraVirtual().getMontoTotal() - totalReserva);
-        alojamiento.setDisponible(false);
+        alojamiento.setActivo(false);
 
         return nuevaReserva;
     }
@@ -523,7 +542,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
 
         Alojamiento alojamiento = reserva.getAlojamiento();
         if (alojamiento != null) {
-            alojamiento.setDisponible(true);
+            alojamiento.setActivo(true);
         } else {
             throw new Exception("No se encontró un alojamiento asociado a la reserva.");
         }

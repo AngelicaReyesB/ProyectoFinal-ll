@@ -86,13 +86,13 @@ public class PrincipalControlador implements ServiciosEmpresa {
         Stage stage = (Stage) node.getScene().getWindow();
         stage.close();
     }
-    @Override
-    public void cargarDatosEmpresa() throws Exception {
-    }
-
-    @Override
-    public void guardarDatosEmpresa() throws Exception {
-    }
+    //@Override
+    //    public void cargarDatosEmpresa() throws Exception {
+    //    }
+    //
+    //    @Override
+    //    public void guardarDatosEmpresa() throws Exception {
+    //    }
 
     @Override
     public Cliente registrarCliente(String cedula, String nombre, String telefono, String email, String password) throws Exception {
@@ -145,8 +145,8 @@ public class PrincipalControlador implements ServiciosEmpresa {
     }
 
     @Override
-    public Alojamiento crearAlojamiento(String nombre, String descripcion, String imagen, LocalDate fechaEstancia, float valorNoche, int numHuespedes, List<String> serviciosIncluidos, TipoAlojamiento tipoAlojamiento, TipoCiudad tipoCiudad) throws Exception {
-        return bookYourStay.crearAlojamiento(nombre, descripcion, imagen, fechaEstancia, valorNoche, numHuespedes, serviciosIncluidos, tipoAlojamiento, tipoCiudad);
+    public Alojamiento crearAlojamiento(String nombre, String descripcion, String imagen, LocalDate fechaEstancia, float valorNoche, int numHuespedes, List<String> serviciosIncluidos, TipoAlojamiento tipoAlojamiento, TipoCiudad tipoCiudad, boolean activo) throws Exception {
+        return bookYourStay.crearAlojamiento(nombre, descripcion, imagen, fechaEstancia, valorNoche, numHuespedes, serviciosIncluidos, tipoAlojamiento, tipoCiudad, activo);
     }
 
     @Override

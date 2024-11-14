@@ -2,14 +2,15 @@ package co.edu.uniquindio.bookyourstay.controlador;
 
 import co.edu.uniquindio.bookyourstay.controlador.observador.Observable;
 import co.edu.uniquindio.bookyourstay.modelo.Cliente;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import lombok.Setter;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
 
 public class RegistroClienteControlador implements Observable, Initializable {
 
@@ -18,39 +19,42 @@ public class RegistroClienteControlador implements Observable, Initializable {
     @FXML private TextField nombre;
     @FXML private TextField password;
     @FXML private TextField telefono;
-    private final PrincipalControlador principalControlador;
+    private PrincipalControlador principalControlador;
+    @Setter
     private Observable observable;
 
     public RegistroClienteControlador() {
-        principalControlador = PrincipalControlador.getInstancia();
     }
 
-    @FXML void irPanelInicio(ActionEvent event) {
+    @FXML
+    public void irPanelInicio() {
         principalControlador.navegarVentana("/inicio.fxml", "Inicio");
         principalControlador.cerrarVentana(nombre);
     }
 
     @FXML
-    void registrarUsuario(ActionEvent event) {
+    public void registrarUsuario() {
         if(nombre.getText().isEmpty() || cedula.getText().isEmpty() || telefono.getText().isEmpty() ||
                 correo.getText().isEmpty() || password.getText().isEmpty()) {
             principalControlador.mostrarAlerta("Todos los campos son obligatorios para el registro",
                     Alert.AlertType.WARNING);
         } else {
             try {
-                System.out.println("CEDULA PARA BUSCAR" + cedula.getText());
+                System.out.println("CÉDULA PARA BUSCAR" + cedula.getText());
                 Cliente cliente = principalControlador.registrarCliente(
                         nombre.getText(), cedula.getText(), telefono.getText(), correo.getText(), password.getText());
                 if(cliente != null) {
+                    principalControlador.getSesion().setCliente(cliente);
                     principalControlador.mostrarAlerta(
                             "El usuario fue creado con exito. \n\nIngresa y activa la cuenta con el código enviado",
                             Alert.AlertType.INFORMATION
                     );
-                    observable.notificar();
-                    principalControlador.navegarVentana("/inicio.fxml", "Inicio.");
-                    principalControlador.getSesion().setCliente(null);
+                    if (observable != null) {
+                        observable.notificar();
+                    }
+                    principalControlador.navegarVentana("/activarCuenta.fxml", "Activación de la cuenta.");
                     principalControlador.cerrarVentana(nombre);
-                }else {
+                } else {
                     principalControlador.mostrarAlerta("No fue posible crear al usuario", Alert.AlertType.WARNING);
                 }
             } catch (Exception e) {
@@ -62,7 +66,6 @@ public class RegistroClienteControlador implements Observable, Initializable {
 
     @Override
     public void notificar() {
-
     }
 
     @Override
@@ -72,5 +75,6 @@ public class RegistroClienteControlador implements Observable, Initializable {
         telefono.clear();
         correo.clear();
         password.clear();
+        principalControlador = PrincipalControlador.getInstancia();
     }
 }

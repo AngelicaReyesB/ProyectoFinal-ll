@@ -23,8 +23,6 @@ public class InicioControlador implements Observable, Initializable {
     @FXML private Hyperlink olvidoPasswordLink;
     @FXML private TextField password;
     private final PrincipalControlador principalControlador;
-    private Alojamiento alojamientoRandom;
-    private ArrayList<Alojamiento> listaAlojamientos = new ArrayList<>();
     private Observable observable;
 
     public InicioControlador() {
@@ -91,9 +89,9 @@ public class InicioControlador implements Observable, Initializable {
 
     private void alojamientoRandom(){
         try{
-            if(principalControlador.getBookYourStay().getAlojamientos().size() > 0){
+            if(!principalControlador.getBookYourStay().getAlojamientos().isEmpty()){
                 int indice = (int)Math.floor (Math.random() * principalControlador.getBookYourStay().getAlojamientos().size());
-                alojamientoRandom = principalControlador.getBookYourStay().getAlojamientos().get(indice);
+                Alojamiento alojamientoRandom = principalControlador.getBookYourStay().getAlojamientos().get(indice);
                 principalControlador.getSesion().setAlojamientoAleatorio(alojamientoRandom);
                 System.out.println("EVENTO RAMDON: " + alojamientoRandom);
                 //nombreAlojamiento.setText(alojamientoRandom.getNombre());
@@ -108,35 +106,16 @@ public class InicioControlador implements Observable, Initializable {
         }
     }
 
-    public void detalleAlojamiento(){
-        principalControlador.getSesion().setAlojamientoDetalle(alojamientoRandom);
-        principalControlador.cerrarVentana(correo);
-    }
-
-    public void detalleAlojamientoBox(Alojamiento alojamiento){
-        System.out.println(alojamiento);
-        principalControlador.getSesion().setAlojamientoDetalle(alojamientoRandom);
-        principalControlador.navegarVentana("/detallesAlojamiento.fxml", "Detalles del alojamiento.");
-        principalControlador.cerrarVentana(correo);
-    }
-
-    public void reservarAlojamiento() {
-        principalControlador.getSesion().setReservarAlojamiento(alojamientoRandom);
-        principalControlador.navegarVentana("/reservaAlojamiento.fxml", "Reservar alojamiento.");
-        principalControlador.cerrarVentana(correo);
-    }
-
     private void mostrarAlojamientos(){
         try{
             llamarAlojamientos();
-
-        }catch (Exception e){
-
+        }catch (Exception ignored){
         }
     }
 
     private void llamarAlojamientos(){
         try{
+            ArrayList<Alojamiento> listaAlojamientos = new ArrayList<>();
             if (principalControlador.getSesion().getAlojamientos() != null){
                  listaAlojamientos = (ArrayList<Alojamiento>) principalControlador.getSesion().getAlojamientos();
             }else {

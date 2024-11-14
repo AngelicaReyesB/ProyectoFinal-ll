@@ -26,7 +26,7 @@ public class Alojamiento {
     private List<String> serviciosIncluidos;
     private TipoAlojamiento tipoAlojamiento;
     private TipoCiudad tipoCiudad;
-    private boolean disponible; //no
+    private boolean activo; //no
     private List<Habitacion> habitaciones; // Solo para hoteles
     private List<Resena> resenas; //no
     private double costoAseoMantenimiento; // Para casa o apartamento

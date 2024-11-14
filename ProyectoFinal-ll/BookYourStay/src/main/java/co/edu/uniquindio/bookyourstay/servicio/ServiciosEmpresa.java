@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface ServiciosEmpresa {
-    void cargarDatosEmpresa() throws Exception;
-    void guardarDatosEmpresa() throws Exception;
+   // void cargarDatosEmpresa() throws Exception;
+    //void guardarDatosEmpresa() throws Exception;
     Cliente registrarCliente(String cedula, String nombre, String telefono, String email, String password) throws Exception;
     Cliente iniciarSesion(String email, String password) throws Exception;
     boolean eliminarCuentaCliente(String cedulaCliente) throws  Exception;
@@ -22,7 +22,7 @@ public interface ServiciosEmpresa {
     Cliente editarCuenta(String cedula, String nombre, String telefono, String email, String password) throws Exception;
     //boolean validarCodigoActivacion(String email, String codigo) throws Exception;
     boolean validarIngresoAdministrador(String email, String password) throws Exception;
-    Alojamiento crearAlojamiento(String nombre, String descripcion, String imagen, LocalDate fechaEstancia, float valorNoche, int numHuespedes, List<String> serviciosIncluidos, TipoAlojamiento tipoAlojamiento, TipoCiudad tipoCiudad) throws Exception;
+    Alojamiento crearAlojamiento(String nombre, String descripcion, String imagen, LocalDate fechaEstancia, float valorNoche, int numHuespedes, List<String> serviciosIncluidos, TipoAlojamiento tipoAlojamiento, TipoCiudad tipoCiudad, boolean activo) throws Exception;
     CreacionAlojamiento crearAlojamiento(TipoAlojamiento tipoAlojamiento) throws Exception;
     Alojamiento obtenerAlojamiento(String codigo) throws Exception;
     Alojamiento actualizarAlojamiento(Alojamiento alojamiento) throws Exception;

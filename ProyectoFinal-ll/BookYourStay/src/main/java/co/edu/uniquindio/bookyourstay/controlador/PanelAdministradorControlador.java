@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
 public class PanelAdministradorControlador implements Observable, Initializable {
 
     @FXML private TableView<Alojamiento> TableAlojamientos;
-    @FXML private Button btnAlojaientosRentables;
+    @FXML private Button btnAlojamientosRentables;
     @FXML private Button btnAlojamientosPopulares;
     @FXML private Button btnCerrarSesion;
     @FXML private Button btnCrearAlojamientos;
@@ -43,6 +43,18 @@ public class PanelAdministradorControlador implements Observable, Initializable 
     }
 
     @FXML
+    void alojamientosPopulares(ActionEvent event) {
+        principalControlador.navegarVentana("/alojamientosPopulares.fxml", "Alojamientos populares");
+        principalControlador.cerrarVentana(btnAlojamientosPopulares);
+    }
+
+    @FXML
+    void alojamientosRentables(ActionEvent event) {
+        principalControlador.navegarVentana("/alojamientosRentables.fxml", "Alojamientos rentables");
+        principalControlador.cerrarVentana(btnAlojamientosRentables);
+    }
+
+    @FXML
     public void cerrarSesion(ActionEvent event) {
         principalControlador.navegarVentana("/inicio.fxml", "Inicio.");
         principalControlador.cerrarVentana(btnCerrarSesion);
@@ -58,6 +70,12 @@ public class PanelAdministradorControlador implements Observable, Initializable 
     public void crearOfertas(ActionEvent event) {
         principalControlador.navegarVentana("/crearOfertas.fxml", "Crear ofertas");
         principalControlador.cerrarVentana(btnCrearOfertas);
+    }
+
+    @FXML
+    void verEstadisticas(ActionEvent event) {
+        principalControlador.navegarVentana("/verEstadisticas.fxml", "Ver estadísticas");
+        principalControlador.cerrarVentana(btnVerEstadisticas);
     }
 
     public void actualizarTabla(ArrayList listaAlojamientos){
