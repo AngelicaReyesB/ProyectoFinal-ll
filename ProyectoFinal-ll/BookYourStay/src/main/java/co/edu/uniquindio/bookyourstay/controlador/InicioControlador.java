@@ -13,6 +13,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+//hecho, solo falta des comentar cuando se añada en el panel
 public class InicioControlador implements Observable, Initializable {
 
     @FXML private GridPane AlojamientosDisponiblesGridPane;

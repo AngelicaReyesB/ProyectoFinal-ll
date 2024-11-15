@@ -15,6 +15,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 
+//hecho
 public class BarraBusquedasControlador implements Observable, Initializable {
 
     @FXML private Button btnBuscarAlojamiento;

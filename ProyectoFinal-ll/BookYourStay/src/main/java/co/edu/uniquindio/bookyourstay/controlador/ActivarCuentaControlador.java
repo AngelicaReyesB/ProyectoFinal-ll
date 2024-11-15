@@ -12,6 +12,7 @@ import lombok.Setter;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+//hecho
 public class ActivarCuentaControlador implements Observable, Initializable {
 
     @FXML private TextField codigoActivacion;
@@ -28,12 +29,10 @@ public class ActivarCuentaControlador implements Observable, Initializable {
         try {
             Cliente cliente = principalControlador.getSesion().getCliente();
 
-            // Verificar si la cuenta ya está activada
             if (cliente.isEstadoCuenta()) {
                 principalControlador.mostrarAlerta("La cuenta ya está activada", Alert.AlertType.INFORMATION);
-                return;  // Si ya está activada, no hacer nada más
+                return;
             }
-
             boolean cuentaActivada = principalControlador.activarUsuario(codigoActivacion.getText(), cliente);
             System.out.println("cuenta activada: " + cuentaActivada);
 

@@ -15,6 +15,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
+//falta la parte de elegir el alojamiento
 public class ReservaAlojamientoControlador implements Observable, Initializable {
 
 
@@ -90,7 +91,7 @@ public class ReservaAlojamientoControlador implements Observable, Initializable 
 
                 factura = principalControlador.generarFactura(reserva);
                 reserva.setFactura(factura);
-                reserva.setPagado(true); // Marcamos como pagado si corresponde
+                reserva.setPagado(true);
 
                 String codigoQR = principalControlador.enviarCodigoQR(factura, cliente.getEmail());
                 reserva.setCodigoQR(codigoQR);

@@ -11,7 +11,7 @@ import lombok.Setter;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
+//hecho
 public class RegistroClienteControlador implements Observable, Initializable {
 
     @FXML private TextField cedula;
