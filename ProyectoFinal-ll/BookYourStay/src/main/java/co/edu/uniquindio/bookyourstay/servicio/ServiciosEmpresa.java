@@ -53,8 +53,8 @@ public interface ServiciosEmpresa {
     void crearOfertaEspecial(Alojamiento alojamiento, LocalDate fechaInicio, LocalDate fechaFin, float descuento) throws Exception;
     List<Alojamiento> listarOfertasEspeciales() throws Exception;
     void enviarCodigoQR(Factura factura, String rutaQR) throws Exception;
-
     String generarCodigoQR(Factura factura) throws Exception;
+    boolean verificarCodigoActivacion(String cedula, String codigoActivacion) throws Exception;
 
 
 }

@@ -817,6 +817,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
     }
 
     // Método para generar un código QR a partir del código de la factura
+    @Override
     public String generarCodigoQR(Factura factura) throws Exception {
         if (factura == null || factura.getCodigo() == null) {
             throw new Exception("La factura no puede ser nula o tener un código nulo.");
@@ -853,6 +854,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         }
     }
 
+    @Override
     public void enviarCodigoQR(Factura factura, String rutaQR) throws Exception {
         if (factura == null || factura.getCliente() == null) {
             throw new Exception("La factura o el cliente no pueden ser nulos.");
@@ -910,6 +912,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         return admin;
     }
 
+    @Override
     public boolean verificarCodigoActivacion(String cedula, String codigoActivacion) throws Exception {
         // Validar parámetros de entrada
         if (cedula == null || cedula.trim().isEmpty()) {
