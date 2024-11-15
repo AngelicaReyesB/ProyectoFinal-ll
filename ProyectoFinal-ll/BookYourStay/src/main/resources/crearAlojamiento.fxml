@@ -94,7 +94,7 @@
             <Insets bottom="32.0" left="16.0" right="32.0" />
          </HBox.margin>
          <children>
-            <TableView fx:id="tablaAlojamientos" prefHeight="464.0" prefWidth="670.0">
+            <TableView fx:id="tablaAlojamientos" prefHeight="460.0" prefWidth="902.0">
               <columns>
                 <TableColumn fx:id="colNombre" prefWidth="75.0" text="Nombre" />
                 <TableColumn fx:id="colDescripcion" prefWidth="91.99999237060547" text="Descripcion" />

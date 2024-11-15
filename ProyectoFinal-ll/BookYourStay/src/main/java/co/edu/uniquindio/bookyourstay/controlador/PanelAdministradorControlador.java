@@ -31,49 +31,44 @@ public class PanelAdministradorControlador implements Observable, Initializable 
     @FXML private TableColumn<Alojamiento, String> colServicios;
     @FXML private TableColumn<Alojamiento, String> colValorNoche;
     private final PrincipalControlador principalControlador;
-    private Observable observable;
 
     public PanelAdministradorControlador(){
         principalControlador = PrincipalControlador.getInstancia();
         System.out.println(principalControlador.getBookYourStay().getAlojamientos());
     }
 
-    public void inicializarObservable(Observable observable){
-        this.observable = observable;
-    }
-
     @FXML
-    void alojamientosPopulares(ActionEvent event) {
+    void alojamientosPopulares() {
         principalControlador.navegarVentana("/alojamientosPopulares.fxml", "Alojamientos populares");
         principalControlador.cerrarVentana(btnAlojamientosPopulares);
     }
 
     @FXML
-    void alojamientosRentables(ActionEvent event) {
+    void alojamientosRentables() {
         principalControlador.navegarVentana("/alojamientosRentables.fxml", "Alojamientos rentables");
         principalControlador.cerrarVentana(btnAlojamientosRentables);
     }
 
     @FXML
-    public void cerrarSesion(ActionEvent event) {
+    public void cerrarSesion() {
         principalControlador.navegarVentana("/inicio.fxml", "Inicio.");
         principalControlador.cerrarVentana(btnCerrarSesion);
     }
 
     @FXML
-    public void crearAlojamientos(ActionEvent event) {
+    public void crearAlojamientos() {
         principalControlador.navegarVentana("/crearAlojamiento.fxml", "Crear Alojamiento");
         principalControlador.cerrarVentana(btnCrearAlojamientos);
     }
 
     @FXML
-    public void crearOfertas(ActionEvent event) {
-        principalControlador.navegarVentana("/crearOfertas.fxml", "Crear ofertas");
+    public void crearOfertas() {
+        principalControlador.navegarVentana("/crearOferta.fxml", "Crear ofertas");
         principalControlador.cerrarVentana(btnCrearOfertas);
     }
 
     @FXML
-    void verEstadisticas(ActionEvent event) {
+    void verEstadisticas() {
         principalControlador.navegarVentana("/verEstadisticas.fxml", "Ver estadísticas");
         principalControlador.cerrarVentana(btnVerEstadisticas);
     }

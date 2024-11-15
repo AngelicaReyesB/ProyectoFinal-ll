@@ -46,10 +46,10 @@ public class CrearAlojamientoControlador implements Observable, Initializable {
     @FXML private TextField txtValorNoche;
     private String imagenSeleccionada;
     private final PrincipalControlador principalControlador;
-    private final Observable observable;
+    private Observable observable;
     private final Sesion sesion = Sesion.getInstancia();
-    public CrearAlojamientoControlador(Observable observable){
-        this.observable = observable;
+
+    public CrearAlojamientoControlador(){
         principalControlador = PrincipalControlador.getInstancia();
         System.out.println(principalControlador.getBookYourStay().getAlojamientos());
     }
@@ -58,8 +58,7 @@ public class CrearAlojamientoControlador implements Observable, Initializable {
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Seleccionar imagen");
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.jpeg"));
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.jpeg"));
         File imagen = fileChooser.showOpenDialog(null);
         System.out.println(imagen.toString());
 
@@ -131,7 +130,8 @@ public class CrearAlojamientoControlador implements Observable, Initializable {
     }
 
     public void actualizarTabla(ArrayList<Alojamiento> alojamientos){
-        colCapacidad.setCellValueFactory(cellData-> new SimpleStringProperty());
+        colCapacidad.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getCapacidadMaxima())));
+        colValor.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getValorNoche())));
         colCiudad.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTipoCiudad().toString()));
         colDescripcion.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescripcion()));
         colEstado.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().isActivo() ? "Activo" : "Inactivo"));
@@ -140,7 +140,6 @@ public class CrearAlojamientoControlador implements Observable, Initializable {
         colNombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
         colServicios.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getServiciosIncluidos().toString()));
         colTipo.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTipoAlojamiento().toString()));
-        colValor.setCellValueFactory(cellData -> new SimpleStringProperty());
 
         tablaAlojamientos.setItems(FXCollections.observableArrayList());
     }

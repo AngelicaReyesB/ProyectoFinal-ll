@@ -42,10 +42,10 @@
                     <Label prefHeight="18.0" prefWidth="141.0" style="-fx-font-weight: bold;" text="Fecha Inicio" GridPane.rowIndex="1" />
                     <Label prefHeight="18.0" prefWidth="138.0" style="-fx-font-weight: bold;" text="Fecha Fin" GridPane.rowIndex="2" />
                <Label prefHeight="18.0" prefWidth="138.0" style="-fx-font-weight: bold;" text="Porcentaje Descuento" GridPane.rowIndex="3" />
-               <ComboBox prefHeight="26.0" prefWidth="196.0" promptText="Seleccione el Porcentaje" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-               <DatePicker prefHeight="26.0" prefWidth="194.0" promptText="Seleccione la Fecha" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-               <ComboBox prefHeight="26.0" prefWidth="196.0" promptText="Seleccione el Alojamiento" GridPane.columnIndex="1" />
-               <DatePicker prefHeight="26.0" prefWidth="194.0" promptText="Seleccione la Fecha" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+               <ComboBox fx:id="porcentajeDescuento" prefHeight="26.0" prefWidth="196.0" promptText="Seleccione el Porcentaje" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+               <DatePicker fx:id="fechaInicioPicker" prefHeight="26.0" prefWidth="194.0" promptText="Seleccione la Fecha" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+               <ComboBox fx:id="alojamientoSeleccionado" prefHeight="26.0" prefWidth="196.0" promptText="Seleccione el Alojamiento" GridPane.columnIndex="1" />
+               <DatePicker fx:id="fechaFinPicker" prefHeight="26.0" prefWidth="194.0" promptText="Seleccione la Fecha" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                 </children>
                 <VBox.margin>
                     <Insets left="40.0" right="40.0" top="20.0" />
@@ -54,7 +54,7 @@
 
             <!-- Botones -->
             <HBox alignment="CENTER" prefHeight="60.0" prefWidth="436.0" VBox.vgrow="NEVER">
-                <Button fx:id="btnRegistrarAlojamiento" onAction="#registrarAlojamiento" prefHeight="36.0" prefWidth="112.0" style="-fx-background-color: #006600;" text="Crear Oferta" textFill="WHITE" />
+                <Button fx:id="btnCrearOferta" onAction="#crearOferta" prefHeight="36.0" prefWidth="112.0" style="-fx-background-color: #006600;" text="Crear Oferta" textFill="WHITE" />
                 <VBox.margin>
                     <Insets top="15.0" />
                 </VBox.margin>
@@ -70,10 +70,10 @@
             <children>
                 <TableView prefHeight="426.0" prefWidth="585.0">
                     <columns>
-                        <TableColumn prefWidth="143.99994200468063" text="Nombre Alojamiento" />
-                        <TableColumn prefWidth="115.19999694824219" text="Fecha Inicio" />
-                        <TableColumn prefWidth="103.199951171875" text="Fecha Fin" />
-                        <TableColumn prefWidth="127.20013427734375" text="Valor con Descuento" />
+                        <TableColumn fx:id="colNombre" prefWidth="143.99994200468063" text="Nombre Alojamiento" />
+                        <TableColumn fx:id="colFechaInicio" prefWidth="115.19999694824219" text="Fecha Inicio" />
+                        <TableColumn fx:id="colFechaFin" prefWidth="103.199951171875" text="Fecha Fin" />
+                        <TableColumn fx:id="colValorConDescuento" prefWidth="127.20013427734375" text="Valor con Descuento" />
                     </columns>
                 </TableView>
             </children>
@@ -81,7 +81,7 @@
     </HBox>
     <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="846.0">
         <children>
-            <Button alignment="CENTER" mnemonicParsing="false" prefHeight="38.0" prefWidth="123.0" style="-fx-background-color: #006600;" text="Eliminar Oferta" textFill="WHITE">
+            <Button fx:id="btnEliminarOferta" alignment="CENTER" mnemonicParsing="false" prefHeight="38.0" prefWidth="123.0" style="-fx-background-color: #006600;" text="Eliminar Oferta" textFill="WHITE">
                 <HBox.margin>
                     <Insets left="5.0" right="32.0" />
                 </HBox.margin></Button>
