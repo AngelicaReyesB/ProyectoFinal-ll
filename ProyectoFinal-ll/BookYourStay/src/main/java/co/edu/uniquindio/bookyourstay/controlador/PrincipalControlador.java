@@ -291,6 +291,11 @@ public class PrincipalControlador implements ServiciosEmpresa {
     }
 
     @Override
+    public String generarCodigoQR(Factura factura) throws Exception {
+        return null;
+    }
+
+    @Override
     public void crearOfertaEspecial(Alojamiento alojamiento, LocalDate fechaInicio, LocalDate fechaFin, float descuento) throws Exception {
         bookYourStay.crearOfertaEspecial(alojamiento, fechaInicio, fechaFin, descuento);
     }
