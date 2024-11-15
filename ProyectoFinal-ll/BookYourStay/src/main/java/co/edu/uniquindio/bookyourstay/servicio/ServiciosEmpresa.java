@@ -40,7 +40,8 @@ public interface ServiciosEmpresa {
     float calcularCostoReserva(Reserva reserva) throws Exception;
     void recargarBilleteraVirtual(Cliente cliente, float monto) throws Exception;
     String agregarResena(Reserva reserva, String comentario, int calificacion) throws Exception;
-    Cliente cambiarPasswordC(String cedula, String nuevaPassword) throws Exception;
+
+    Cliente cambiarPasswordC(String cedula, String nuevaPassword, String codigoActivacion) throws Exception;
     void enviarNotificacion(String destinatario, String asunto, String mensaje) throws Exception;
     boolean eliminarAlojamiento(Alojamiento alojamiento) throws Exception;
     float aplicarDescuentos(Alojamiento alojamiento, float porcentaje) throws Exception;
@@ -50,7 +51,7 @@ public interface ServiciosEmpresa {
     ArrayList<Reserva> listaMasRentables(int limite) throws Exception;
     Administrador cambiarPassword(String email, String nuevaPassword) throws Exception;
     Factura generarFactura(Reserva reserva) throws Exception;
-    String enviarCodigoQR(Factura factura, String emailCliente) throws Exception;
+    void enviarCodigoQR(Factura factura, String rutaQR) throws Exception;
     void crearOfertaEspecial(Alojamiento alojamiento, LocalDate fechaInicio, LocalDate fechaFin, float descuento) throws Exception;
     List<Alojamiento> listarOfertasEspeciales() throws Exception;
 
