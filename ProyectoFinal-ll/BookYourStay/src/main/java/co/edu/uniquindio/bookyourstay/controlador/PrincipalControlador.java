@@ -225,11 +225,6 @@ public class PrincipalControlador implements ServiciosEmpresa {
     }
 
     @Override
-    public Cliente cambiarPasswordC(String cedula, String nuevaPassword) throws Exception {
-        return bookYourStay.cambiarPasswordC(cedula, nuevaPassword);
-    }
-
-    @Override
     public void enviarNotificacion(String destinatario, String asunto, String mensaje) throws Exception {
         bookYourStay.enviarNotificacion(destinatario, asunto, mensaje);
     }
@@ -265,11 +260,6 @@ public class PrincipalControlador implements ServiciosEmpresa {
     }
 
     @Override
-    public Administrador cambiarPassword(String email, String nuevaPassword) throws Exception {
-        return bookYourStay.cambiarPassword(email, nuevaPassword);
-    }
-
-    @Override
     public Factura generarFactura(Reserva reserva) throws Exception {
         return bookYourStay.generarFactura(reserva);
     }
@@ -288,4 +278,15 @@ public class PrincipalControlador implements ServiciosEmpresa {
     public List<Alojamiento> listarOfertasEspeciales() throws Exception {
         return bookYourStay.listarOfertasEspeciales();
     }
+
+    @Override
+    public Administrador cambiarPassword(String email, String nuevaPassword) throws Exception{
+        return bookYourStay.cambiarPassword(email,nuevaPassword);
+    }
+
+    @Override
+    public Cliente cambiarPasswordC(String cedula, String nuevaPassword) throws Exception {
+        return bookYourStay.cambiarPasswordC(cedula, nuevaPassword);
+    }
+
 }

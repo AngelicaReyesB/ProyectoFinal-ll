@@ -226,12 +226,6 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         throw new Exception("No se encontró un cliente con la cédula " + cedulaCliente);
     }
 
-    //FALTAAAA
-    @Override
-    public Cliente cambiarPasswordC(String cedula, String nuevaPassword) throws Exception {
-        return null;
-    }
-
     @Override
     public ArrayList<Cliente> listarClientes() throws Exception {
         return new ArrayList<>(clientes);
@@ -272,12 +266,6 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         }else {
             throw new Exception("El usuario no existe");
         }
-    }
-
-    //FALTAAA
-    @Override
-    public Administrador cambiarPassword(String email, String nuevaPassword) throws Exception {
-        return null;
     }
 
     //se hace uso en inicio controlador
@@ -778,6 +766,47 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
     @Override
     public String enviarCodigoQR(Factura factura, String emailCliente) throws Exception {
        return null;
+    }
+
+    //Revisar
+    @Override
+    public Administrador cambiarPassword(String email, String nuevaPassword) throws Exception {
+        String usuarioAdministrador = "admin@bookyourstay.com";
+
+        if (!email.equals(usuarioAdministrador)) {
+            throw new Exception("Administrador no encontrado con el email proporcionado.");
+        }
+
+        if (nuevaPassword == null || nuevaPassword.length() < 6) {
+            throw new Exception("La nueva contraseña debe tener al menos 6 caracteres.");
+        }
+
+        Administrador admin = new Administrador(email, nuevaPassword);
+        admin.setEmail(email);
+        admin.setPassword(nuevaPassword);
+
+        // guardarDatosAdmin();
+
+        return admin;
+    }
+
+    @Override
+    public Cliente cambiarPasswordC(String cedula, String nuevaPassword) throws Exception {
+        Cliente cliente = obtenerCliente(cedula);
+
+        if (cliente == null) {
+            throw new Exception("Cliente no encontrado con la cédula proporcionada.");
+        }
+
+        if (nuevaPassword == null || nuevaPassword.length() < 6) {
+            throw new Exception("La nueva contraseña debe tener al menos 6 caracteres.");
+        }
+
+        cliente.setPassword(nuevaPassword);
+
+        // guardarDatosEmpresa();
+
+        return cliente;
     }
 
 
