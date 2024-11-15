@@ -9,6 +9,7 @@ import co.edu.uniquindio.bookyourstay.servicio.CreacionAlojamiento;
 import co.edu.uniquindio.bookyourstay.servicio.ServiciosEmpresa;
 import co.edu.uniquindio.bookyourstay.utils.EnvioEmail;
 import co.edu.uniquindio.bookyourstay.utils.Persistencia;
+import jakarta.activation.DataSource;
 import lombok.Getter;
 import lombok.Setter;
 import org.simplejavamail.api.email.Email;
@@ -23,6 +24,19 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.qrcode.QRCodeWriter;
+
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
+
 
 @Getter
 @Setter
@@ -795,33 +809,42 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         }
     }
 
-    //// Método para generar un código QR a partir del código de la factura
-    //    public String generarCodigoQR(Factura factura) throws Exception {
-    //        if (factura == null || factura.getCodigo() == null) {
-    //            throw new Exception("La factura no puede ser nula o tener un código nulo.");
-    //        }
-    //
-    //        String codigoFactura = factura.getCodigo();
-    //        String filePath = "codigoQR_" + codigoFactura + ".png";
-    //        int width = 300;
-    //        int height = 300;
-    //
-    //        QRCodeWriter qrCodeWriter = new QRCodeWriter();
-    //        BitMatrix bitMatrix = qrCodeWriter.encode(
-    //                codigoFactura,
-    //                BarcodeFormat.QR_CODE,
-    //                width,
-    //                height,
-    //                new HashMap<EncodeHintType, Object>() {{
-    //                    put(EncodeHintType.CHARACTER_SET, "UTF-8");
-    //                }}
-    //        );
-    //
-    //        Path path = FileSystems.getDefault().getPath(filePath);
-    //        MatrixToImageWriter.writeToPath(bitMatrix, "PNG", path);
-    //
-    //        return filePath; // Devuelve la ruta donde se guardó el código QR
-    //    }
+    // Método para generar un código QR a partir del código de la factura
+    public String generarCodigoQR(Factura factura) throws Exception {
+        if (factura == null || factura.getCodigo() == null) {
+            throw new Exception("La factura no puede ser nula o tener un código nulo.");
+        }
+
+        String codigoFactura = factura.getCodigo(); // Código único de la factura
+        String filePath = "codigoQR_" + codigoFactura + ".png"; // Ruta para guardar el archivo
+        int width = 300; // Ancho del QR
+        int height = 300; // Alto del QR
+
+        // Configuración para la codificación del QR
+        Map<EncodeHintType, Object> hints = new HashMap<>();
+        hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
+
+        try {
+            // Crear el QR
+            QRCodeWriter qrCodeWriter = new QRCodeWriter();
+            BitMatrix bitMatrix = qrCodeWriter.encode(
+                    codigoFactura,
+                    BarcodeFormat.QR_CODE,
+                    width,
+                    height,
+                    hints
+            );
+
+            // Guardar el QR en el sistema de archivos
+            Path path = FileSystems.getDefault().getPath(filePath);
+            MatrixToImageWriter.writeToPath(bitMatrix, "PNG", path);
+
+            return filePath; // Devuelve la ruta del archivo generado
+
+        } catch (WriterException | IOException e) {
+            throw new Exception("Error al generar el código QR: " + e.getMessage(), e);
+        }
+    }
 
     public void enviarCodigoQR(Factura factura, String rutaQR) throws Exception {
         if (factura == null || factura.getCliente() == null) {
@@ -845,12 +868,12 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
                 .to(factura.getCliente().getNombre(), emailCliente)
                 .withSubject("Factura de BookYourStay - Código QR")
                 .withPlainText("Estimado " + factura.getCliente().getNombre() + ",\n\nAdjuntamos el código QR correspondiente a su factura. Gracias por usar BookYourStay.")
-                .withAttachment("codigoQR.png", archivoQR) // Adjuntar el archivo QR
+                .withAttachment("codigoQR.png", (DataSource) archivoQR) // Adjuntar el archivo QR
                 .buildEmail();
 
         // Configurar el mailer
         Mailer mailer = MailerBuilder
-                .withSMTPServer("smtp.gmail.com", 587, "clinicauq@gmail.com", "tu_contraseña_de_aplicación") // Configuración del servidor SMTP
+                .withSMTPServer("smtp.gmail.com", 587, "bookyourstay11@gmail.com", "bkic fjkw kzjm cyuj") // Configuración del servidor SMTP
                 .withTransportStrategy(org.simplejavamail.api.mailer.config.TransportStrategy.SMTP_TLS) // Usar TLS
                 .buildMailer();
 
