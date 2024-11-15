@@ -137,6 +137,7 @@ public class CrearAlojamientoControlador implements Observable, Initializable {
         cbCiudad.getSelectionModel().clearSelection();
         activoCheck.setSelected(false);
         cbServicios.getSelectionModel().clearSelection();
+        imagenCargada = null;
         imagenSeleccionada = null;
         fechaInstanciaPicker.setValue(null);
     }
@@ -211,7 +212,7 @@ public class CrearAlojamientoControlador implements Observable, Initializable {
 
     @FXML
     public void irPanelAdministrador() {
-        principalControlador.navegarVentana("/panelAdministrador", "Panel del administrador");
+        principalControlador.navegarVentana("/panelAdministrador.fxml", "Panel del administrador");
         principalControlador.cerrarVentana(btnRegresar);
     }
 

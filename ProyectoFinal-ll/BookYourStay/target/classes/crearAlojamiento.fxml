@@ -123,6 +123,7 @@
                <Insets left="25.0" />
             </HBox.margin>
          </Button>
+         <Button fx:id="btnRegresar" mnemonicParsing="false" onAction="#irPanelAdministrador" prefHeight="38.0" prefWidth="130.0" style="-fx-background-color: #006600;" text="Regresar" textFill="WHITE" />
       </children>
       <VBox.margin>
          <Insets left="455.0" />
