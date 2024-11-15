@@ -70,7 +70,6 @@ public class CrearAlojamientoControlador implements Observable, Initializable {
         }
     }
 
-
     @FXML
     public void cargarImagen() {
         abrirFileChooser();
