@@ -222,6 +222,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
     }
 
 
+    //FALTAAAA
     @Override
     public boolean validarCodigoActivacion(String email, String codigo) throws Exception {
         return false;
@@ -254,7 +255,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         }
     }
 
-    //se hace uso en el registro controlador, antes hay que crear el gmail
+    //se hace uso en el registro controlador
     @Override
     public void enviarCodigoActivacion(Cliente cliente) throws Exception {
         String email = cliente.getEmail();
@@ -503,7 +504,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         return reservasRentables;
     }
 
-    //no se hace uso, no sé donde se utiliza
+    //no se hace uso, perfil controlador
     @Override
     public List<Reserva> listarReservasCliente(String cedulaCliente) throws Exception {
         if (cedulaCliente == null || cedulaCliente.isEmpty()) {
