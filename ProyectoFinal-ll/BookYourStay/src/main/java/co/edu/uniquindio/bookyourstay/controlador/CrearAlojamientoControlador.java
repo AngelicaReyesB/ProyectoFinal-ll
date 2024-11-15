@@ -2,13 +2,13 @@ package co.edu.uniquindio.bookyourstay.controlador;
 
 import co.edu.uniquindio.bookyourstay.controlador.observador.Observable;
 import co.edu.uniquindio.bookyourstay.modelo.Alojamiento;
-import co.edu.uniquindio.bookyourstay.modelo.Sesion;
 import co.edu.uniquindio.bookyourstay.modelo.enums.TipoAlojamiento;
 import co.edu.uniquindio.bookyourstay.modelo.enums.TipoCiudad;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
+
 
 import java.io.File;
 import java.net.URL;
@@ -18,15 +18,18 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 
-//falta cargar la imagen
 public class CrearAlojamientoControlador implements Observable, Initializable {
 
     @FXML private CheckBox activoCheck;
-    @FXML private Button imagen;
-    @FXML private Label imagenCargada;
+    @FXML private ImageView imagenCargada;
     @FXML private ComboBox<TipoCiudad> cbCiudad;
+    @FXML private Button btnRegresar;
     @FXML private ComboBox<String> cbServicios;
     @FXML private ComboBox<TipoAlojamiento> cbTipoAlojamiento;
     @FXML private TableColumn<Alojamiento, String> colCapacidad;
@@ -48,93 +51,97 @@ public class CrearAlojamientoControlador implements Observable, Initializable {
     private String imagenSeleccionada;
     private final PrincipalControlador principalControlador;
     private Observable observable;
-    private final Sesion sesion = Sesion.getInstancia();
 
     public CrearAlojamientoControlador(){
         principalControlador = PrincipalControlador.getInstancia();
-        System.out.println(principalControlador.getBookYourStay().getAlojamientos());
     }
 
-    private void abrirFileChooser() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Seleccionar imagen");
-        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.jpeg"));
-        File imagen = fileChooser.showOpenDialog(null);
-
-        if (imagen != null) {
-            System.out.println(imagen.toString());
-            imagenSeleccionada = imagen.toURI().toString();
-            imagenCargada.setText("Imagen cargada exitosamente.");
-        } else {
-            imagenCargada.setText("No se seleccionó ninguna imagen.");
-        }
-    }
 
     @FXML
     public void cargarImagen() {
-        abrirFileChooser();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Archivos de Imagen", "*.jpg", "*.png", "*.gif"));
+        File file = fileChooser.showOpenDialog(null);
+
+        if (file != null) {
+            try {
+                Image image = new Image(file.toURI().toString());
+                imagenSeleccionada = file.getAbsolutePath();
+                imagenCargada.setImage(image);  // Asegúrate de que imagenCargada es un ImageView
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
-    public boolean cambioFecha() {
-        System.out.println(fechaInstanciaPicker.getValue());
-        LocalDate fechaActual = LocalDate.now();
-        boolean isBefore = false;
-        if(fechaInstanciaPicker.getValue().isBefore(fechaActual)){
-            principalControlador.mostrarAlerta("La fecha seleccionada debe ser igual o superior al día de hoy", Alert.AlertType.WARNING);
-            isBefore = true;
+    private boolean validarCampos() {
+        if (txtNombre.getText().isEmpty() || txtDescripcion.getText().isEmpty() ||
+                txtCapacidadMaxima.getText().isEmpty() || txtValorNoche.getText().isEmpty() ||
+                fechaInstanciaPicker.getValue() == null || cbCiudad.getValue() == null ||
+                cbServicios.getValue() == null || cbTipoAlojamiento.getValue() == null ||
+                imagenSeleccionada == null) {
+            principalControlador.mostrarAlerta("Ningún campo puede estar vacío", Alert.AlertType.ERROR);
+            return false;
         }
-        return isBefore;
+        if (fechaInstanciaPicker.getValue().isBefore(LocalDate.now())) {
+            principalControlador.mostrarAlerta("La fecha seleccionada debe ser igual o superior al día de hoy", Alert.AlertType.WARNING);
+            return false;
+        }
+        return true;
     }
 
     @FXML
     public void registrarAlojamiento() {
-        if(txtNombre.getText().isEmpty() || txtDescripcion.getText().isEmpty() ||
-                txtCapacidadMaxima.getText().isEmpty() || txtValorNoche.getText().isEmpty() ||
-                fechaInstanciaPicker.getValue() == null || cbCiudad.getItems().isEmpty() ||
-                cbServicios.getItems().isEmpty() || cbTipoAlojamiento.getItems().isEmpty() ||
-                imagenSeleccionada == null) {
+        if (!validarCampos()) return;
 
-            principalControlador.mostrarAlerta("Ningún campo puede estar vacío", Alert.AlertType.ERROR);
-        } else if(cambioFecha()) {
-            principalControlador.mostrarAlerta("La fecha seleccionada debe ser igual o superior al día de hoy", Alert.AlertType.WARNING);
-        } else {
-            try {
-                String valorNocheText = txtValorNoche.getText();
-                String capacidadMaximaText = txtCapacidadMaxima.getText();
-
-                float valorNoche = Float.parseFloat(valorNocheText);
-                int capacidadMaxima = Integer.parseInt(capacidadMaximaText);
-
-                TipoAlojamiento tipoAlojamiento = cbTipoAlojamiento.getValue();
-                TipoCiudad tipoCiudad = cbCiudad.getValue();
-                boolean activo = activoCheck.isSelected();
-                Alojamiento alojamientoCreado = principalControlador.crearAlojamiento(txtNombre.getText(), txtDescripcion.getText(), imagenSeleccionada, fechaInstanciaPicker.getValue(), valorNoche, capacidadMaxima, cbServicios.getItems(), tipoAlojamiento, tipoCiudad, activo);
-
-                if(alojamientoCreado != null){
-                    observable.notificar();
-                    deshabilitarEntradas();
-                    actualizarTabla((ArrayList<Alojamiento>) principalControlador.getSesion().getAlojamientos());
-                    principalControlador.mostrarAlerta("Alojamiento creado correctamente", Alert.AlertType.INFORMATION);
-                }
-            } catch (NumberFormatException e) {
-                principalControlador.mostrarAlerta("Los valores de 'Valor por noche' o 'Capacidad máxima' no son válidos. Por favor ingrese números.", Alert.AlertType.ERROR);
-            } catch (Exception e) {
-                principalControlador.mostrarAlerta("Ocurrió un error al registrar el alojamiento.", Alert.AlertType.ERROR);
-            }
-        }
-    }
-
-    public void inicializarValores(PrincipalControlador principalControlador) {
         try {
-            if (principalControlador != null) {
+            float valorNoche = Float.parseFloat(txtValorNoche.getText());
+            int capacidadMaxima = Integer.parseInt(txtCapacidadMaxima.getText());
+
+            TipoAlojamiento tipoAlojamiento = cbTipoAlojamiento.getValue();
+            TipoCiudad tipoCiudad = cbCiudad.getValue();
+            boolean activo = activoCheck.isSelected();
+
+            Alojamiento alojamientoCreado = principalControlador.crearAlojamiento(
+                    txtNombre.getText(),
+                    txtDescripcion.getText(),
+                    imagenSeleccionada,
+                    fechaInstanciaPicker.getValue(),
+                    valorNoche,
+                    capacidadMaxima,
+                    cbServicios.getItems(),
+                    tipoAlojamiento,
+                    tipoCiudad,
+                    activo
+            );
+            limpiarCampos();
+
+            if (alojamientoCreado != null) {
+                principalControlador.notificarObservadores();
                 actualizarTabla((ArrayList<Alojamiento>) principalControlador.getSesion().getAlojamientos());
+                principalControlador.mostrarAlerta("Alojamiento creado correctamente", Alert.AlertType.INFORMATION);
             }
+        } catch (NumberFormatException e) {
+            principalControlador.mostrarAlerta("Los valores de 'Valor por noche' o 'Capacidad máxima' no son válidos. Por favor ingrese números.", Alert.AlertType.ERROR);
         } catch (Exception e) {
-            e.printStackTrace();
+            principalControlador.mostrarAlerta("Ocurrió un error al registrar el alojamiento.", Alert.AlertType.ERROR);
         }
     }
 
-    public void actualizarTabla(ArrayList<Alojamiento> alojamientos){
+    private void limpiarCampos() {
+        txtNombre.clear();
+        txtDescripcion.clear();
+        txtValorNoche.clear();
+        txtCapacidadMaxima.clear();
+        cbTipoAlojamiento.getSelectionModel().clearSelection();
+        cbCiudad.getSelectionModel().clearSelection();
+        activoCheck.setSelected(false);
+        cbServicios.getSelectionModel().clearSelection();
+        imagenSeleccionada = null;
+        fechaInstanciaPicker.setValue(null);
+    }
+
+    public void actualizarTabla(ArrayList<Alojamiento> alojamientos) {
         colCapacidad.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getCapacidadMaxima())));
         colValor.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getValorNoche())));
         colCiudad.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTipoCiudad().toString()));
@@ -143,11 +150,16 @@ public class CrearAlojamientoControlador implements Observable, Initializable {
         colFecha.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFechaEstancia().toString()));
         colImagen.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getImagen()));
         colNombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
-        colServicios.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getServiciosIncluidos().toString()));
+        colServicios.setCellValueFactory(cellData -> new SimpleStringProperty(String.join(", ", cellData.getValue().getServiciosIncluidos())));
         colTipo.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTipoAlojamiento().toString()));
 
-        tablaAlojamientos.setItems(FXCollections.observableArrayList());
+        if (alojamientos != null && !alojamientos.isEmpty()) {
+            tablaAlojamientos.setItems(FXCollections.observableArrayList(alojamientos));
+        } else {
+            tablaAlojamientos.setItems(FXCollections.observableArrayList());
+        }
     }
+
 
     @FXML
      public void editarAlojamiento() {
@@ -161,7 +173,7 @@ public class CrearAlojamientoControlador implements Observable, Initializable {
             alojamientoSeleccionado.setActivo(activoCheck.isSelected());
             Alojamiento alojamientoModificado = principalControlador.actualizarAlojamiento(alojamientoSeleccionado);
             System.out.println(alojamientoModificado);
-            observable.notificar();
+            principalControlador.notificarObservadores();
             principalControlador.mostrarAlerta("Alojamiento actualizado exitosamente.", Alert.AlertType.CONFIRMATION);
         } catch (Exception e) {
             principalControlador.mostrarAlerta("El alojamiento no se pudo actualizar." + e.getMessage(), Alert.AlertType.INFORMATION);
@@ -181,27 +193,40 @@ public class CrearAlojamientoControlador implements Observable, Initializable {
         principalControlador.mostrarAlerta("Alojamiento eliminado correctamente.", Alert.AlertType.CONFIRMATION);
     }
 
-    private void deshabilitarEntradas(){
-        txtNombre.setDisable(true);
-        txtDescripcion.setDisable(true);
-        txtValorNoche.setDisable(true);
-        txtCapacidadMaxima.setDisable(true);
-        fechaInstanciaPicker.setDisable(true);
-        imagen.setDisable(true);
+    private void actualizarServiciosDisponibles() {
+        ObservableList<String> serviciosActualizados = FXCollections.observableArrayList();
+
+        if (cbTipoAlojamiento.getValue() != null) {
+            // Ejemplo de lógica para cambiar servicios dependiendo del tipo de alojamiento
+            if (cbTipoAlojamiento.getValue() == TipoAlojamiento.CASA) {
+                serviciosActualizados.addAll("WiFi", "Piscina", "Gimnasio");
+            } else if (cbTipoAlojamiento.getValue() == TipoAlojamiento.APARTAMENTO) {
+                serviciosActualizados.addAll("WiFi", "Parking");
+            }
+        }
+
+
+        cbServicios.setItems(serviciosActualizados);
+    }
+
+    @FXML
+    public void irPanelAdministrador() {
+        principalControlador.navegarVentana("/panelAdministrador", "Panel del administrador");
+        principalControlador.cerrarVentana(btnRegresar);
     }
 
     @Override
     public void notificar() {
-
+        actualizarTabla((ArrayList<Alojamiento>) principalControlador.getSesion().getAlojamientos());
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        inicializarValores(principalControlador);
         ObservableList<String> serviciosIncluidos = FXCollections.observableArrayList("WiFi", "Desayuno", "Piscina", "Gimnasio", "Parking");
         cbServicios.setItems(serviciosIncluidos);
-        cbTipoAlojamiento.setItems(FXCollections.observableArrayList(TipoAlojamiento.values()));
+        cbTipoAlojamiento.setOnAction(event -> actualizarServiciosDisponibles());
         cbCiudad.setItems(FXCollections.observableArrayList(TipoCiudad.values()));
-
+        cbTipoAlojamiento.setItems(FXCollections.observableArrayList(TipoAlojamiento.values()));
+        PrincipalControlador.getInstancia().registrarObservador(this);
     }
 }

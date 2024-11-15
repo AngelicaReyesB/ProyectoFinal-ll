@@ -10,6 +10,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -37,7 +38,7 @@
            <rowConstraints>
              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
              <RowConstraints maxHeight="63.9999755859375" minHeight="10.0" prefHeight="60.799993896484374" vgrow="SOMETIMES" />
-             <RowConstraints maxHeight="37.60001220703124" minHeight="10.0" prefHeight="24.000006103515616" vgrow="SOMETIMES" />
+               <RowConstraints maxHeight="37.60001220703124" minHeight="10.0" prefHeight="24.000006103515616" vgrow="SOMETIMES" />
                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -71,7 +72,7 @@
                      <Insets left="50.0" />
                   </GridPane.margin>
                </CheckBox>
-               <Label fx:id="imagenCargada" prefHeight="32.0" prefWidth="176.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+               <ImageView fx:id="imagenCargada" fitHeight="20.0" fitWidth="135.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             </children>
             <VBox.margin>
                <Insets left="40.0" right="40.0" top="20.0" />
@@ -122,6 +123,7 @@
                <Insets left="25.0" />
             </HBox.margin>
          </Button>
+         <Button fx:id="btnRegresar" mnemonicParsing="false" onAction="#irPanelAdministrador" prefHeight="38.0" prefWidth="130.0" style="-fx-background-color: #006600;" text="Eliminar Alojamiento" textFill="WHITE" />
       </children>
       <VBox.margin>
          <Insets left="455.0" />

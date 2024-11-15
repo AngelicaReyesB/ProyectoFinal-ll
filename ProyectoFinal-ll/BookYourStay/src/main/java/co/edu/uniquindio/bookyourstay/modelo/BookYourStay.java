@@ -271,7 +271,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
     //se hace uso en inicio controlador
     @Override
     public boolean validarIngresoAdministrador(String email, String password) throws Exception {
-        String usuarioAdministrador = "admin@bookyourstay.com";
+        String usuarioAdministrador = "admin";
         String passwordAdministrador = "admin123";
         return email.equals(usuarioAdministrador) && password.equals(passwordAdministrador);
     }
@@ -730,13 +730,16 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         CreacionAlojamiento creacionAlojamiento;
         if(tipoAlojamiento == TipoAlojamiento.APARTAMENTO){
             creacionAlojamiento = new AlojamientoApartamento();
-        }else if (tipoAlojamiento == TipoAlojamiento.CASA){
+        } else if (tipoAlojamiento == TipoAlojamiento.CASA){
             creacionAlojamiento = new AlojamientoCasa();
-        }else if (tipoAlojamiento == TipoAlojamiento.HOTEL){
+        } else if (tipoAlojamiento == TipoAlojamiento.HOTEL){
             creacionAlojamiento = new AlojamientoHotel();
+        } else {
+            throw new IllegalArgumentException("Tipo de alojamiento desconocido: " + tipoAlojamiento);
         }
-        return null;
+        return creacionAlojamiento;  // Devolver el objeto creado
     }
+
 
     //hace uso del controlador crear alojamiento
     @Override
@@ -747,14 +750,21 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
                     || tipoAlojamiento == null || tipoCiudad == null) {
                 throw new Exception("Todos los campos son obligatorios");
             }
+
+            // Creando la instancia correcta de Alojamiento según el tipo
             CreacionAlojamiento creacionAlojamiento = crearAlojamiento(tipoAlojamiento);
+            if (creacionAlojamiento == null) {
+                throw new Exception("Tipo de alojamiento no reconocido");
+            }
+
+            // Creando el objeto Alojamiento a partir de la fábrica
             Alojamiento alojamiento = creacionAlojamiento.crearOrdenAlojamiento(
                     nombre, descripcion, imagen, fechaEstancia, valorNoche, numHuespedes,
                     serviciosIncluidos, tipoAlojamiento, tipoCiudad);
-
-            alojamiento.setActivo(activo);
-            alojamientos.add(alojamiento);
-            // guardarDatosEmpresa();
+            System.out.println("Alojamiento creado: " + alojamiento);
+            alojamiento.setActivo(activo); // Asignar el estado activo
+            alojamientos.add(alojamiento); // Añadir a la lista de alojamientos
+            System.out.println("Tamaño de alojamientos: " + alojamientos.size());
 
             return alojamiento;
         } catch (Exception e) {
@@ -768,7 +778,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
        return null;
     }
 
-    //Revisar
+    //no se hace uso
     @Override
     public Administrador cambiarPassword(String email, String nuevaPassword) throws Exception {
         String usuarioAdministrador = "admin@bookyourstay.com";
@@ -790,6 +800,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         return admin;
     }
 
+    //no se hace uso
     @Override
     public Cliente cambiarPasswordC(String cedula, String nuevaPassword) throws Exception {
         Cliente cliente = obtenerCliente(cedula);

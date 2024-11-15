@@ -1,5 +1,6 @@
 package co.edu.uniquindio.bookyourstay.controlador;
 
+import co.edu.uniquindio.bookyourstay.controlador.observador.Observable;
 import co.edu.uniquindio.bookyourstay.modelo.*;
 import co.edu.uniquindio.bookyourstay.modelo.enums.TipoAlojamiento;
 import co.edu.uniquindio.bookyourstay.modelo.enums.TipoCiudad;
@@ -24,10 +25,12 @@ public class PrincipalControlador implements ServiciosEmpresa {
     private final BookYourStay bookYourStay;
     private final Sesion sesion;
     private static PrincipalControlador INSTANCIA;
+    private List<Observable> observables;
 
     public PrincipalControlador() {
         bookYourStay = new BookYourStay();
         sesion = new Sesion();
+        observables = new ArrayList<>();
         inicializarValores();
     }
 
@@ -44,6 +47,19 @@ public class PrincipalControlador implements ServiciosEmpresa {
             sesion.setAlojamientos(bookYourStay.listarAlojamientos());
         } catch (Exception e) {
             System.out.println("Error al inicializar el valor de Sesión");
+        }
+    }
+
+    public void registrarObservador(Observable observador) {
+        if (!observables.contains(observador)) {
+            observables.add(observador);
+        }
+    }
+
+    // Método para notificar a todos los observadores
+    public void notificarObservadores() {
+        for (Observable observador : observables) {
+            observador.notificar();
         }
     }
 
@@ -121,7 +137,7 @@ public class PrincipalControlador implements ServiciosEmpresa {
 
     @Override
     public Cliente obtenerUsuario(String email) throws Exception {
-        return obtenerUsuario(email);
+        return bookYourStay.obtenerUsuario(email);
     }
 
     @Override
@@ -156,12 +172,12 @@ public class PrincipalControlador implements ServiciosEmpresa {
 
     @Override
     public Alojamiento obtenerAlojamiento(String codigo) throws Exception {
-        return obtenerAlojamiento(codigo);
+        return bookYourStay.obtenerAlojamiento(codigo);
     }
 
     @Override
     public Alojamiento actualizarAlojamiento(Alojamiento alojamiento) throws Exception {
-        return actualizarAlojamiento(alojamiento);
+        return bookYourStay.actualizarAlojamiento(alojamiento);
     }
 
     @Override

@@ -5,6 +5,7 @@ import co.edu.uniquindio.bookyourstay.modelo.Cliente;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TextField;
 import lombok.Setter;
 
@@ -19,6 +20,7 @@ public class RegistroClienteControlador implements Observable, Initializable {
     @FXML private TextField nombre;
     @FXML private TextField password;
     @FXML private TextField telefono;
+    @FXML private Hyperlink iniciaSesionHyperlink;
     private PrincipalControlador principalControlador;
     @Setter
     private Observable observable;
@@ -63,6 +65,11 @@ public class RegistroClienteControlador implements Observable, Initializable {
                 principalControlador.mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
             }
         }
+    }
+
+    public void inicioSesion(){
+        principalControlador.navegarVentana("/inicio.fxml", "Inicio");
+        principalControlador.cerrarVentana(iniciaSesionHyperlink);
     }
 
     @Override
