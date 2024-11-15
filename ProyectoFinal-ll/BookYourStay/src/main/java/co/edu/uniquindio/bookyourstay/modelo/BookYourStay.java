@@ -772,10 +772,67 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         }
     }
 
-    //FALTAAAAA
-    @Override
-    public String enviarCodigoQR(Factura factura, String emailCliente) throws Exception {
-       return null;
+    // Método para generar un código QR a partir del código de la factura
+    public String generarCodigoQR(Factura factura) throws Exception {
+        if (factura == null || factura.getCodigo() == null) {
+            throw new Exception("La factura no puede ser nula o tener un código nulo.");
+        }
+
+        String codigoFactura = factura.getCodigo();
+        String filePath = "codigoQR_" + codigoFactura + ".png";
+        int width = 300;
+        int height = 300;
+
+        QRCodeWriter qrCodeWriter = new QRCodeWriter();
+        BitMatrix bitMatrix = qrCodeWriter.encode(
+                codigoFactura,
+                BarcodeFormat.QR_CODE,
+                width,
+                height,
+                new HashMap<EncodeHintType, Object>() {{
+                    put(EncodeHintType.CHARACTER_SET, "UTF-8");
+                }}
+        );
+
+        Path path = FileSystems.getDefault().getPath(filePath);
+        MatrixToImageWriter.writeToPath(bitMatrix, "PNG", path);
+
+        return filePath; // Devuelve la ruta donde se guardó el código QR
+    }
+
+    public void enviarCodigoQR(Factura factura, String rutaQR) throws Exception {
+        if (factura == null || factura.getCliente() == null) {
+            throw new Exception("La factura o el cliente no pueden ser nulos.");
+        }
+
+        String emailCliente = factura.getCliente().getEmail(); // Suponiendo que Cliente tiene un método getEmail()
+        if (emailCliente == null || emailCliente.isEmpty()) {
+            throw new Exception("El cliente no tiene un correo electrónico válido.");
+        }
+
+        // Validar que la ruta del archivo QR sea válida
+        File archivoQR = new File(rutaQR);
+        if (!archivoQR.exists()) {
+            throw new Exception("El archivo del código QR no existe en la ruta especificada.");
+        }
+
+        // Crear el email con Simple Java Mail
+        Email email = EmailBuilder.startingBlank()
+                .from("BookYourStay", "no-reply@bookyourstay.com")
+                .to(factura.getCliente().getNombre(), emailCliente)
+                .withSubject("Factura de BookYourStay - Código QR")
+                .withPlainText("Estimado " + factura.getCliente().getNombre() + ",\n\nAdjuntamos el código QR correspondiente a su factura. Gracias por usar BookYourStay.")
+                .withAttachment("codigoQR.png", archivoQR) // Adjuntar el archivo QR
+                .buildEmail();
+
+        // Configurar el mailer
+        Mailer mailer = MailerBuilder
+                .withSMTPServer("smtp.gmail.com", 587, "clinicauq@gmail.com", "tu_contraseña_de_aplicación") // Configuración del servidor SMTP
+                .withTransportStrategy(org.simplejavamail.api.mailer.config.TransportStrategy.SMTP_TLS) // Usar TLS
+                .buildMailer();
+
+        // Enviar el correo
+        mailer.sendMail(email);
     }
 
     //no se hace uso
