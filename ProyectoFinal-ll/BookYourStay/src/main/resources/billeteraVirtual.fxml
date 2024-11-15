@@ -6,7 +6,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" prefHeight="345.0" prefWidth="444.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.UniEventos.controlador.ActivarCuentaControlador">
+<VBox alignment="CENTER" prefHeight="345.0" prefWidth="444.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.bookyourstay.controlador.BilleteraVirtualControlador">
     <VBox alignment="CENTER" maxWidth="480.0" prefHeight="320.0" prefWidth="371.0" spacing="20.0" style="-fx-background-color: #d8dbe2;">
         <Label style="-fx-font-weight: BOLD; -fx-font-size: 14;" text="SALDO DISPONIBLE:" />
       <Label fx:id="labelSaldoDisponible" prefHeight="18.0" prefWidth="102.0" />

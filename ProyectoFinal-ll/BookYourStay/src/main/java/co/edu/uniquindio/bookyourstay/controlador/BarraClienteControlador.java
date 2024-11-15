@@ -7,11 +7,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class BarraClienteControlador implements Observable, Initializable {
-
-
-
     @Override
     public void notificar() {
+
     }
 
     @Override
