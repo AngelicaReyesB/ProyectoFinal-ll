@@ -20,7 +20,7 @@ public interface ServiciosEmpresa {
     boolean activarUsuario(String codigoActivacion, Cliente cliente) throws Exception;
     void enviarCodigoActivacion(Cliente cliente) throws Exception;
     Cliente editarCuenta(String cedula, String nombre, String telefono, String email, String password) throws Exception;
-    //boolean validarCodigoActivacion(String email, String codigo) throws Exception;
+    boolean validarCodigoActivacion(String email, String codigo) throws Exception;
     boolean validarIngresoAdministrador(String email, String password) throws Exception;
     CreacionAlojamiento crearAlojamiento(TipoAlojamiento tipoAlojamiento) throws Exception;
     Alojamiento crearAlojamiento(String nombre, String descripcion, String imagen, LocalDate fechaEstancia, float valorNoche, int numHuespedes, List<String> serviciosIncluidos, TipoAlojamiento tipoAlojamiento, TipoCiudad tipoCiudad, boolean activo) throws Exception;
