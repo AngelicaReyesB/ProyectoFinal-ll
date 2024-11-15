@@ -11,7 +11,12 @@ import co.edu.uniquindio.bookyourstay.utils.EnvioEmail;
 import co.edu.uniquindio.bookyourstay.utils.Persistencia;
 import lombok.Getter;
 import lombok.Setter;
+import org.simplejavamail.api.email.Email;
+import org.simplejavamail.api.mailer.Mailer;
+import org.simplejavamail.email.EmailBuilder;
+import org.simplejavamail.mailer.MailerBuilder;
 
+import java.io.File;
 import java.nio.file.FileSystems;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -719,10 +724,27 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         return "Reseña agregada exitosamente.";
     }
 
-    //FALTAAAA
-    @Override
+    //Revisar
     public int verEstadisticas(String ciudad) throws Exception {
-        return 0;
+        try {
+            if (ciudad == null || ciudad.trim().isEmpty()) {
+                throw new Exception("El nombre de la ciudad no puede ser nulo o vacío.");
+            }
+
+            long cantidadAlojamientos = alojamientos.stream()
+                    .filter(alojamiento -> alojamiento.getTipoCiudad().toString().equalsIgnoreCase(ciudad)
+                            && alojamiento.isActivo())
+                    .count();
+
+            if (cantidadAlojamientos == 0) {
+                throw new Exception("No se encontraron alojamientos disponibles en la ciudad especificada.");
+            }
+
+            return (int) cantidadAlojamientos;
+
+        } catch (Exception e) {
+            throw new Exception("Error al obtener las estadísticas: " + e.getMessage(), e);
+        }
     }
 
     //hace uso de otro método
@@ -773,33 +795,33 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         }
     }
 
-    // Método para generar un código QR a partir del código de la factura
-    public String generarCodigoQR(Factura factura) throws Exception {
-        if (factura == null || factura.getCodigo() == null) {
-            throw new Exception("La factura no puede ser nula o tener un código nulo.");
-        }
-
-        String codigoFactura = factura.getCodigo();
-        String filePath = "codigoQR_" + codigoFactura + ".png";
-        int width = 300;
-        int height = 300;
-
-        QRCodeWriter qrCodeWriter = new QRCodeWriter();
-        BitMatrix bitMatrix = qrCodeWriter.encode(
-                codigoFactura,
-                BarcodeFormat.QR_CODE,
-                width,
-                height,
-                new HashMap<EncodeHintType, Object>() {{
-                    put(EncodeHintType.CHARACTER_SET, "UTF-8");
-                }}
-        );
-
-        Path path = FileSystems.getDefault().getPath(filePath);
-        MatrixToImageWriter.writeToPath(bitMatrix, "PNG", path);
-
-        return filePath; // Devuelve la ruta donde se guardó el código QR
-    }
+    //// Método para generar un código QR a partir del código de la factura
+    //    public String generarCodigoQR(Factura factura) throws Exception {
+    //        if (factura == null || factura.getCodigo() == null) {
+    //            throw new Exception("La factura no puede ser nula o tener un código nulo.");
+    //        }
+    //
+    //        String codigoFactura = factura.getCodigo();
+    //        String filePath = "codigoQR_" + codigoFactura + ".png";
+    //        int width = 300;
+    //        int height = 300;
+    //
+    //        QRCodeWriter qrCodeWriter = new QRCodeWriter();
+    //        BitMatrix bitMatrix = qrCodeWriter.encode(
+    //                codigoFactura,
+    //                BarcodeFormat.QR_CODE,
+    //                width,
+    //                height,
+    //                new HashMap<EncodeHintType, Object>() {{
+    //                    put(EncodeHintType.CHARACTER_SET, "UTF-8");
+    //                }}
+    //        );
+    //
+    //        Path path = FileSystems.getDefault().getPath(filePath);
+    //        MatrixToImageWriter.writeToPath(bitMatrix, "PNG", path);
+    //
+    //        return filePath; // Devuelve la ruta donde se guardó el código QR
+    //    }
 
     public void enviarCodigoQR(Factura factura, String rutaQR) throws Exception {
         if (factura == null || factura.getCliente() == null) {
@@ -858,25 +880,51 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         return admin;
     }
 
-    //no se hace uso
-    @Override
-    public Cliente cambiarPasswordC(String cedula, String nuevaPassword) throws Exception {
-        Cliente cliente = obtenerCliente(cedula);
+    public boolean verificarCodigoActivacion(String cedula, String codigoActivacion) throws Exception {
+        // Validar parámetros de entrada
+        if (cedula == null || cedula.trim().isEmpty()) {
+            throw new Exception("La cédula no puede ser nula o vacía.");
+        }
+        if (codigoActivacion == null || codigoActivacion.trim().isEmpty()) {
+            throw new Exception("El código de activación no puede ser nulo o vacío.");
+        }
 
+        // Obtener el cliente
+        Cliente cliente = obtenerCliente(cedula);
         if (cliente == null) {
             throw new Exception("Cliente no encontrado con la cédula proporcionada.");
         }
 
+        // Validar el código de activación
+        if (!codigoActivacion.equals(cliente.getCodigoActivacion())) {
+            throw new Exception("El código de activación es incorrecto.");
+        }
+
+        // Código válido
+        return true;
+    }
+
+    @Override
+    public Cliente cambiarPasswordC(String cedula, String nuevaPassword, String codigoActivacion) throws Exception {
+        // Verificar el código de activación
+        if (!verificarCodigoActivacion(cedula, codigoActivacion)) {
+            throw new Exception("Código de activación inválido.");
+        }
+        Cliente cliente = obtenerCliente(cedula);
+        if (cliente == null) {
+            throw new Exception("Cliente no encontrado con la cédula proporcionada.");
+        }
         if (nuevaPassword == null || nuevaPassword.length() < 6) {
             throw new Exception("La nueva contraseña debe tener al menos 6 caracteres.");
         }
-
         cliente.setPassword(nuevaPassword);
 
         // guardarDatosEmpresa();
 
         return cliente;
     }
+
+
 
 
 }

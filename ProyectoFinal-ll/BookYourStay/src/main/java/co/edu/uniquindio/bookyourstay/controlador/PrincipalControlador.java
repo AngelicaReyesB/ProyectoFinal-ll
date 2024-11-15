@@ -301,8 +301,8 @@ public class PrincipalControlador implements ServiciosEmpresa {
     }
 
     @Override
-    public Cliente cambiarPasswordC(String cedula, String nuevaPassword) throws Exception {
-        return bookYourStay.cambiarPasswordC(cedula, nuevaPassword);
+    public Cliente cambiarPasswordC(String cedula, String nuevaPassword, String codigoActivacion) throws Exception {
+        return bookYourStay.cambiarPasswordC(cedula, nuevaPassword,codigoActivacion);
     }
 
 }
