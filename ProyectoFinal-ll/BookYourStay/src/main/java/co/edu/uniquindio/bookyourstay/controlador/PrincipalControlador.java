@@ -156,6 +156,11 @@ public class PrincipalControlador implements ServiciosEmpresa {
     }
 
     @Override
+    public boolean validarCodigoActivacion(String email, String codigo) throws Exception {
+        return bookYourStay.validarCodigoActivacion(email,codigo);
+    }
+
+    @Override
     public boolean validarIngresoAdministrador(String email, String password) throws Exception {
         return bookYourStay.validarIngresoAdministrador(email, password);
     }

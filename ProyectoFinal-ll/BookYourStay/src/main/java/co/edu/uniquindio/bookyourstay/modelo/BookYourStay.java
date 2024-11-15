@@ -216,6 +216,12 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         return cliente;
     }
 
+
+    @Override
+    public boolean validarCodigoActivacion(String email, String codigo) throws Exception {
+        return false;
+    }
+
     //hay que añadir un botón para este método
     @Override
     public boolean eliminarCuentaCliente(String cedulaCliente) throws Exception {
