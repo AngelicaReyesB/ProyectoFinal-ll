@@ -151,6 +151,21 @@ public class PrincipalControlador implements ServiciosEmpresa {
     }
 
     @Override
+    public void obtenerAdministrador(String email) throws Exception {
+        bookYourStay.obtenerAdministrador(email);
+    }
+
+    @Override
+    public void enviarCorreoRecuperacion(String email) throws Exception {
+        bookYourStay.enviarCorreoRecuperacion(email);
+    }
+
+    @Override
+    public String generarCodigoVerificacion() {
+        return bookYourStay.generarCodigoVerificacion();
+    }
+
+    @Override
     public Cliente editarCuenta(String cedula, String nombre, String telefono, String email, String password) throws Exception {
         return bookYourStay.editarCuenta(cedula, nombre, telefono, email, password);
     }
@@ -286,8 +301,8 @@ public class PrincipalControlador implements ServiciosEmpresa {
     }
 
     @Override
-    public void enviarCodigoQR(Factura factura, String rutaQR)  throws Exception {
-        bookYourStay.enviarCodigoQR(factura, rutaQR);
+    public String enviarCodigoQR(Factura factura, String rutaQR)  throws Exception {
+        return bookYourStay.enviarCodigoQR(factura, rutaQR);
     }
 
     @Override

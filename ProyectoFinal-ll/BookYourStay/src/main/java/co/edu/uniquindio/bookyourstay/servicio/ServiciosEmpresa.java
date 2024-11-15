@@ -19,6 +19,9 @@ public interface ServiciosEmpresa {
     Cliente obtenerUsuario(String email) throws Exception;
     boolean activarUsuario(String codigoActivacion, Cliente cliente) throws Exception;
     void enviarCodigoActivacion(Cliente cliente) throws Exception;
+    void obtenerAdministrador(String email) throws Exception;
+    void enviarCorreoRecuperacion(String email) throws Exception;
+    String generarCodigoVerificacion();
     Cliente editarCuenta(String cedula, String nombre, String telefono, String email, String password) throws Exception;
     boolean validarCodigoActivacion(String email, String codigo) throws Exception;
     boolean validarIngresoAdministrador(String email, String password) throws Exception;
@@ -52,9 +55,8 @@ public interface ServiciosEmpresa {
     Factura generarFactura(Reserva reserva) throws Exception;
     void crearOfertaEspecial(Alojamiento alojamiento, LocalDate fechaInicio, LocalDate fechaFin, float descuento) throws Exception;
     List<Alojamiento> listarOfertasEspeciales() throws Exception;
-    void enviarCodigoQR(Factura factura, String rutaQR) throws Exception;
+    String enviarCodigoQR(Factura factura, String rutaQR) throws Exception;
     String generarCodigoQR(Factura factura) throws Exception;
     boolean verificarCodigoActivacion(String cedula, String codigoActivacion) throws Exception;
-
 
 }

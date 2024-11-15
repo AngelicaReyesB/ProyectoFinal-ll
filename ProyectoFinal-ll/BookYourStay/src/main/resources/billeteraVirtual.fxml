@@ -14,7 +14,7 @@
             <VBox.margin>
                 <Insets />
             </VBox.margin></Label>
-        <TextField fx:id="TxtMontoRecarga" alignment="CENTER" maxWidth="360.0" minHeight="30.0" prefHeight="30.0" prefWidth="279.0" promptText="Ingrese el monto a recargar">
+        <TextField fx:id="txtMontoRecarga" alignment="CENTER" maxWidth="360.0" minHeight="28.0" prefHeight="28.0" prefWidth="295.0" promptText="Ingrese el monto a recargar">
             <VBox.margin>
                 <Insets left="50.0" right="50.0" />
             </VBox.margin></TextField>

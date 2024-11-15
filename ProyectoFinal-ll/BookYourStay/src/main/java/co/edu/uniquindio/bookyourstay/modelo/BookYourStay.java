@@ -32,7 +32,6 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.qrcode.QRCodeWriter;
 
 import java.io.IOException;
-import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
@@ -194,15 +193,75 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
     }
 
 
-    //se debería de hacer uso en recuperar contraseña
+    //se hace uso en recuperar contraseña
     @Override
     public Cliente obtenerUsuario(String email) throws Exception {
-        for (Cliente cliente: clientes){
-            if(cliente.getEmail().equals(email)){
+        for (Cliente cliente : clientes) {
+            if (cliente.getEmail().equals(email)) {
+                String codigoVerificacion = generarCodigoVerificacion();
+                System.out.println("Código de verificación para el usuario " + cliente.getNombre() + ": " + codigoVerificacion);
+                String asunto = "Código de verificación - BookYourStay";
+                String mensaje = """
+                    Hola %s,
+                    
+                    Hemos recibido una solicitud para restablecer tu contraseña. 
+                    Utiliza el siguiente código para completar el proceso:
+                    
+                    Código: %s
+                    
+                    Si no solicitaste este cambio, por favor ignora este correo.
+                    
+                    Saludos,
+                    Equipo de BookYourStay
+                    """.formatted(cliente.getNombre(), codigoVerificacion);
+                EnvioEmail envioEmail = new EnvioEmail(email, asunto, mensaje);
+                envioEmail.enviarNotificacion();
                 return cliente;
             }
         }
-        return null;
+        throw new Exception("Cliente no encontrado con el email proporcionado.");
+    }
+
+    //se hace uso en recuperación contraseña
+    @Override
+    public void obtenerAdministrador(String email) throws Exception {
+        String usuarioAdministrador = "admin@bookyourstay.com";
+        if (!email.equals(usuarioAdministrador)) {
+            throw new Exception("Administrador no encontrado con el email proporcionado.");
+        }
+        enviarCorreoRecuperacion(email);
+        System.out.println("Código de verificación para el usuario " + administrador.getEmail() + ": " + generarCodigoVerificacion());
+
+    }
+
+    @Override
+    public void enviarCorreoRecuperacion(String email) throws Exception{
+        String codigo = generarCodigoVerificacion();
+        String mensaje = """
+        Hola,
+        
+        Hemos recibido una solicitud para restablecer la contraseña de tu cuenta de administrador. 
+        Si realizaste esta solicitud, utiliza el siguiente código de verificación:
+        
+        Código: """ + codigo + """
+        
+        Si no realizaste esta solicitud, ignora este correo.
+        
+        Saludos,
+        Equipo de BookYourStay
+        """;
+        EnvioEmail envioEmail = new EnvioEmail(email, "Recuperación contraseña", mensaje);
+        try {
+            envioEmail.enviarNotificacion();
+            throw new Exception("Correo de recuperación enviado correctamente.");
+        } catch (Exception e) {
+            throw new Exception("Error al enviar el correo de recuperación: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public String generarCodigoVerificacion() {
+        return String.valueOf((int) (Math.random() * 900000) + 100000);
     }
 
     //se hace uso en actualizar datos clientes
@@ -855,7 +914,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
     }
 
     @Override
-    public void enviarCodigoQR(Factura factura, String rutaQR) throws Exception {
+    public String enviarCodigoQR(Factura factura, String rutaQR) throws Exception {
         if (factura == null || factura.getCliente() == null) {
             throw new Exception("La factura o el cliente no pueden ser nulos.");
         }
@@ -888,6 +947,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
 
         // Enviar el correo
         mailer.sendMail(email);
+        return emailCliente;
     }
 
     //no se hace uso

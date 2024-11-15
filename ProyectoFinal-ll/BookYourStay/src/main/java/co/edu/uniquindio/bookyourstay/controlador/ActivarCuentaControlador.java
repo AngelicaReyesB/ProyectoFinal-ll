@@ -39,7 +39,7 @@ public class ActivarCuentaControlador implements Observable, Initializable {
             if (cuentaActivada) {
                 principalControlador.getSesion().setCliente(cliente);
                 if (observable != null) {
-                    observable.notificar();
+                    principalControlador.registrarObservador(observable);
                 }
 
                 principalControlador.mostrarAlerta("Cuenta activada con éxito", Alert.AlertType.INFORMATION);

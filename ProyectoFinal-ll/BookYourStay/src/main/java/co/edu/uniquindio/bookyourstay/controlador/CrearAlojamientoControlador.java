@@ -24,6 +24,7 @@ import javafx.stage.FileChooser;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 
+//modificar los servicios
 public class CrearAlojamientoControlador implements Observable, Initializable {
 
     @FXML private CheckBox activoCheck;
@@ -50,7 +51,7 @@ public class CrearAlojamientoControlador implements Observable, Initializable {
     @FXML private TextField txtValorNoche;
     private String imagenSeleccionada;
     private final PrincipalControlador principalControlador;
-    private Observable observable;
+
 
     public CrearAlojamientoControlador(){
         principalControlador = PrincipalControlador.getInstancia();
@@ -160,7 +161,6 @@ public class CrearAlojamientoControlador implements Observable, Initializable {
             tablaAlojamientos.setItems(FXCollections.observableArrayList());
         }
     }
-
 
     @FXML
      public void editarAlojamiento() {
