@@ -7,6 +7,8 @@ module co.edu.uniquindio.bookyourstay {
     requires org.simplejavamail;
     requires java.desktop;
     requires jakarta.mail;
+    requires com.google.zxing;
+    requires com.google.zxing.javase;
 
     opens co.edu.uniquindio.bookyourstay to javafx.fxml;
     exports co.edu.uniquindio.bookyourstay;

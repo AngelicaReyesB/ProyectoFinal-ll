@@ -286,8 +286,8 @@ public class PrincipalControlador implements ServiciosEmpresa {
     }
 
     @Override
-    public String enviarCodigoQR(Factura factura, String emailCliente) throws Exception {
-        return bookYourStay.enviarCodigoQR(factura, emailCliente);
+    public void enviarCodigoQR(Factura factura, String rutaQR)  throws Exception {
+        bookYourStay.enviarCodigoQR(factura, rutaQR);
     }
 
     @Override

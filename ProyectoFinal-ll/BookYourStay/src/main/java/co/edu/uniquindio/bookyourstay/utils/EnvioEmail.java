@@ -17,8 +17,8 @@ public class EnvioEmail {
     }
 
     private Session crearSesion() {
-        final String username = "clinicauq@gmail.com"; // Dirección de correo Gmail
-        final String appPassword = "tu_contraseña_de_aplicación"; // Aquí va la contraseña de aplicación, generada en la cuenta de Google
+        final String username = "bookyourstay11@gmail.com"; // Dirección de correo Gmail
+        final String appPassword = "bkic fjkw kzjm cyuj"; // Aquí va la contraseña de aplicación, generada en la cuenta de Google
 
         // Configuración del servidor SMTP de Gmail
         Properties props = new Properties();
