@@ -2,6 +2,7 @@ package co.edu.uniquindio.bookyourstay.factory;
 
 import co.edu.uniquindio.bookyourstay.modelo.Alojamiento;
 import co.edu.uniquindio.bookyourstay.modelo.Habitacion;
+import co.edu.uniquindio.bookyourstay.modelo.Resena;
 import co.edu.uniquindio.bookyourstay.modelo.enums.TipoAlojamiento;
 import co.edu.uniquindio.bookyourstay.modelo.enums.TipoCiudad;
 import co.edu.uniquindio.bookyourstay.modelo.enums.TipoHabitacion;
@@ -48,6 +49,7 @@ public class AlojamientoHotel implements CreacionAlojamiento  {
                 .imagen(imagen)
                 .fechaEstancia(fechaEstancia)
                 .valorNoche(valorNoche)
+                .capacidadMaxima(numHuespedes)
                 .serviciosIncluidos(serviciosIncluidos)
                 .tipoAlojamiento(TipoAlojamiento.HOTEL)
                 .tipoCiudad(tipoCiudad)
@@ -55,15 +57,5 @@ public class AlojamientoHotel implements CreacionAlojamiento  {
                 .habitaciones(habitaciones)
                 .ofertaEspecial(false)
                 .build();
-
-        //    private int capacidadMaxima;
-
-        //    private List<Resena> resenas; //no
-        //    private boolean ofertaEspecial; //no, es para saber si un alojamiento tiene o no oferta especial
-        //
-        //    // Nuevos campos para gestionar las ofertas especiales
-        //    private LocalDate fechaInicioOferta;
-        //    private LocalDate fechaFinOferta;
-        //    private float descuento;
     }
 }

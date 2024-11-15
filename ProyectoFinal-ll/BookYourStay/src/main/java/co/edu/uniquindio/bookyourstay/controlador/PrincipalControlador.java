@@ -99,10 +99,10 @@ public class PrincipalControlador implements ServiciosEmpresa {
         return bookYourStay.registrarCliente(cedula, nombre, telefono, email, password);
     }
 
-    @Override
-    public Cliente iniciarSesion(String email, String password) throws Exception {
-        return bookYourStay.iniciarSesion(email, password);
-    }
+    //@Override
+    //    public Cliente iniciarSesion(String email, String password) throws Exception {
+    //        return bookYourStay.iniciarSesion(email, password);
+    //    }
 
     @Override
     public boolean eliminarCuentaCliente(String cedulaCliente) throws Exception {

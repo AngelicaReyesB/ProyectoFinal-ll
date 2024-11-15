@@ -9,7 +9,6 @@ import javafx.scene.control.TextField;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-//hay que validar si el correo existe, hacer método de validar correo
 public class RecuperacionPasswordControlador implements Observable, Initializable {
 
     @FXML private Button btnEnviarCodigo;

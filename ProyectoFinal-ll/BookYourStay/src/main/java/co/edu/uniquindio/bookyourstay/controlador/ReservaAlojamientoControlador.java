@@ -15,7 +15,6 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
-//falta la parte de elegir el alojamiento
 public class ReservaAlojamientoControlador implements Observable, Initializable {
 
 
@@ -72,20 +71,18 @@ public class ReservaAlojamientoControlador implements Observable, Initializable 
                 principalControlador.mostrarAlerta("Debe iniciar sesión para confirmar la reserva.", Alert.AlertType.ERROR);
                 return;
             }
-
-            //Alojamiento alojamiento = obtenerAlojamientoSeleccionado(); // Implementa este método para obtener el alojamiento de la interfaz
             if (alojamiento == null || !alojamiento.isActivo()) {
                 principalControlador.mostrarAlerta("El alojamiento seleccionado no está disponible.", Alert.AlertType.ERROR);
                 return;
             }
-
             LocalDate fechaInicio = obtenerFechaInicio();
             LocalDate fechaFin = obtenerFechaFin();
             int numHuespedes = obtenerNumeroHuespedes();
 
             Factura factura = null;
-
             Reserva reserva = principalControlador.realizarReserva(cliente, alojamiento, fechaInicio, fechaFin, numHuespedes, factura);
+            float costoReserva = principalControlador.calcularCostoReserva(reserva);
+            verSubtotal.setText(String.valueOf(costoReserva));
 
             if (reserva != null) {
 

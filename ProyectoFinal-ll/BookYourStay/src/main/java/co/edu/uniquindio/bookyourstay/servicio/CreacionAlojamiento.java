@@ -1,6 +1,7 @@
 package co.edu.uniquindio.bookyourstay.servicio;
 
 import co.edu.uniquindio.bookyourstay.modelo.Alojamiento;
+import co.edu.uniquindio.bookyourstay.modelo.Resena;
 import co.edu.uniquindio.bookyourstay.modelo.enums.TipoAlojamiento;
 import co.edu.uniquindio.bookyourstay.modelo.enums.TipoCiudad;
 

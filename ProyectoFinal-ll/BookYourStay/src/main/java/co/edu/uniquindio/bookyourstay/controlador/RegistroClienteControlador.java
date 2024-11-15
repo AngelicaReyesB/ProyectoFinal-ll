@@ -32,6 +32,7 @@ public class RegistroClienteControlador implements Observable, Initializable {
         principalControlador.cerrarVentana(nombre);
     }
 
+    //cuando se haga el nuevo gmail, puedo cambiar el método
     @FXML
     public void registrarUsuario() {
         if(nombre.getText().isEmpty() || cedula.getText().isEmpty() || telefono.getText().isEmpty() ||
@@ -78,3 +79,43 @@ public class RegistroClienteControlador implements Observable, Initializable {
         principalControlador = PrincipalControlador.getInstancia();
     }
 }
+
+//@FXML
+//public void registrarUsuario() {
+//    if(nombre.getText().isEmpty() || cedula.getText().isEmpty() || telefono.getText().isEmpty() ||
+//            correo.getText().isEmpty() || password.getText().isEmpty()) {
+//        principalControlador.mostrarAlerta("Todos los campos son obligatorios para el registro",
+//                Alert.AlertType.WARNING);
+//    } else {
+//        try {
+//            System.out.println("CÉDULA PARA BUSCAR" + cedula.getText());
+//            // Registrar cliente
+//            Cliente cliente = principalControlador.registrarCliente(
+//                    nombre.getText(), cedula.getText(), telefono.getText(), correo.getText(), password.getText());
+//
+//            if(cliente != null) {
+//                principalControlador.getSesion().setCliente(cliente);
+//
+//                // Enviar código de activación
+//                principalControlador.enviarCodigoActivacion(cliente);  // Llamada al método para enviar el correo
+//
+//                principalControlador.mostrarAlerta(
+//                        "El usuario fue creado con éxito. \n\nIngresa y activa la cuenta con el código enviado",
+//                        Alert.AlertType.INFORMATION
+//                );
+//
+//                if (observable != null) {
+//                    observable.notificar();
+//                }
+//
+//                principalControlador.navegarVentana("/activarCuenta.fxml", "Activación de la cuenta.");
+//                principalControlador.cerrarVentana(nombre);
+//            } else {
+//                principalControlador.mostrarAlerta("No fue posible crear al usuario", Alert.AlertType.WARNING);
+//            }
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//            principalControlador.mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
+//        }
+//    }
+//}

@@ -1,6 +1,6 @@
 package co.edu.uniquindio.bookyourstay.modelo;
 
-import co.edu.uniquindio.bookyourstay.factory.AlojamientoApatamento;
+import co.edu.uniquindio.bookyourstay.factory.AlojamientoApartamento;
 import co.edu.uniquindio.bookyourstay.factory.AlojamientoCasa;
 import co.edu.uniquindio.bookyourstay.factory.AlojamientoHotel;
 import co.edu.uniquindio.bookyourstay.modelo.enums.TipoAlojamiento;
@@ -71,6 +71,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
     //        }
     //    }
 
+    //si se hace uso en el controlador de registro cliente
     @Override
     public Cliente registrarCliente(String cedula, String nombre, String telefono, String email, String password) throws Exception {
         if(cedula.isEmpty() || cedula.isBlank() ){
@@ -118,24 +119,26 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         return cliente;
     }
 
-    @Override
-    public Cliente iniciarSesion(String email, String password) throws Exception {
-        if (email == null || email.isEmpty() || password == null || password.isEmpty()) {
-            throw new Exception("Correo y contraseña no pueden estar vacíos.");
-        }
+    //se hace uso en el controlador de inicio
+  //  @Override
+    //    public Cliente iniciarSesion(String email, String password) throws Exception {
+    //        if (email == null || email.isEmpty() || password == null || password.isEmpty()) {
+    //            throw new Exception("Correo y contraseña no pueden estar vacíos.");
+    //        }
+    //
+    //        for (Cliente cliente : clientes) {
+    //            if (cliente.getEmail().equals(email)) {
+    //                if (cliente.getPassword() != null && cliente.getPassword().equals(password)) {
+    //                    return cliente;
+    //                } else {
+    //                    throw new Exception("Correo o contraseña incorrectos.");
+    //                }
+    //            }
+    //        }
+    //        throw new Exception("Correo o contraseña incorrectos.");
+    //    }
 
-        for (Cliente cliente : clientes) {
-            if (cliente.getEmail().equals(email)) {
-                if (cliente.getPassword() != null && cliente.getPassword().equals(password)) {
-                    return cliente;
-                } else {
-                    throw new Exception("Correo o contraseña incorrectos.");
-                }
-            }
-        }
-        throw new Exception("Correo o contraseña incorrectos.");
-    }
-
+    //se hace uso en inicio controlador
     @Override
     public Cliente obtenerCliente(String cedula) throws Exception {
         try {
@@ -151,20 +154,27 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         }
     }
 
+    //se hace uso en inicio controlador
     @Override
     public Cliente validarUsuario(String email, String password) throws Exception {
+        if (email == null || email.isEmpty() || password == null || password.isEmpty()) {
+            throw new Exception("Correo y contraseña no pueden estar vacíos.");
+        }
+
         Cliente cliente = obtenerCliente(email);
         if(cliente != null){
             if(cliente.getPassword().equals(password)){
                 return cliente;
-            }else {
-                throw new Exception("Los datos de ingreso son incorrectos");
+            } else {
+                throw new Exception("Los datos de ingreso son incorrectos.");
             }
         } else {
-            throw new Exception("El usuario no existe");
+            throw new Exception("El usuario no existe.");
         }
     }
 
+
+    //se debería de hacer uso en recuperar contraseña
     @Override
     public Cliente obtenerUsuario(String email) throws Exception {
         for (Cliente cliente: clientes){
@@ -175,6 +185,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         return null;
     }
 
+    //se hace uso en actualizar datos clientes
     @Override
     public Cliente editarCuenta(String cedula, String nombre, String telefono, String email, String password) throws Exception {
 
@@ -204,6 +215,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         return cliente;
     }
 
+    //hay que añadir un botón para este método
     @Override
     public boolean eliminarCuentaCliente(String cedulaCliente) throws Exception {
         for (Cliente cliente : clientes) {
@@ -225,6 +237,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         return new ArrayList<>(clientes);
     }
 
+    //hace uso de otro método
     @Override
     public void enviarNotificacion(String destinatario, String asunto, String mensaje) throws Exception {
         try {
@@ -235,6 +248,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         }
     }
 
+    //se hace uso en el registro controlador, antes hay que crear el gmail
     @Override
     public void enviarCodigoActivacion(Cliente cliente) throws Exception {
         String email = cliente.getEmail();
@@ -243,6 +257,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         enviarNotificacion(email, "BookYourStay: Código de activación", mensajeActivacion );
     }
 
+    //se hace uso en el controlador de activar cuenta
     @Override
     public boolean activarUsuario(String codigoActivacion, Cliente cliente) throws Exception {
         Cliente usuarioEncontrado = validarUsuario(cliente.getCedula(), cliente.getPassword());
@@ -259,12 +274,13 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         }
     }
 
+    //FALTAAA
     @Override
     public Administrador cambiarPassword(String email, String nuevaPassword) throws Exception {
         return null;
     }
 
-
+    //se hace uso en inicio controlador
     @Override
     public boolean validarIngresoAdministrador(String email, String password) throws Exception {
         String usuarioAdministrador = "admin@bookyourstay.com";
@@ -272,42 +288,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         return email.equals(usuarioAdministrador) && password.equals(passwordAdministrador);
     }
 
-    @Override
-    public Alojamiento crearAlojamiento(
-            String nombre, String descripcion, String imagen, LocalDate fechaEstancia,
-            float valorNoche, int numHuespedes, List<String> serviciosIncluidos,
-            TipoAlojamiento tipoAlojamiento, TipoCiudad tipoCiudad, boolean activo) throws Exception {
-
-        try {
-            // Verifica si algún campo es inválido o está vacío
-            if (nombre.isEmpty() || descripcion.isEmpty() || imagen == null || fechaEstancia == null
-                    || valorNoche < 0 || numHuespedes < 0 || serviciosIncluidos.isEmpty()
-                    || tipoAlojamiento == null || tipoCiudad == null) {
-                throw new Exception("Todos los campos son obligatorios");
-            }
-
-            // Llama al método para obtener la creación específica de alojamiento
-            CreacionAlojamiento creacionAlojamiento = crearAlojamiento(tipoAlojamiento);
-
-            // Crea el alojamiento con todos los parámetros, incluyendo `activo`
-            Alojamiento alojamiento = creacionAlojamiento.crearOrdenAlojamiento(
-                    nombre, descripcion, imagen, fechaEstancia, valorNoche, numHuespedes,
-                    serviciosIncluidos, tipoAlojamiento, tipoCiudad);
-
-            // Establece el estado de disponibilidad según el parámetro `activo`
-            alojamiento.setActivo(activo);
-
-            // Agrega el nuevo alojamiento a la lista y guarda los cambios
-            alojamientos.add(alojamiento);
-           // guardarDatosEmpresa();
-
-            return alojamiento;
-        } catch (Exception e) {
-            throw new Exception("No se pudo crear el alojamiento: " + e.getMessage());
-        }
-    }
-
-
+    //hace uso de otro método
     @Override
     public Alojamiento obtenerAlojamiento(String codigo) throws Exception {
         for (Alojamiento alojamiento: alojamientos){
@@ -318,6 +299,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         return null;
     }
 
+    //se hace uso en crear alojamiento
     @Override
     public Alojamiento actualizarAlojamiento(Alojamiento alojamiento) throws Exception {
         Alojamiento alojamientoEncontrado = obtenerAlojamiento(alojamiento.getCodigo());
@@ -339,6 +321,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         return alojamientoEncontrado;
     }
 
+    //se hace uso en el controlador de búsquedas
     @Override
     public ArrayList<Alojamiento> listarAlojamientos() throws Exception {
         ArrayList<Alojamiento> alojamientosActivos = new ArrayList<>();
@@ -350,6 +333,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         return (ArrayList<Alojamiento>) alojamientos;
     }
 
+    //se hace uso en el controlador de búsquedas
     @Override
     public ArrayList<Alojamiento> listarAlojamientos(TipoAlojamiento tipoAlojamiento) throws Exception {
         ArrayList<Alojamiento> alojamientosPorTipo = new ArrayList<>();
@@ -361,6 +345,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         return alojamientosPorTipo;
     }
 
+    //se hace uso en el controlador de búsquedas
     @Override
     public ArrayList<Alojamiento> listarAlojamientos(TipoCiudad tipoCiudad) throws Exception {
         ArrayList<Alojamiento> alojamientosPorCiudad = new ArrayList<>();
@@ -372,6 +357,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         return alojamientosPorCiudad;
     }
 
+    //no se hace uso, no creo que sea necesario
     @Override
     public ArrayList<Alojamiento> listarAlojamientos(String nombreAlojamiento) throws Exception {
         ArrayList<Alojamiento> alojamientosPorNombre = new ArrayList<>();
@@ -384,6 +370,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         return null;
     }
 
+    //no se hace uso
     @Override
     public ArrayList<Alojamiento> listaPopularesPorCiudad(String ciudad) throws Exception {
         ArrayList<Alojamiento> alojamientosPopulares = new ArrayList<>();
@@ -415,6 +402,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         return numeroDeReservas;
     }
 
+    //no se hace uso
     @Override
     public List<Alojamiento> listarOfertasEspeciales() throws Exception {
         List<Alojamiento> alojamientosConOferta = new ArrayList<>();
@@ -428,6 +416,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         return alojamientosConOferta;
     }
 
+    //se hace uso en el controlador de crear alojamientos
     @Override
     public boolean eliminarAlojamiento(Alojamiento alojamiento) throws Exception {
         try {
@@ -442,6 +431,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         }
     }
 
+    //se hace uso en el controlador de reserva
     @Override
     public Reserva realizarReserva(Cliente cliente, Alojamiento alojamiento, LocalDate fechaInicio, LocalDate fechaFin, int numHuespedes, Factura factura) throws Exception {
         if (cliente == null || alojamiento == null || fechaInicio == null || fechaFin == null || factura == null) {
@@ -485,6 +475,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         return nuevaReserva;
     }
 
+    //no se hace uso, no sé si se necesite
     @Override
     public ArrayList<Reserva> listarReservas() throws Exception {
         if (reservas == null || reservas.isEmpty()) {
@@ -493,6 +484,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         return new ArrayList<>(reservas);
     }
 
+    //no se hace uso, se debe de utilizar en el controlador de alojamientos más rentables
     @Override
     public ArrayList<Reserva> listaMasRentables(int limite) throws Exception {
         ArrayList<Reserva> reservasRentables = new ArrayList<>();
@@ -511,6 +503,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         return reservasRentables;
     }
 
+    //no se hace uso, no sé donde se utiliza
     @Override
     public List<Reserva> listarReservasCliente(String cedulaCliente) throws Exception {
         if (cedulaCliente == null || cedulaCliente.isEmpty()) {
@@ -528,6 +521,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         return reservasPersona;
     }
 
+    //no se hace uso, se debe hacer uso en el mismo controlador que el de arriba
     @Override
     public boolean cancelarReserva(Reserva reserva) throws Exception {
         if (reserva == null) {
@@ -562,6 +556,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         return true;
     }
 
+    //se hace uso en el controlador de reserva alojamiento
     @Override
     public Factura generarFactura(Reserva reserva) throws Exception {
         if (reserva == null) {
@@ -594,6 +589,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         return factura;
     }
 
+    //se hace uso en reserva controlador
     @Override
     public float calcularCostoReserva(Reserva reserva) throws Exception {
         if (reserva == null) {
@@ -621,6 +617,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         return costoTotal;
     }
 
+    //hace uso de otro método
     @Override
     public float aplicarDescuentos(Alojamiento alojamiento, float porcentaje) throws Exception {
         try {
@@ -641,6 +638,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         }
     }
 
+    //no se hace uso
     @Override
     public float crearTarifaDescuento(Alojamiento alojamiento, LocalDate fechaInicio, LocalDate fechaFin, float descuento) throws Exception {
         try {
@@ -663,6 +661,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         }
     }
 
+    //no se hace uso, controlador de crear oferta
     @Override
     public void crearOfertaEspecial(Alojamiento alojamiento, LocalDate fechaInicio, LocalDate fechaFin, float descuento) throws Exception {
         if (alojamiento == null) {
@@ -688,7 +687,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
 
     }
 
-
+    //se hace uso en el controlador de billetera virtual
     @Override
     public void recargarBilleteraVirtual(Cliente cliente, float monto) throws Exception {
         if (cliente == null) {
@@ -705,6 +704,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         billetera.setMontoTotal(billetera.getMontoTotal() + monto);
     }
 
+    //no se hace uso
     @Override
     public String agregarResena(Reserva reserva, String comentario, int calificacion) throws Exception {
         if (reserva == null) {
@@ -730,17 +730,18 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         return "Reseña agregada exitosamente.";
     }
 
+    //FALTAAAA
     @Override
     public int verEstadisticas(String ciudad) throws Exception {
         return 0;
     }
 
-    //dudas sobre las habitaciones y el costo por mantenimiento, se hace con un if
+    //hace uso de otro método
     @Override
     public CreacionAlojamiento crearAlojamiento(TipoAlojamiento tipoAlojamiento){
         CreacionAlojamiento creacionAlojamiento;
         if(tipoAlojamiento == TipoAlojamiento.APARTAMENTO){
-            creacionAlojamiento = new AlojamientoApatamento();
+            creacionAlojamiento = new AlojamientoApartamento();
         }else if (tipoAlojamiento == TipoAlojamiento.CASA){
             creacionAlojamiento = new AlojamientoCasa();
         }else if (tipoAlojamiento == TipoAlojamiento.HOTEL){
@@ -749,6 +750,31 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         return null;
     }
 
+    //hace uso del controlador crear alojamiento
+    @Override
+    public Alojamiento crearAlojamiento(String nombre, String descripcion, String imagen, LocalDate fechaEstancia, float valorNoche, int numHuespedes, List<String> serviciosIncluidos, TipoAlojamiento tipoAlojamiento, TipoCiudad tipoCiudad, boolean activo) throws Exception {
+        try {
+            if (nombre.isEmpty() || descripcion.isEmpty() || imagen == null || fechaEstancia == null
+                    || valorNoche < 0 || numHuespedes < 0 || serviciosIncluidos.isEmpty()
+                    || tipoAlojamiento == null || tipoCiudad == null) {
+                throw new Exception("Todos los campos son obligatorios");
+            }
+            CreacionAlojamiento creacionAlojamiento = crearAlojamiento(tipoAlojamiento);
+            Alojamiento alojamiento = creacionAlojamiento.crearOrdenAlojamiento(
+                    nombre, descripcion, imagen, fechaEstancia, valorNoche, numHuespedes,
+                    serviciosIncluidos, tipoAlojamiento, tipoCiudad);
+
+            alojamiento.setActivo(activo);
+            alojamientos.add(alojamiento);
+            // guardarDatosEmpresa();
+
+            return alojamiento;
+        } catch (Exception e) {
+            throw new Exception("No se pudo crear el alojamiento: " + e.getMessage());
+        }
+    }
+
+    //FALTAAAAA
     @Override
     public String enviarCodigoQR(Factura factura, String emailCliente) throws Exception {
        return null;

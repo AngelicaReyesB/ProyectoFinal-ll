@@ -56,16 +56,20 @@ public class CrearAlojamientoControlador implements Observable, Initializable {
     }
 
     private void abrirFileChooser() {
-
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Seleccionar imagen");
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.jpeg"));
         File imagen = fileChooser.showOpenDialog(null);
-        System.out.println(imagen.toString());
 
-        imagenSeleccionada = imagen.toURI().toString();
-        imagenCargada.setText("Imagen cargada exitosamente.");
+        if (imagen != null) {
+            System.out.println(imagen.toString());
+            imagenSeleccionada = imagen.toURI().toString();
+            imagenCargada.setText("Imagen cargada exitosamente.");
+        } else {
+            imagenCargada.setText("No se seleccionó ninguna imagen.");
+        }
     }
+
 
     @FXML
     public void cargarImagen() {
@@ -109,6 +113,7 @@ public class CrearAlojamientoControlador implements Observable, Initializable {
 
                 if(alojamientoCreado != null){
                     observable.notificar();
+                    deshabilitarEntradas();
                     actualizarTabla((ArrayList<Alojamiento>) principalControlador.getSesion().getAlojamientos());
                     principalControlador.mostrarAlerta("Alojamiento creado correctamente", Alert.AlertType.INFORMATION);
                 }
@@ -177,6 +182,15 @@ public class CrearAlojamientoControlador implements Observable, Initializable {
         principalControlador.mostrarAlerta("Alojamiento eliminado correctamente.", Alert.AlertType.CONFIRMATION);
     }
 
+    private void deshabilitarEntradas(){
+        txtNombre.setDisable(true);
+        txtDescripcion.setDisable(true);
+        txtValorNoche.setDisable(true);
+        txtCapacidadMaxima.setDisable(true);
+        fechaInstanciaPicker.setDisable(true);
+        imagen.setDisable(true);
+    }
+
     @Override
     public void notificar() {
 
@@ -189,5 +203,6 @@ public class CrearAlojamientoControlador implements Observable, Initializable {
         cbServicios.setItems(serviciosIncluidos);
         cbTipoAlojamiento.setItems(FXCollections.observableArrayList(TipoAlojamiento.values()));
         cbCiudad.setItems(FXCollections.observableArrayList(TipoCiudad.values()));
+
     }
 }

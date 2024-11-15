@@ -36,40 +36,34 @@ public class InicioControlador implements Observable, Initializable {
         System.out.println();
     }
 
-    public void ingresar(){
-        if(correo.getText().isEmpty() || password.getText().isEmpty()) {
+    public void ingresar() {
+        if (correo.getText().isEmpty() || password.getText().isEmpty()) {
             principalControlador.mostrarAlerta("Los campos de correo y contraseña son obligatorios.", Alert.AlertType.WARNING);
             correo.clear();
             password.clear();
-        }else {
+        } else {
             try {
                 boolean administrador = principalControlador.validarIngresoAdministrador(correo.getText(), password.getText());
-                if(administrador){
+                if (administrador) {
                     principalControlador.getSesion().setAdministrador(true);
                     principalControlador.navegarVentana("/panelAdministrador.fxml", "Panel del administrador.");
                     principalControlador.cerrarVentana(correo);
-                }else {
-                    Cliente cliente = principalControlador.obtenerCliente(correo.getText());
-                    if(cliente != null){
+                } else {
+                    Cliente cliente = principalControlador.validarUsuario(correo.getText(), password.getText());
+                    if (cliente != null) {
                         validarCliente(cliente);
-                    }else {
-                        ButtonType respuesta = principalControlador.mostrarAlertaConfirmacion("El usuario no existe. \n\n ¿Desea registrarse?", Alert.AlertType.INFORMATION);
-                        if(respuesta == ButtonType.OK) {
-                            principalControlador.navegarVentana("/registroCliente.fxml", "Registro usuario");
-                            principalControlador.cerrarVentana(correo);
-                        }else {
-                            correo.clear();
-                            password.clear();
-                        }
                     }
                 }
                 correo.clear();
                 password.clear();
-            }catch (Exception e){
+            } catch (Exception e) {
                 principalControlador.mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
+                correo.clear();
+                password.clear();
             }
         }
     }
+
 
     private void validarCliente(Cliente cliente){
         if(cliente.getCedula().equals(correo.getText()) && cliente.getPassword().equals(password.getText())){
