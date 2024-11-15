@@ -291,16 +291,6 @@ public class PrincipalControlador implements ServiciosEmpresa {
     }
 
     @Override
-    public String generarCodigoQR(Factura factura) throws Exception {
-        return bookYourStay.generarCodigoQR(factura);
-    }
-
-    @Override
-    public boolean verificarCodigoActivacion(String cedula, String codigoActivacion) throws Exception {
-        return bookYourStay.verificarCodigoActivacion(cedula,codigoActivacion);
-    }
-
-    @Override
     public void crearOfertaEspecial(Alojamiento alojamiento, LocalDate fechaInicio, LocalDate fechaFin, float descuento) throws Exception {
         bookYourStay.crearOfertaEspecial(alojamiento, fechaInicio, fechaFin, descuento);
     }
@@ -318,6 +308,16 @@ public class PrincipalControlador implements ServiciosEmpresa {
     @Override
     public Cliente cambiarPasswordC(String cedula, String nuevaPassword, String codigoActivacion) throws Exception {
         return bookYourStay.cambiarPasswordC(cedula, nuevaPassword,codigoActivacion);
+    }
+
+    @Override
+    public String generarCodigoQR(Factura factura) throws Exception {
+        return bookYourStay.generarCodigoQR(factura);
+    }
+
+    @Override
+    public boolean verificarCodigoActivacion(String cedula, String codigoActivacion) throws Exception {
+        return bookYourStay.verificarCodigoActivacion(cedula,codigoActivacion);
     }
 
 }
