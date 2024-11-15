@@ -13,27 +13,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
-@AllArgsConstructor
-
 public class PanelUsuarioControlador implements Observable, Initializable {
 
-    @FXML
-    private GridPane AlojamientosDisponiblesGridPane;
-
-    @FXML
-    private HBox ofertasAlojamientosHbox;
-
-    @FXML
-    private VBox mainVBox;
-
-    @FXML
-    public void initialize() {
-
-        cargarAlojamientosDisponibles();
-        cargarOfertasAlojamientos();
-    }
+    @FXML private GridPane AlojamientosDisponiblesGridPane;
+    @FXML private HBox ofertasAlojamientosHbox;
+    @FXML private VBox mainVBox;
 
     private void cargarAlojamientosDisponibles() {
 
@@ -70,5 +54,7 @@ public class PanelUsuarioControlador implements Observable, Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        cargarAlojamientosDisponibles();
+        cargarOfertasAlojamientos();
     }
 }

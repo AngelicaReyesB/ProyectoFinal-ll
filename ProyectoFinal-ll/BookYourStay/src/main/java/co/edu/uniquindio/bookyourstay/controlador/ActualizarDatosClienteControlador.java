@@ -1,6 +1,9 @@
 package co.edu.uniquindio.bookyourstay.controlador;
 
 import co.edu.uniquindio.bookyourstay.controlador.observador.Observable;
+import co.edu.uniquindio.bookyourstay.modelo.Cliente;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 
@@ -19,83 +22,53 @@ import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
-@Getter
 
+//hecho
 public class ActualizarDatosClienteControlador implements Observable, Initializable {
 
-    @FXML
-    private Button btnRegresar;
+    @FXML private Button btnRegresar;
+    @FXML private Button btnGuardarCambios;
+    @FXML private TextField nombre;
+    @FXML private TextField cedula;
+    @FXML private TextField telefono;
+    @FXML private TextField correo;
+    @FXML private TextField password;
+    private final PrincipalControlador principalControlador;
+    private Cliente cliente;
 
-    @Setter
-    @FXML
-    private Button btnGuardarCambios;
-
-    @FXML
-    private TextField nombre;
-
-    @FXML
-    private TextField cedula;
-
-    @FXML
-    private TextField telefono;
+    public ActualizarDatosClienteControlador(){
+        principalControlador = PrincipalControlador.getInstancia();
+    }
 
     @FXML
-    private TextField correo;
-
-    @FXML
-    private TextField password;
-
-    @FXML
-    private void irPerfil(ActionEvent event) {
+    private void irPerfil() {
         try {
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/perfil.fxml"));
-            Parent perfilRoot = loader.load();
-
-            Stage perfilStage = new Stage();
-            perfilStage.setTitle("Perfil de Usuario");
-
-            perfilStage.setScene(new Scene(perfilRoot));
-
-            perfilStage.show();
-
-            System.out.println("Ventana de perfil abierta en una nueva ventana");
-
-        } catch (IOException e) {
-            System.err.println("Error al abrir la ventana de perfil: " + e.getMessage());
+            principalControlador.navegarVentana("/perfil.fxml", "Perfil");
+            principalControlador.cerrarVentana(btnRegresar);
+        } catch (Exception e) {
+            principalControlador.mostrarAlerta(e.getMessage(), AlertType.ERROR);
         }
     }
 
     @FXML
-    private void ActualizarDatos(ActionEvent event) {
-        String nombreCliente = nombre.getText();
-        String cedulaCliente = cedula.getText();
-        String telefonoCliente = telefono.getText();
-        String correoCliente = correo.getText();
-        String passwordCliente = password.getText();
-
-        if (nombreCliente.isEmpty() || cedulaCliente.isEmpty() || telefonoCliente.isEmpty() || correoCliente.isEmpty() || passwordCliente.isEmpty()) {
-            mostrarAlerta("Campos incompletos", "Por favor, complete todos los campos antes de guardar los cambios.");
-            return;
+    private void actualizarDatos() {
+        if(cliente != null){
+            try {
+                principalControlador.editarCuenta(cedula.getText(), nombre.getText(), telefono.getText(), correo.getText(), password.getText());
+                limpiarCampos();
+                principalControlador.mostrarAlerta("Cuenta actualizada correctamente", AlertType.CONFIRMATION);
+            }catch (Exception e){
+                principalControlador.mostrarAlerta("Error al actualizar la cuenta", AlertType.ERROR);
+            }
         }
-
-        System.out.println("Datos actualizados correctamente:");
-        System.out.println("Nombre: " + nombreCliente);
-        System.out.println("Cédula: " + cedulaCliente);
-        System.out.println("Teléfono: " + telefonoCliente);
-        System.out.println("Correo: " + correoCliente);
-        System.out.println("Contraseña: " + passwordCliente);
-
-        mostrarAlerta("Éxito", "Los datos del cliente se han actualizado correctamente.");
     }
 
-    private void mostrarAlerta(String titulo, String mensaje) {
-        Alert alerta = new Alert(AlertType.INFORMATION);
-        alerta.setTitle(titulo);
-        alerta.setHeaderText(null);
-        alerta.setContentText(mensaje);
-        alerta.showAndWait();
+    private void limpiarCampos(){
+        nombre.clear();
+        cedula.clear();
+        telefono.clear();
+        correo.clear();
+        password.clear();
     }
 
     @Override

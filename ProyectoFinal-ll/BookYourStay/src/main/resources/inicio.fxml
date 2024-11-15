@@ -53,7 +53,7 @@
 
                 <Label alignment="CENTER" prefHeight="40.0" prefWidth="150.0" text="Contraseña" GridPane.columnIndex="0" GridPane.rowIndex="2" />
                 <TextField fx:id="password" alignment="CENTER" minHeight="30.0" promptText="Ingrese su contraseña" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-            <Hyperlink fx:id="olvidoPasswordLink" alignment="CENTER" contentDisplay="CENTER" prefHeight="24.0" prefWidth="153.0" text="¿Olvido su contraseña?" GridPane.rowIndex="4" />
+            <Hyperlink fx:id="olvidoPasswordLink" alignment="CENTER" contentDisplay="CENTER" onAction="#recuperacionPassword" prefHeight="24.0" prefWidth="153.0" text="¿Olvido su contraseña?" GridPane.rowIndex="4" />
                 <columnConstraints>
                     <ColumnConstraints />
                 </columnConstraints>

@@ -264,7 +264,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         return null;
     }
 
-    //la contraseña debe de cambiar?
+
     @Override
     public boolean validarIngresoAdministrador(String email, String password) throws Exception {
         String usuarioAdministrador = "admin@bookyourstay.com";

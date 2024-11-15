@@ -78,7 +78,7 @@
 
             </GridPane>
             <HBox alignment="CENTER">
-                <Button id="btnRegistrar" fx:id="btnGuardarCambios" minHeight="40.0" minWidth="130.0" onAction="#ActualizarDatos" style="-fx-background-color: #006600; -fx-text-fill: white;" text="Guardar Cambios">
+                <Button id="btnRegistrar" fx:id="btnGuardarCambios" minHeight="40.0" minWidth="130.0" onAction="#actualizarDatos" style="-fx-background-color: #006600; -fx-text-fill: white;" text="Guardar Cambios">
                     <HBox.margin>
                         <Insets top="96.0" />
                     </HBox.margin></Button>

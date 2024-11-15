@@ -15,23 +15,20 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import lombok.AllArgsConstructor;
 
-@AllArgsConstructor
-
 public class EstadisticasControlador implements Observable, Initializable {
 
-    @FXML
-    private PieChart pieChartOcupacion;
+    @FXML private Button btnRegresar;
+    @FXML private PieChart pieChartOcupacion;
+    @FXML private PieChart pieChartGanancias;
+    private final PrincipalControlador principalControlador;
 
-    @FXML
-    private PieChart pieChartGanancias;
-
-    @FXML
-    private void initialize() {
-        cargarDatosOcupacion();
-        cargarDatosGanancias();
+    public EstadisticasControlador(){
+        principalControlador = PrincipalControlador.getInstancia();
     }
 
     private void cargarDatosOcupacion() {
@@ -55,22 +52,10 @@ public class EstadisticasControlador implements Observable, Initializable {
     @FXML
     private void irPanelInicio() {
         try {
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/panelAdministrador.fxml"));
-            Parent adminRoot = loader.load();
-
-            EventObject event = null;
-            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            Scene adminScene = new Scene(adminRoot);
-
-            currentStage.setScene(adminScene);
-            currentStage.show();
-
-            System.out.println("Ventana cambiada al panel del administrador");
-
-        } catch (IOException e) {
-            System.err.println("Error al cargar el panel de administración: " + e.getMessage());
+            principalControlador.navegarVentana("/panelAdministrador.fxml", "Panel del administrador");
+            principalControlador.cerrarVentana(btnRegresar);
+        } catch (Exception e) {
+            principalControlador.mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
@@ -81,6 +66,7 @@ public class EstadisticasControlador implements Observable, Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        cargarDatosOcupacion();
+        cargarDatosGanancias();
     }
 }

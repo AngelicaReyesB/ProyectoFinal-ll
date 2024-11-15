@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="center" prefHeight="783.0" prefWidth="1526.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="center" prefHeight="783.0" prefWidth="1526.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.bookyourstay.controlador.EstadisticasControlador">
     <HBox style="-fx-background-color: #009900; -fx-min-height: 102.0;">
         <HBox alignment="CENTER_LEFT">
             <ImageView fitHeight="64.0" fitWidth="200.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
@@ -20,7 +20,7 @@
             </ImageView>
         </HBox>
         <HBox alignment="CENTER_RIGHT" prefHeight="102.0" prefWidth="255.0">
-            <Button minHeight="40.0" minWidth="130.0" onAction="#irPanelInicio" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: #006600; -fx-text-fill: white;" text="Regresar">
+            <Button fx:id="btnRegresar" minHeight="40.0" minWidth="130.0" onAction="#irPanelInicio" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: #006600; -fx-text-fill: white;" text="Regresar">
                 <HBox.margin>
                     <Insets left="24.0" right="24.0" />
                 </HBox.margin></Button>

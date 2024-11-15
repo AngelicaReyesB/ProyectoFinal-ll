@@ -1,6 +1,7 @@
 package co.edu.uniquindio.bookyourstay.modelo;
 
 import co.edu.uniquindio.bookyourstay.modelo.enums.TipoAlojamiento;
+import co.edu.uniquindio.bookyourstay.modelo.enums.TipoHabitacion;
 import lombok.*;
 
 @Getter
@@ -10,6 +11,7 @@ import lombok.*;
 @ToString
 public class Habitacion {
 
+    private TipoHabitacion tipoHabitacion;
     private String id;
     private String numero;
     private float precioPorNoche;

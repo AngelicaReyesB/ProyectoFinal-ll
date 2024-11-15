@@ -115,7 +115,7 @@
                <Insets right="24.0" />
             </HBox.margin>
          </Button>
-         <Button fx:id="btnAlojaientosRentables" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#alojamientosRentables" prefHeight="40.0" prefWidth="162.0" style="-fx-background-color: #006600;" text="Alojamientos rentables" textAlignment="CENTER" textFill="WHITE">
+         <Button fx:id="btnAlojamientosRentables" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#alojamientosRentables" prefHeight="40.0" prefWidth="162.0" style="-fx-background-color: #006600;" text="Alojamientos rentables" textAlignment="CENTER" textFill="WHITE">
             <font>
                <Font size="14.0" />
             </font>

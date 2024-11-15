@@ -15,10 +15,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 
-//hecho
+//el rango de los precios
 public class BarraBusquedasControlador implements Observable, Initializable {
 
-    @FXML private Button btnBuscarAlojamiento;
     @FXML private Button btnTodosAlojamientos;
     @FXML private ComboBox<TipoCiudad> ciudadAlojamiento;
     @FXML private ComboBox<String> rangoPrecios;

@@ -129,6 +129,12 @@ public class InicioControlador implements Observable, Initializable {
         }
     }
 
+    @FXML
+    public void recuperacionPassword() {
+        principalControlador.navegarVentana("/recuperacionPassword.fxml", "Recuperar contraseña");
+        principalControlador.cerrarVentana(olvidoPasswordLink);
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         alojamientoRandom();

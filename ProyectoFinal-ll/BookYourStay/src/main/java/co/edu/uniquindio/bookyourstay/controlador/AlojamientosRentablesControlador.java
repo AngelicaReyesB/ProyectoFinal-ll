@@ -15,6 +15,7 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
@@ -22,42 +23,25 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-@AllArgsConstructor
-@Getter
-@Setter
-
+//ponerle los nombres en el fxml
 public class AlojamientosRentablesControlador implements Observable, Initializable {
 
-    @FXML
-    private Button btnRegresar;
+    @FXML private Button btnRegresar;
+    @FXML private BarChart<String, Number> barChart;
+    @FXML private CategoryAxis xAxis;
+    @FXML private NumberAxis yAxis;
+    private final PrincipalControlador principalControlador;
 
-    @FXML
-    private BarChart<String, Number> barChart;
-
-    @FXML
-    private CategoryAxis xAxis;
-
-    @FXML
-    private NumberAxis yAxis;
+    public AlojamientosRentablesControlador(){
+        principalControlador = PrincipalControlador.getInstancia();
+    }
 
     @FXML
     private void irPanelAdministrador(ActionEvent event) {
         try {
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/panelAdministrador.fxml"));
-            Parent adminRoot = loader.load();
-
-            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            Scene adminScene = new Scene(adminRoot);
-
-            currentStage.setScene(adminScene);
-            currentStage.show();
-
-            System.out.println("Ventana cambiada al panel del administrador");
-
-        } catch (IOException e) {
-            System.err.println("Error al cargar el panel de administración: " + e.getMessage());
+            principalControlador.navegarVentana("/panelAdministrador.fxml", "Panel del Administrador");
+        } catch (Exception e) {
+            principalControlador.mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
