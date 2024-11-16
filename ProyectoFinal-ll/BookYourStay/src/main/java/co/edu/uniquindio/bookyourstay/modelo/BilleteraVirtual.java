@@ -3,12 +3,14 @@ package co.edu.uniquindio.bookyourstay.modelo;
 import lombok.*;
 
 @AllArgsConstructor
-@Builder
 @Getter
 @Setter
 @ToString
 public class BilleteraVirtual {
 
-    private double montoTotal;
+    private float montoTotal;
 
+    public BilleteraVirtual() {
+        this.montoTotal = 0.0f;
+    }
 }

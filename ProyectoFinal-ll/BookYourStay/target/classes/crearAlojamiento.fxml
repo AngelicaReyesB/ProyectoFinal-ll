@@ -17,7 +17,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.util.Callback?>
 <VBox prefHeight="620.0" prefWidth="1323.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.bookyourstay.controlador.CrearAlojamientoControlador">
     <Label alignment="CENTER" prefHeight="30.0" prefWidth="1277.0" style="-fx-background-color: #009900; -fx-font-weight: BOLD;" text="REGISTRO DE ALOJAMIENTO" textFill="WHITE">
         <font>

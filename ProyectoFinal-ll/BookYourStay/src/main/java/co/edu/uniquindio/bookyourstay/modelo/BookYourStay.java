@@ -164,16 +164,21 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
     public Cliente obtenerCliente(String cedula) throws Exception {
         try {
             for (Cliente cliente : clientes) {
-                System.out.println("CLIENTE QUE RECORRO EN BUSCAR" + cliente);
+                System.out.println("CLIENTE QUE RECORRO EN BUSCAR: " + cliente);
                 if (cliente.getCedula().equals(cedula)) {
+                    // Verificamos si el cliente tiene una billetera virtual
+                    if (cliente.getBilleteraVirtual() == null) {
+                        cliente.setBilleteraVirtual(new BilleteraVirtual()); // Asignamos una billetera vacía
+                    }
                     return cliente;
                 }
             }
-            return null;
-        }catch (Exception e){
+            return null; // Si no se encuentra el cliente
+        } catch (Exception e) {
             throw new Exception("No se puede buscar cliente");
         }
     }
+
 
     //se hace uso en inicio controlador
     @Override
@@ -182,9 +187,16 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
             throw new Exception("Correo y contraseña no pueden estar vacíos.");
         }
 
+        // Obtener el cliente mediante el correo
         Cliente cliente = obtenerCliente(email);
-        if(cliente != null){
-            if(cliente.getPassword().equals(password)){
+        if (cliente != null) {
+            // Verificamos que la billetera virtual esté asociada
+            if (cliente.getBilleteraVirtual() == null) {
+                cliente.setBilleteraVirtual(new BilleteraVirtual()); // Asignamos una billetera vacía si no está asociada
+            }
+
+            // Validamos la contraseña
+            if (cliente.getPassword().equals(password)) {
                 return cliente;
             } else {
                 throw new Exception("Los datos de ingreso son incorrectos.");
@@ -193,6 +205,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
             throw new Exception("El usuario no existe.");
         }
     }
+
 
 
     //se hace uso en recuperar contraseña
@@ -308,6 +321,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
     public boolean eliminarCuentaCliente(String cedulaCliente) throws Exception {
         for (Cliente cliente : clientes) {
             if (cliente.getCedula().equals(cedulaCliente)) {
+                clientes.remove(cliente);
                 return true;
             }
         }
@@ -548,7 +562,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
                 .fechaCreacion(LocalDateTime.now())
                 .build();
 
-        cliente.getBilleteraVirtual().setMontoTotal(cliente.getBilleteraVirtual().getMontoTotal() - totalReserva);
+        cliente.getBilleteraVirtual().setMontoTotal((float) (cliente.getBilleteraVirtual().getMontoTotal() - totalReserva));
         alojamiento.setActivo(false);
 
         return nuevaReserva;
@@ -610,7 +624,6 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         if (!reserva.isEstadoReserva()) {
             throw new Exception("La reserva ya está cancelada.");
         }
-
         reserva.setEstadoReserva(false);
 
         Alojamiento alojamiento = reserva.getAlojamiento();

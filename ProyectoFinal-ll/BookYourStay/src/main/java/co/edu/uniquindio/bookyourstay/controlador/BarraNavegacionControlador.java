@@ -8,7 +8,7 @@ import javafx.scene.control.Button;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-//hecho
+//funciona
 public class BarraNavegacionControlador implements Observable, Initializable {
 
     @FXML

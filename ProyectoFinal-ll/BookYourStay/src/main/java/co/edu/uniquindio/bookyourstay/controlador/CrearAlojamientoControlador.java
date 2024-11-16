@@ -25,7 +25,7 @@ import javafx.stage.FileChooser;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 
-//modificar los servicios
+//modificar los servicios, editar
 public class CrearAlojamientoControlador implements Observable, Initializable {
 
     @FXML private CheckBox activoCheck;

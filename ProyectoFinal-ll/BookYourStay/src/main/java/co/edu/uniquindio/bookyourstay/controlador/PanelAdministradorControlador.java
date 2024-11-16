@@ -18,7 +18,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-//hecho, hablar sobre el código de cada alojamiento
+//funciona, hablar sobre el código de cada alojamiento
 public class PanelAdministradorControlador implements Observable, Initializable {
 
     @FXML private TableView<Alojamiento> TableAlojamientos;

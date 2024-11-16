@@ -20,7 +20,7 @@ import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
 
-//hecho, no modificar
+//funciona correctamente
 public class BilleteraVirtualControlador implements Observable, Initializable {
 
     @FXML private Label labelSaldoDisponible;

@@ -62,7 +62,7 @@
             </ListView>
             <HBox alignment="CENTER" prefHeight="196.0" prefWidth="1780.0">
                <children>
-                  <Button fx:id="btnCancelarReserva" minHeight="40.0" minWidth="130.0" onAction="#irActualizarDatosCliente" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: #006600; -fx-text-fill: white;" text="Cancelar Reserva" />
+                  <Button fx:id="btnCancelarReserva" minHeight="40.0" minWidth="130.0" onAction="#cancelarReserva" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: #006600; -fx-text-fill: white;" text="Cancelar Reserva" />
                   <Button fx:id="btnVerDetalles" minHeight="40.0" minWidth="130.0" onAction="#detallesAlojamiento" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: #006600; -fx-text-fill: white;" text="Ver">
                      <HBox.margin>
                         <Insets left="24.0" />

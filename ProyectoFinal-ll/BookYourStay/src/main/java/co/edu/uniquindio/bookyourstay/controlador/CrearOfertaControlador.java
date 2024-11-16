@@ -14,6 +14,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
+//solo muestra el último alojamiento
 public class CrearOfertaControlador implements Observable, Initializable {
 
     @FXML private ComboBox<Alojamiento> alojamientoSeleccionado;

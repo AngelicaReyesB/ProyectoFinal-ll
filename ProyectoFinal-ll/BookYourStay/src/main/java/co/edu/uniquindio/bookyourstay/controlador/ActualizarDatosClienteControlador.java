@@ -23,7 +23,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 
-//hecho
+//no funciona
 public class ActualizarDatosClienteControlador implements Observable, Initializable {
 
     @FXML private Button btnRegresar;
@@ -52,16 +52,19 @@ public class ActualizarDatosClienteControlador implements Observable, Initializa
 
     @FXML
     private void actualizarDatos() {
-        if(cliente != null){
+        if (cliente != null) {
             try {
                 principalControlador.editarCuenta(cedula.getText(), nombre.getText(), telefono.getText(), correo.getText(), password.getText());
                 limpiarCampos();
                 principalControlador.mostrarAlerta("Cuenta actualizada correctamente", AlertType.CONFIRMATION);
-            }catch (Exception e){
+                principalControlador.navegarVentana("/inicio.fxml", "Inicio");
+            } catch (Exception e) {
                 principalControlador.mostrarAlerta("Error al actualizar la cuenta", AlertType.ERROR);
+                e.printStackTrace();
             }
         }
     }
+
 
     private void limpiarCampos(){
         nombre.clear();
