@@ -10,7 +10,6 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -72,7 +71,7 @@
                      <Insets left="50.0" />
                   </GridPane.margin>
                </CheckBox>
-               <ImageView fx:id="imagenCargada" fitHeight="20.0" fitWidth="135.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+               <Label fx:id="imagenCargada" prefHeight="18.0" prefWidth="41.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             </children>
             <VBox.margin>
                <Insets left="40.0" right="40.0" top="20.0" />
@@ -95,20 +94,21 @@
             <Insets bottom="32.0" left="16.0" right="32.0" />
          </HBox.margin>
          <children>
-            <TableView fx:id="tablaAlojamientos" prefHeight="460.0" prefWidth="902.0">
-              <columns>
-                <TableColumn fx:id="colNombre" prefWidth="75.0" text="Nombre" />
-                <TableColumn fx:id="colDescripcion" prefWidth="91.99999237060547" text="Descripcion" />
-                  <TableColumn fx:id="colFecha" prefWidth="96.0" text="Fecha" />
-                  <TableColumn fx:id="colValor" prefWidth="73.5999755859375" text="Valor" />
-                  <TableColumn fx:id="colCapacidad" prefWidth="66.4000244140625" text="Capacidad" />
-                  <TableColumn fx:id="colTipo" prefWidth="83.199951171875" text="Tipo" />
-                  <TableColumn fx:id="colCiudad" prefWidth="65.60000610351562" text="Ciudad" />
-                  <TableColumn fx:id="colServicios" prefWidth="83.199951171875" text="Servicios" />
-                  <TableColumn fx:id="colEstado" prefWidth="83.19989013671875" text="Estado" />
-                  <TableColumn fx:id="colImagen" prefWidth="109.59995117187498" text="Imagen" />
-              </columns>
-            </TableView>
+             <TableView fx:id="tablaAlojamientos" prefHeight="460.0" prefWidth="902.0">
+                 <columns>
+                     <TableColumn fx:id="colNombre" prefWidth="75.0" text="Nombre" />
+                     <TableColumn fx:id="colDescripcion" prefWidth="92.0" text="Descripcion" />
+                     <TableColumn fx:id="colFecha" prefWidth="96.0" text="Fecha" />
+                     <TableColumn fx:id="colValor" prefWidth="73.6" text="Valor" />
+                     <TableColumn fx:id="colCapacidad" prefWidth="66.4" text="Capacidad" />
+                     <TableColumn fx:id="colTipo" prefWidth="83.2" text="Tipo" />
+                     <TableColumn fx:id="colCiudad" prefWidth="65.6" text="Ciudad" />
+                     <TableColumn fx:id="colServicios" prefWidth="83.2" text="Servicios" />
+                     <TableColumn fx:id="colEstado" prefWidth="83.2" text="Estado" />
+                     <TableColumn fx:id="colImagen" prefWidth="109.6" text="Imagen" />
+                 </columns>
+             </TableView>
+
          </children>
       </VBox>
     </HBox>

@@ -1,8 +1,10 @@
 package co.edu.uniquindio.bookyourstay.servicio;
 
+import co.edu.uniquindio.bookyourstay.controlador.observador.Observable;
 import co.edu.uniquindio.bookyourstay.modelo.*;
 import co.edu.uniquindio.bookyourstay.modelo.enums.TipoAlojamiento;
 import co.edu.uniquindio.bookyourstay.modelo.enums.TipoCiudad;
+import javafx.collections.ObservableList;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -19,6 +21,9 @@ public interface ServiciosEmpresa {
     Cliente obtenerUsuario(String email) throws Exception;
     boolean activarUsuario(String codigoActivacion, Cliente cliente) throws Exception;
     void enviarCodigoActivacion(Cliente cliente) throws Exception;
+    void obtenerAdministrador(String email) throws Exception;
+    void enviarCorreoRecuperacion(String email) throws Exception;
+    String generarCodigoVerificacion();
     Cliente editarCuenta(String cedula, String nombre, String telefono, String email, String password) throws Exception;
     boolean validarCodigoActivacion(String email, String codigo) throws Exception;
     boolean validarIngresoAdministrador(String email, String password) throws Exception;
@@ -38,6 +43,8 @@ public interface ServiciosEmpresa {
     boolean cancelarReserva(Reserva reserva) throws Exception;
     ArrayList<Reserva> listarReservas() throws Exception;
     float calcularCostoReserva(Reserva reserva) throws Exception;
+    void editarOferta(Alojamiento alojamiento, LocalDate nuevaFechaInicio, LocalDate nuevaFechaFin, float nuevoDescuento) throws Exception;
+    boolean eliminarOferta(String nombreAlojamiento) throws Exception;
     void recargarBilleteraVirtual(Cliente cliente, float monto) throws Exception;
     String agregarResena(Reserva reserva, String comentario, int calificacion) throws Exception;
     Cliente cambiarPasswordC(String cedula, String nuevaPassword, String codigoActivacion) throws Exception;
@@ -51,10 +58,9 @@ public interface ServiciosEmpresa {
     Administrador cambiarPassword(String email, String nuevaPassword) throws Exception;
     Factura generarFactura(Reserva reserva) throws Exception;
     void crearOfertaEspecial(Alojamiento alojamiento, LocalDate fechaInicio, LocalDate fechaFin, float descuento) throws Exception;
-    List<Alojamiento> listarOfertasEspeciales() throws Exception;
-    void enviarCodigoQR(Factura factura, String rutaQR) throws Exception;
+    ObservableList<Alojamiento> listarOfertasEspeciales() throws Exception;
+    String enviarCodigoQR(Factura factura, String rutaQR) throws Exception;
     String generarCodigoQR(Factura factura) throws Exception;
     boolean verificarCodigoActivacion(String cedula, String codigoActivacion) throws Exception;
-
 
 }

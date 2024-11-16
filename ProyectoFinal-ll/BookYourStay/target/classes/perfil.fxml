@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="center" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="center" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.bookyourstay.controlador.PerfilControlador">
     <HBox style="-fx-background-color: #009900; -fx-min-height: 102.0;">
         <HBox alignment="CENTER_LEFT">
             <ImageView fitHeight="64.0" fitWidth="200.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
@@ -30,7 +30,7 @@
                <Insets right="24.0" />
             </HBox.margin>
          </Button>
-         <Button minHeight="40.0" minWidth="130.0" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: #006600; -fx-text-fill: white;" text="Regresar">
+         <Button fx:id="btnRegresar" minHeight="40.0" minWidth="130.0" onAction="#irPanelUsuario" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: #006600; -fx-text-fill: white;" text="Regresar">
             <HBox.margin>
                <Insets right="32.0" />
             </HBox.margin>
@@ -55,19 +55,20 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <ListView prefHeight="655.0" prefWidth="1780.0">
+            <ListView fx:id="listaReservas" prefHeight="655.0" prefWidth="1780.0">
                <VBox.margin>
                   <Insets bottom="20.0" top="20.0" />
                </VBox.margin>
             </ListView>
             <HBox alignment="CENTER" prefHeight="196.0" prefWidth="1780.0">
                <children>
-                  <Button fx:id="btnActualizarDatos1" minHeight="40.0" minWidth="130.0" onAction="#irActualizarDatosCliente" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: #006600; -fx-text-fill: white;" text="Cancelar Reserva" />
-                  <Button fx:id="btnActualizarDatos11" minHeight="40.0" minWidth="130.0" onAction="#irActualizarDatosCliente" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: #006600; -fx-text-fill: white;" text="Ver">
+                  <Button fx:id="btnCancelarReserva" minHeight="40.0" minWidth="130.0" onAction="#irActualizarDatosCliente" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: #006600; -fx-text-fill: white;" text="Cancelar Reserva" />
+                  <Button fx:id="btnVerDetalles" minHeight="40.0" minWidth="130.0" onAction="#detallesAlojamiento" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: #006600; -fx-text-fill: white;" text="Ver">
                      <HBox.margin>
                         <Insets left="24.0" />
                      </HBox.margin>
                   </Button>
+                  <Button fx:id="btnEliminarCuenta" minHeight="40.0" minWidth="130.0" onAction="#eliminarCuenta" prefHeight="42.0" prefWidth="130.0" style="-fx-background-color: #006600; -fx-text-fill: white;" text="Eliminar cuenta" />
                </children>
             </HBox>
          </children>

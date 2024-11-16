@@ -4,6 +4,7 @@ import co.edu.uniquindio.bookyourstay.controlador.observador.Observable;
 import co.edu.uniquindio.bookyourstay.modelo.Alojamiento;
 import co.edu.uniquindio.bookyourstay.modelo.enums.TipoAlojamiento;
 import co.edu.uniquindio.bookyourstay.modelo.enums.TipoCiudad;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,10 +25,11 @@ import javafx.stage.FileChooser;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 
+//modificar los servicios
 public class CrearAlojamientoControlador implements Observable, Initializable {
 
     @FXML private CheckBox activoCheck;
-    @FXML private ImageView imagenCargada;
+    @FXML private Label imagenCargada;
     @FXML private ComboBox<TipoCiudad> cbCiudad;
     @FXML private Button btnRegresar;
     @FXML private ComboBox<String> cbServicios;
@@ -37,7 +39,7 @@ public class CrearAlojamientoControlador implements Observable, Initializable {
     @FXML private TableColumn<Alojamiento, String> colDescripcion;
     @FXML private TableColumn<Alojamiento, String> colEstado;
     @FXML private TableColumn<Alojamiento, String> colFecha;
-    @FXML private TableColumn<Alojamiento, String> colImagen;
+    @FXML TableColumn<Alojamiento, ImageView> colImagen = new TableColumn<>("Imagen");
     @FXML private TableColumn<Alojamiento, String> colNombre;
     @FXML private TableColumn<Alojamiento, String> colServicios;
     @FXML private TableColumn<Alojamiento, String > colTipo;
@@ -49,8 +51,9 @@ public class CrearAlojamientoControlador implements Observable, Initializable {
     @FXML private TextField txtNombre;
     @FXML private TextField txtValorNoche;
     private String imagenSeleccionada;
+    private Alojamiento alojamientoActual;
     private final PrincipalControlador principalControlador;
-    private Observable observable;
+
 
     public CrearAlojamientoControlador(){
         principalControlador = PrincipalControlador.getInstancia();
@@ -58,20 +61,27 @@ public class CrearAlojamientoControlador implements Observable, Initializable {
 
 
     @FXML
-    public void cargarImagen() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Archivos de Imagen", "*.jpg", "*.png", "*.gif"));
-        File file = fileChooser.showOpenDialog(null);
+    private void cargarImagen() {
+        abrirFileChooser();
+    }
 
-        if (file != null) {
-            try {
-                Image image = new Image(file.toURI().toString());
-                imagenSeleccionada = file.getAbsolutePath();
-                imagenCargada.setImage(image);  // Asegúrate de que imagenCargada es un ImageView
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+    private void abrirFileChooser() {
+
+        // Crear un FileChooser para seleccionar la imagen
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Seleccionar imagen");
+
+        // Filtrar los archivos que se pueden seleccionar
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.jpeg")
+        );
+
+        // Mostrar el FileChooser y obtener la imagen seleccionada
+        File imagen = fileChooser.showOpenDialog(null);
+        System.out.println(imagen.toString());
+
+        imagenSeleccionada = imagen.toURI().toString();
+        imagenCargada.setText("Imagen cargada exitosamente.");
     }
 
     private boolean validarCampos() {
@@ -149,10 +159,26 @@ public class CrearAlojamientoControlador implements Observable, Initializable {
         colDescripcion.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescripcion()));
         colEstado.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().isActivo() ? "Activo" : "Inactivo"));
         colFecha.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFechaEstancia().toString()));
-        colImagen.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getImagen()));
         colNombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
         colServicios.setCellValueFactory(cellData -> new SimpleStringProperty(String.join(", ", cellData.getValue().getServiciosIncluidos())));
         colTipo.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTipoAlojamiento().toString()));
+
+        // Aquí se crea el ImageView a partir de la URL de la imagen
+        colImagen.setCellValueFactory(cellData -> {
+            String imagenUrl = cellData.getValue().getImagen(); // Esto asume que la URL está almacenada en getImagen
+            if (imagenUrl != null) {
+                Image image = new Image(imagenUrl);  // Cargar la imagen
+                ImageView imageView = new ImageView(image);
+                imageView.setFitWidth(100); // Ajustar el tamaño de la imagen
+                imageView.setFitHeight(100);
+                return new SimpleObjectProperty<>(imageView); // Devolver un ImageView
+            } else {
+                return new SimpleObjectProperty<>(new ImageView()); // Devolver un ImageView vacío si no hay imagen
+            }
+        });
+
+
+
 
         if (alojamientos != null && !alojamientos.isEmpty()) {
             tablaAlojamientos.setItems(FXCollections.observableArrayList(alojamientos));
@@ -163,23 +189,21 @@ public class CrearAlojamientoControlador implements Observable, Initializable {
 
 
     @FXML
-     public void editarAlojamiento() {
-        Alojamiento alojamientoSeleccionado = tablaAlojamientos.getSelectionModel().getSelectedItem();
-        if(alojamientoSeleccionado == null){
+    public void editarAlojamiento() {
+        alojamientoActual = tablaAlojamientos.getSelectionModel().getSelectedItem();
+        if (alojamientoActual == null) {
             principalControlador.mostrarAlerta("Selecciona un alojamiento para actualizar.", Alert.AlertType.WARNING);
             return;
         }
-        activoCheck.setSelected(alojamientoSeleccionado.isActivo());
+        activoCheck.setSelected(alojamientoActual.isActivo());
         try {
-            alojamientoSeleccionado.setActivo(activoCheck.isSelected());
-            Alojamiento alojamientoModificado = principalControlador.actualizarAlojamiento(alojamientoSeleccionado);
-            System.out.println(alojamientoModificado);
+            alojamientoActual.setActivo(activoCheck.isSelected());
+            Alojamiento alojamientoModificado = principalControlador.actualizarAlojamiento(alojamientoActual);
             principalControlador.notificarObservadores();
             principalControlador.mostrarAlerta("Alojamiento actualizado exitosamente.", Alert.AlertType.CONFIRMATION);
         } catch (Exception e) {
             principalControlador.mostrarAlerta("El alojamiento no se pudo actualizar." + e.getMessage(), Alert.AlertType.INFORMATION);
         }
-
     }
 
     @FXML
@@ -205,8 +229,6 @@ public class CrearAlojamientoControlador implements Observable, Initializable {
                 serviciosActualizados.addAll("WiFi", "Parking");
             }
         }
-
-
         cbServicios.setItems(serviciosActualizados);
     }
 

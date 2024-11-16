@@ -23,7 +23,6 @@ public class BarraBusquedasControlador implements Observable, Initializable {
     @FXML private ComboBox<String> rangoPrecios;
     @FXML private ComboBox<TipoAlojamiento> tipoAlojamiento;
     private final PrincipalControlador principalControlador;
-    private Observable observable;
 
     public BarraBusquedasControlador(){
         principalControlador = PrincipalControlador.getInstancia();
@@ -38,11 +37,6 @@ public class BarraBusquedasControlador implements Observable, Initializable {
         } catch (Exception e) {
             principalControlador.mostrarAlerta("Error al filtrar la búsqueda." + e.getMessage(), Alert.AlertType.ERROR);
         }
-    }
-
-    @FXML
-    public void buscar() {
-        obtenerAlojamientos();
     }
 
     @FXML

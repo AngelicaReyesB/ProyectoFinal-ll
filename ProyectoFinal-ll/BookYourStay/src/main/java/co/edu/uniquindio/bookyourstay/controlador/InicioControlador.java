@@ -24,7 +24,6 @@ public class InicioControlador implements Observable, Initializable {
     @FXML private Hyperlink olvidoPasswordLink;
     @FXML private TextField password;
     private final PrincipalControlador principalControlador;
-    private Observable observable;
 
     public InicioControlador() {
         principalControlador = PrincipalControlador.getInstancia();
@@ -140,7 +139,4 @@ public class InicioControlador implements Observable, Initializable {
 
     }
 
-    public void inicializarObservable(Observable observable){
-        this.observable = observable;
-    }
 }

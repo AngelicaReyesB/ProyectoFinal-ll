@@ -6,6 +6,7 @@ import co.edu.uniquindio.bookyourstay.modelo.enums.TipoAlojamiento;
 import co.edu.uniquindio.bookyourstay.modelo.enums.TipoCiudad;
 import co.edu.uniquindio.bookyourstay.servicio.CreacionAlojamiento;
 import co.edu.uniquindio.bookyourstay.servicio.ServiciosEmpresa;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -151,6 +152,21 @@ public class PrincipalControlador implements ServiciosEmpresa {
     }
 
     @Override
+    public void obtenerAdministrador(String email) throws Exception {
+        bookYourStay.obtenerAdministrador(email);
+    }
+
+    @Override
+    public void enviarCorreoRecuperacion(String email) throws Exception {
+        bookYourStay.enviarCorreoRecuperacion(email);
+    }
+
+    @Override
+    public String generarCodigoVerificacion() {
+        return bookYourStay.generarCodigoVerificacion();
+    }
+
+    @Override
     public Cliente editarCuenta(String cedula, String nombre, String telefono, String email, String password) throws Exception {
         return bookYourStay.editarCuenta(cedula, nombre, telefono, email, password);
     }
@@ -236,6 +252,16 @@ public class PrincipalControlador implements ServiciosEmpresa {
     }
 
     @Override
+    public void editarOferta(Alojamiento alojamiento, LocalDate nuevaFechaInicio, LocalDate nuevaFechaFin, float nuevoDescuento) throws Exception {
+        bookYourStay.editarOferta(alojamiento, nuevaFechaInicio, nuevaFechaFin, nuevoDescuento);
+    }
+
+    @Override
+    public boolean eliminarOferta(String nombreAlojamiento) throws Exception {
+        return bookYourStay.eliminarOferta(nombreAlojamiento);
+    }
+
+    @Override
     public void recargarBilleteraVirtual(Cliente cliente, float monto) throws Exception {
         bookYourStay.recargarBilleteraVirtual(cliente, monto);
     }
@@ -286,8 +312,8 @@ public class PrincipalControlador implements ServiciosEmpresa {
     }
 
     @Override
-    public void enviarCodigoQR(Factura factura, String rutaQR)  throws Exception {
-        bookYourStay.enviarCodigoQR(factura, rutaQR);
+    public String enviarCodigoQR(Factura factura, String rutaQR)  throws Exception {
+        return bookYourStay.enviarCodigoQR(factura, rutaQR);
     }
 
     @Override
@@ -296,7 +322,7 @@ public class PrincipalControlador implements ServiciosEmpresa {
     }
 
     @Override
-    public List<Alojamiento> listarOfertasEspeciales() throws Exception {
+    public ObservableList<Alojamiento> listarOfertasEspeciales() throws Exception {
         return bookYourStay.listarOfertasEspeciales();
     }
 

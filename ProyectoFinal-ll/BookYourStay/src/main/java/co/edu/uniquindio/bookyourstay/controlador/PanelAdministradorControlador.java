@@ -2,6 +2,7 @@ package co.edu.uniquindio.bookyourstay.controlador;
 
 import co.edu.uniquindio.bookyourstay.controlador.observador.Observable;
 import co.edu.uniquindio.bookyourstay.modelo.Alojamiento;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -10,6 +11,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -27,7 +30,7 @@ public class PanelAdministradorControlador implements Observable, Initializable 
     @FXML private Button btnVerEstadisticas;
     @FXML private TableColumn<Alojamiento, String> colCapacidad;
     @FXML private TableColumn<Alojamiento, String> colCiudad;
-    @FXML private TableColumn<Alojamiento, String> colImagen;
+    @FXML TableColumn<Alojamiento, ImageView> colImagen = new TableColumn<>("Imagen");
     @FXML private TableColumn<Alojamiento, String> colNombre;
     @FXML private TableColumn<Alojamiento, String> colServicios;
     @FXML private TableColumn<Alojamiento, String> colValorNoche;
@@ -78,9 +81,21 @@ public class PanelAdministradorControlador implements Observable, Initializable 
         //colCodigo.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCodigo()));
         colNombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
         colCiudad.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTipoCiudad().toString()));
-        colCapacidad.setCellValueFactory(cellData -> new SimpleStringProperty());
-        colValorNoche.setCellValueFactory(cellData -> new SimpleStringProperty());
+        colCapacidad.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getCapacidadMaxima())));
+        colValorNoche.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getValorNoche())));
         colServicios.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getServiciosIncluidos().toString()));
+        colImagen.setCellValueFactory(cellData -> {
+            String imagenUrl = cellData.getValue().getImagen();  // Obtén la URL de la imagen
+            if (imagenUrl != null && !imagenUrl.isEmpty()) {
+                Image image = new Image(imagenUrl);  // Cargar la imagen
+                ImageView imageView = new ImageView(image);
+                imageView.setFitWidth(100);  // Establecer el tamaño de la imagen
+                imageView.setFitHeight(100);
+                return new SimpleObjectProperty<>(imageView);  // Devolver el ImageView
+            } else {
+                return new SimpleObjectProperty<>(new ImageView());  // Devuelve un ImageView vacío si no hay imagen
+            }
+        });
 
         TableAlojamientos.setItems(FXCollections.observableArrayList(listaAlojamientos));
     }

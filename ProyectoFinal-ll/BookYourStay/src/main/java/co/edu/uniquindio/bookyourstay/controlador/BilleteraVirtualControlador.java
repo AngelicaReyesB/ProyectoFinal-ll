@@ -1,6 +1,7 @@
 package co.edu.uniquindio.bookyourstay.controlador;
 
 import co.edu.uniquindio.bookyourstay.controlador.observador.Observable;
+import co.edu.uniquindio.bookyourstay.modelo.Cliente;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 
@@ -10,6 +11,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -18,59 +20,48 @@ import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
-@Getter
+//hecho, no modificar
 public class BilleteraVirtualControlador implements Observable, Initializable {
 
-    @FXML
-    private Label labelSaldoDisponible;
-
-    @FXML
-    private TextField codigoActivacion;
-
-    @FXML
-    private Button btnRecargar;
-
-    @FXML
-    private Button btnRegresarPanel;
-
+    @FXML private Label labelSaldoDisponible;
+    @FXML private Button btnRecargar;
+    @FXML private Button btnRegresarPanel;
+    @FXML private TextField txtMontoRecarga;
     private double saldo = 0.0;
+    private final PrincipalControlador principalControlador;
+
+    public BilleteraVirtualControlador(){
+        principalControlador = PrincipalControlador.getInstancia();
+    }
 
     @FXML
-    private void recargarBilletera(ActionEvent event) {
+    private void recargarBilletera() {
         try {
-            double montoRecarga = Double.parseDouble(codigoActivacion.getText());
+            double montoRecarga = Double.parseDouble(txtMontoRecarga.getText());
 
             if (montoRecarga > 0) {
-                saldo += montoRecarga;
-                labelSaldoDisponible.setText(String.format("Saldo disponible: $%.2f", saldo));
-                codigoActivacion.clear();
-                System.out.println("Recarga realizada con éxito. Nuevo saldo: $" + saldo);
+                Cliente clienteActual = principalControlador.getSesion().getCliente();
+                principalControlador.recargarBilleteraVirtual(clienteActual, (float) montoRecarga);
+                saldo = clienteActual.getBilleteraVirtual().getMontoTotal();
+                principalControlador.mostrarAlerta("Recarga realizada con éxito. Nuevo saldo: $" + saldo, Alert.AlertType.CONFIRMATION);
             } else {
-                System.out.println("Por favor, ingrese un monto válido.");
+                principalControlador.mostrarAlerta("Por favor, ingrese un monto válido.", Alert.AlertType.ERROR);
             }
         } catch (NumberFormatException e) {
-            System.out.println("Error: Ingrese un valor numérico para la recarga.");
+            principalControlador.mostrarAlerta("Error: Ingrese un valor numérico para la recarga.", Alert.AlertType.ERROR);
+        } catch (Exception e) {
+            principalControlador.mostrarAlerta("Error en la recarga: " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
     @FXML
     private void regresarPanel(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/path/to/panelReservas.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-            Stage stage = (Stage) btnRegresarPanel.getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
+            principalControlador.navegarVentana("/reservaAlojamiento.fxml", "Panel de reservas");
+            principalControlador.cerrarVentana(btnRegresarPanel);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    @FXML
-    private void initialize() {
-        actualizarSaldoEnPantalla();
     }
 
     private void actualizarSaldoEnPantalla() {
@@ -83,6 +74,6 @@ public class BilleteraVirtualControlador implements Observable, Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Inicialización adicional, si es necesaria
+        actualizarSaldoEnPantalla();
     }
 }
