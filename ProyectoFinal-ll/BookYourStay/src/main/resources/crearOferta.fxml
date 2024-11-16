@@ -68,12 +68,12 @@
                 <Insets bottom="32.0" left="16.0" right="32.0" />
             </HBox.margin>
             <children>
-                <TableView prefHeight="426.0" prefWidth="585.0">
+                <TableView fx:id="tablaOfertas" prefHeight="426.0" prefWidth="585.0">
                     <columns>
                         <TableColumn fx:id="colNombre" prefWidth="143.99994200468063" text="Nombre Alojamiento" />
                         <TableColumn fx:id="colFechaInicio" prefWidth="115.19999694824219" text="Fecha Inicio" />
                         <TableColumn fx:id="colFechaFin" prefWidth="103.199951171875" text="Fecha Fin" />
-                        <TableColumn fx:id="colValorConDescuento" prefWidth="127.20013427734375" text="Valor con Descuento" />
+                        <TableColumn fx:id="colDescuento" prefWidth="127.20013427734375" text="Valor con Descuento" />
                     </columns>
                 </TableView>
             </children>
@@ -81,10 +81,12 @@
     </HBox>
     <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="846.0">
         <children>
-            <Button fx:id="btnEliminarOferta" alignment="CENTER" mnemonicParsing="false" prefHeight="38.0" prefWidth="123.0" style="-fx-background-color: #006600;" text="Eliminar Oferta" textFill="WHITE">
+            <Button fx:id="btnEliminarOferta" alignment="CENTER" mnemonicParsing="false" onAction="#eliminarOferta" prefHeight="38.0" prefWidth="123.0" style="-fx-background-color: #006600;" text="Eliminar Oferta" textFill="WHITE">
                 <HBox.margin>
                     <Insets left="5.0" right="32.0" />
                 </HBox.margin></Button>
+         <Button fx:id="btnRegresar" alignment="CENTER" mnemonicParsing="false" onAction="#irPanelAdmin" prefHeight="38.0" prefWidth="123.0" style="-fx-background-color: #006600;" text="Regresar" textFill="WHITE" />
+         <Button fx:id="btnEditarOferta" alignment="CENTER" mnemonicParsing="false" onAction="#editarOferta" prefHeight="38.0" prefWidth="123.0" style="-fx-background-color: #006600;" text="Editar Oferta" textFill="WHITE" />
         </children>
         <VBox.margin>
             <Insets left="455.0" />

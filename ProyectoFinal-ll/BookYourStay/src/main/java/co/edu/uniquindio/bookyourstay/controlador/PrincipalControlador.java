@@ -6,6 +6,7 @@ import co.edu.uniquindio.bookyourstay.modelo.enums.TipoAlojamiento;
 import co.edu.uniquindio.bookyourstay.modelo.enums.TipoCiudad;
 import co.edu.uniquindio.bookyourstay.servicio.CreacionAlojamiento;
 import co.edu.uniquindio.bookyourstay.servicio.ServiciosEmpresa;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -251,6 +252,16 @@ public class PrincipalControlador implements ServiciosEmpresa {
     }
 
     @Override
+    public void editarOferta(Alojamiento alojamiento, LocalDate nuevaFechaInicio, LocalDate nuevaFechaFin, float nuevoDescuento) throws Exception {
+        bookYourStay.editarOferta(alojamiento, nuevaFechaInicio, nuevaFechaFin, nuevoDescuento);
+    }
+
+    @Override
+    public boolean eliminarOferta(String nombreAlojamiento) throws Exception {
+        return bookYourStay.eliminarOferta(nombreAlojamiento);
+    }
+
+    @Override
     public void recargarBilleteraVirtual(Cliente cliente, float monto) throws Exception {
         bookYourStay.recargarBilleteraVirtual(cliente, monto);
     }
@@ -311,7 +322,7 @@ public class PrincipalControlador implements ServiciosEmpresa {
     }
 
     @Override
-    public List<Alojamiento> listarOfertasEspeciales() throws Exception {
+    public ObservableList<Alojamiento> listarOfertasEspeciales() throws Exception {
         return bookYourStay.listarOfertasEspeciales();
     }
 

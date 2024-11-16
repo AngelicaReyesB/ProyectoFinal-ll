@@ -10,6 +10,8 @@ import co.edu.uniquindio.bookyourstay.servicio.ServiciosEmpresa;
 import co.edu.uniquindio.bookyourstay.utils.EnvioEmail;
 import co.edu.uniquindio.bookyourstay.utils.Persistencia;
 import jakarta.activation.DataSource;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import lombok.Getter;
 import lombok.Setter;
 import org.simplejavamail.api.email.Email;
@@ -431,7 +433,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         return alojamientosPorCiudad;
     }
 
-    //no se hace uso, no creo que sea necesario
+    //no se hace uso, se hace uso en el controlador de crear ofertas
     @Override
     public ArrayList<Alojamiento> listarAlojamientos(String nombreAlojamiento) throws Exception {
         ArrayList<Alojamiento> alojamientosPorNombre = new ArrayList<>();
@@ -441,7 +443,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
                 return alojamientosPorNombre;
             }
         }
-        return null;
+        return listarAlojamientos();
     }
 
     //no se hace uso
@@ -478,17 +480,20 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
 
     //no se hace uso
     @Override
-    public List<Alojamiento> listarOfertasEspeciales() throws Exception {
+    public ObservableList<Alojamiento> listarOfertasEspeciales() throws Exception {
         List<Alojamiento> alojamientosConOferta = new ArrayList<>();
 
+        // Filtrar los alojamientos con oferta especial
         for (Alojamiento alojamiento : alojamientos) {
             if (alojamiento.isOfertaEspecial()) {
                 alojamientosConOferta.add(alojamiento);
             }
         }
 
-        return alojamientosConOferta;
+        // Convertir a ObservableList antes de devolver
+        return FXCollections.observableArrayList(alojamientosConOferta);
     }
+
 
     //se hace uso en el controlador de crear alojamientos
     @Override
@@ -759,6 +764,54 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         alojamiento.setFechaFinOferta(fechaFin);
         alojamiento.setDescuento(descuento);
 
+    }
+
+    @Override
+    public void editarOferta(Alojamiento alojamiento, LocalDate nuevaFechaInicio, LocalDate nuevaFechaFin, float nuevoDescuento) throws Exception {
+        // Verificar si el alojamiento tiene una oferta especial
+        if (alojamiento.isOfertaEspecial()) {
+            // Actualizar las fechas de la oferta y el descuento
+            alojamiento.setFechaInicioOferta(nuevaFechaInicio);
+            alojamiento.setFechaFinOferta(nuevaFechaFin);
+            alojamiento.setDescuento(nuevoDescuento);
+
+            // Verificar si la nueva oferta sigue siendo válida (las fechas no pueden ser antes de la fecha actual)
+            if (nuevaFechaInicio.isBefore(LocalDate.now()) || nuevaFechaFin.isBefore(LocalDate.now())) {
+                alojamiento.setOfertaEspecial(false); // Si la fecha no es válida, la oferta deja de ser especial
+            }
+
+            // Actualizar la lista de alojamientos con ofertas especiales
+            ObservableList<Alojamiento> ofertasEspeciales = listarOfertasEspeciales();
+            // Aquí puedes añadir lógica para actualizar cualquier otra lista o vista asociada a la UI
+
+        } else {
+            throw new Exception("El alojamiento no tiene una oferta especial para editar.");
+        }
+}
+
+
+    @Override
+    public boolean eliminarOferta(String nombreAlojamiento) throws Exception {
+        try {
+            ArrayList<Alojamiento> alojamientosPorNombre = listarAlojamientos(nombreAlojamiento);
+            if (alojamientosPorNombre != null && !alojamientosPorNombre.isEmpty()) {
+                for (Alojamiento alojamiento : alojamientosPorNombre) {
+                    if (alojamiento.getFechaInicioOferta() != null && alojamiento.getFechaFinOferta() != null) {
+                        alojamiento.setFechaInicioOferta(null);
+                        alojamiento.setFechaFinOferta(null);
+                        alojamiento.setDescuento(0);
+                        alojamiento.setOfertaEspecial(false);
+
+                        listarOfertasEspeciales().remove(alojamiento);
+                    }
+                }
+                return true;
+            } else {
+                throw new Exception("No se encontraron alojamientos con el nombre especificado.");
+            }
+        } catch (Exception e) {
+            throw new Exception("Error al eliminar la oferta: " + e.getMessage());
+        }
     }
 
     //se hace uso en el controlador de billetera virtual
