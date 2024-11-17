@@ -101,9 +101,6 @@ public class ReservaAlojamientoControlador implements Observable, Initializable 
         }
     }
 
-
-
-
     @FXML
     void irInicio() {
         principalControlador.getSesion().setReservarAlojamiento(null);

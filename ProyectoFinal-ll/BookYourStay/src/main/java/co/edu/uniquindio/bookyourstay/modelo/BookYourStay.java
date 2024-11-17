@@ -155,18 +155,35 @@ public class BookYourStay implements ServiciosEmpresa {
         }
     }
 
+    @Override
+    public boolean activarUsuario(String codigoActivacion, Cliente cliente) {
+        if (cliente != null && cliente.getCodigoActivacion().equals(codigoActivacion)) {
+            cliente.setEstadoCuenta(true); // Activa la cuenta
+
+            // Asociamos una billetera virtual al cliente si no tiene una
+            if (cliente.getBilleteraVirtual() == null) {
+                cliente.setBilleteraVirtual(new BilleteraVirtual());
+            }
+
+            return true;
+        }
+        return false;
+    }
+
+
 
     //se hace uso en inicio controlador
     @Override
     public Cliente validarUsuario(String email, String password) throws Exception {
+        if (email == null || email.isEmpty() || password == null || password.isEmpty()) {
+            throw new Exception("Correo y contraseña no pueden estar vacíos.");
+        }
+        // Obtener el cliente mediante el correo
         Cliente cliente = obtenerCliente(email);
         if (cliente != null) {
-            // Verificamos que la billetera virtual esté asociada
-            if (cliente.getBilleteraVirtual() == null) {
-                cliente.setBilleteraVirtual(new BilleteraVirtual()); // Asignamos una billetera vacía si no está asociada
-            }
+            // Validamos la contraseña
             if (cliente.getPassword().equals(password)) {
-                return cliente; // Retornamos el cliente sin importar si la cuenta está activada o no
+                return cliente;
             } else {
                 throw new Exception("Los datos de ingreso son incorrectos.");
             }
@@ -321,14 +338,9 @@ public class BookYourStay implements ServiciosEmpresa {
         enviarNotificacion(email, "BookYourStay: Código de activación", mensajeActivacion);
     }
 
+
     //se hace uso en el controlador de activar cuenta
-    public boolean activarUsuario(String codigoActivacion, Cliente cliente) {
-        if (cliente != null && cliente.getCodigoActivacion().equals(codigoActivacion)) {
-            cliente.setEstadoCuenta(true);  // Activa la cuenta
-            return true;
-        }
-        return false;
-    }
+
 
 
     //se hace uso en inicio controlador
@@ -636,34 +648,31 @@ public class BookYourStay implements ServiciosEmpresa {
     //se hace uso en el controlador de reserva alojamiento
     @Override
     public Factura generarFactura(Reserva reserva) throws Exception {
-        if (reserva == null) {
-            throw new Exception("La reserva no puede ser nula.");
+        if (reserva == null || reserva.getAlojamiento() == null) {
+            throw new Exception("La reserva y su alojamiento no pueden ser nulos.");
         }
+
         Alojamiento alojamiento = reserva.getAlojamiento();
-        int numHuespedes = reserva.getNumHuespedes();
-        float subtotal = alojamiento.getValorNoche() * (float) reserva.getFechaInicio().until(reserva.getFechaFin(), java.time.temporal.ChronoUnit.DAYS);
-
-        // Aquí podrías aplicar descuentos, si los hubiera
-        float descuento = 0;
-        if (alojamiento.isOfertaEspecial()) {
-            descuento = subtotal * 0.10f; // Suponemos que si tiene oferta, aplica un 10% de descuento
+        long noches = java.time.temporal.ChronoUnit.DAYS.between(reserva.getFechaInicio(), reserva.getFechaFin());
+        if (noches <= 0) {
+            throw new Exception("La reserva debe ser para al menos una noche.");
         }
+        float subtotal = noches * alojamiento.getValorNoche();
+        if (alojamiento.getTipoAlojamiento() == TipoAlojamiento.CASA || alojamiento.getTipoAlojamiento() == TipoAlojamiento.APARTAMENTO) {
+            subtotal += alojamiento.getCostoAseoMantenimiento();
+        }
+        float descuento = alojamiento.isOfertaEspecial() ? subtotal * 0.10f : 0;
         float total = subtotal - descuento;
-        String codigoFactura = java.util.UUID.randomUUID().toString();
-
-        Factura factura = Factura.builder()
-                .codigo(codigoFactura)
+        return Factura.builder()
+                .codigo(java.util.UUID.randomUUID().toString())
                 .subtotal(subtotal)
+                .descuento(descuento)
                 .total(total)
-                .reserva(reserva)
                 .fecha(java.time.LocalDateTime.now())
                 .cliente(reserva.getCliente())
                 .alojamiento(alojamiento)
-                .numHuespedes(numHuespedes)
-                .descuento(descuento)
+                .numHuespedes(reserva.getNumHuespedes())
                 .build();
-
-        return factura;
     }
 
     //se hace uso en reserva controlador
@@ -1039,7 +1048,6 @@ public class BookYourStay implements ServiciosEmpresa {
 
         String codigoQRFilePath = generarCodigoQR(factura); // Usamos tu método para generar el QR
 
-        // Crear el mensaje del correo
         String mensaje = "Hola " + reserva.getCliente().getNombre() + ",\n\n"
                 + "Gracias por realizar tu reserva con nosotros. A continuación, encontrarás los detalles de tu reserva:\n\n"
                 + "Código de Factura: " + factura.getCodigo() + "\n"
