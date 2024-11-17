@@ -904,9 +904,9 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
 
     //hace uso del controlador crear alojamiento
     @Override
-    public Alojamiento crearAlojamiento(String nombre, String descripcion, String imagen, LocalDate fechaEstancia, float valorNoche, int numHuespedes, List<String> serviciosIncluidos, TipoAlojamiento tipoAlojamiento, TipoCiudad tipoCiudad, boolean activo) throws Exception {
+    public Alojamiento crearAlojamiento(String nombre, String descripcion, String imagen, float valorNoche, int numHuespedes, List<String> serviciosIncluidos, TipoAlojamiento tipoAlojamiento, TipoCiudad tipoCiudad, boolean activo) throws Exception {
         try {
-            if (nombre.isEmpty() || descripcion.isEmpty() || imagen == null || fechaEstancia == null
+            if (nombre.isEmpty() || descripcion.isEmpty() || imagen == null
                     || valorNoche < 0 || numHuespedes < 0 || serviciosIncluidos.isEmpty()
                     || tipoAlojamiento == null || tipoCiudad == null) {
                 throw new Exception("Todos los campos son obligatorios");
@@ -920,7 +920,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
 
             // Creando el objeto Alojamiento a partir de la fábrica
             Alojamiento alojamiento = creacionAlojamiento.crearOrdenAlojamiento(
-                    nombre, descripcion, imagen, fechaEstancia, valorNoche, numHuespedes,
+                    nombre, descripcion, imagen, valorNoche, numHuespedes,
                     serviciosIncluidos, tipoAlojamiento, tipoCiudad);
             System.out.println("Alojamiento creado: " + alojamiento);
             alojamiento.setActivo(activo); // Asignar el estado activo

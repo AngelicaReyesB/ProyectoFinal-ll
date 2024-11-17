@@ -15,7 +15,7 @@ import java.util.UUID;
 
 public class AlojamientoHotel implements CreacionAlojamiento  {
     @Override
-    public Alojamiento crearOrdenAlojamiento(String nombre, String descripcion, String imagen, LocalDate fechaEstancia, float valorNoche, int numHuespedes, List<String> serviciosIncluidos, TipoAlojamiento tipoAlojamiento, TipoCiudad tipoCiudad) throws Exception {
+    public Alojamiento crearOrdenAlojamiento(String nombre, String descripcion, String imagen, float valorNoche, int numHuespedes, List<String> serviciosIncluidos, TipoAlojamiento tipoAlojamiento, TipoCiudad tipoCiudad) throws Exception {
         ArrayList<Habitacion> habitaciones = new ArrayList<>();
         Habitacion individual = Habitacion.builder()
                 .tipoHabitacion(TipoHabitacion.INDIVIDUAL)
@@ -47,7 +47,6 @@ public class AlojamientoHotel implements CreacionAlojamiento  {
                 .nombre(nombre)
                 .descripcion(descripcion)
                 .imagen(imagen)
-                .fechaEstancia(fechaEstancia)
                 .valorNoche(valorNoche)
                 .capacidadMaxima(numHuespedes)
                 .serviciosIncluidos(serviciosIncluidos)

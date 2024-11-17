@@ -26,7 +26,7 @@ public interface ServiciosEmpresa {
     void editarCuenta(String cedula, String nombre, String telefono, String email, String password) throws Exception;
     boolean validarIngresoAdministrador(String email, String password) throws Exception;
     CreacionAlojamiento crearAlojamiento(TipoAlojamiento tipoAlojamiento) throws Exception;
-    Alojamiento crearAlojamiento(String nombre, String descripcion, String imagen, LocalDate fechaEstancia, float valorNoche, int numHuespedes, List<String> serviciosIncluidos, TipoAlojamiento tipoAlojamiento, TipoCiudad tipoCiudad, boolean activo) throws Exception;
+    Alojamiento crearAlojamiento(String nombre, String descripcion, String imagen, float valorNoche, int numHuespedes, List<String> serviciosIncluidos, TipoAlojamiento tipoAlojamiento, TipoCiudad tipoCiudad, boolean activo) throws Exception;
     Alojamiento obtenerAlojamiento(String codigo) throws Exception;
     Alojamiento actualizarAlojamiento(Alojamiento alojamiento) throws Exception;
     //void actualizarAlojamiento(Reserva reserva) throws Exception;

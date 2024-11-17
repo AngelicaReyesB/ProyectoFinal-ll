@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface CreacionAlojamiento {
 
-    Alojamiento crearOrdenAlojamiento(String nombre, String descripcion, String imagen, LocalDate fechaEstancia, float valorNoche, int numHuespedes, List<String> serviciosIncluidos, TipoAlojamiento tipoAlojamiento, TipoCiudad tipoCiudad)throws Exception;
+    Alojamiento crearOrdenAlojamiento(String nombre, String descripcion, String imagen, float valorNoche, int numHuespedes, List<String> serviciosIncluidos, TipoAlojamiento tipoAlojamiento, TipoCiudad tipoCiudad)throws Exception;
 
 
 }

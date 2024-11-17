@@ -50,7 +50,7 @@
                 <Label fx:id="CiudadAlojamiento" alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="440.0" />
                 <Label fx:id="ValorAlojamiento" alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="440.0" />
                 <Label fx:id="capacidadMaxima" alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="440.0" />
-            <Label fx:id="labelServicios" text="Label" />
+            <Label fx:id="labelServicios" prefHeight="18.0" prefWidth="711.0" />
             </children>
             <padding>
                 <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />

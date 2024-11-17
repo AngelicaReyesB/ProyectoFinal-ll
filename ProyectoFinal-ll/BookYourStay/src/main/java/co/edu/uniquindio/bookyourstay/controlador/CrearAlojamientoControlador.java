@@ -38,14 +38,12 @@ public class CrearAlojamientoControlador implements Observable, Initializable {
     @FXML private TableColumn<Alojamiento, String> colCiudad;
     @FXML private TableColumn<Alojamiento, String> colDescripcion;
     @FXML private TableColumn<Alojamiento, String> colEstado;
-    @FXML private TableColumn<Alojamiento, String> colFecha;
     @FXML TableColumn<Alojamiento, ImageView> colImagen = new TableColumn<>("Imagen");
     @FXML private TableColumn<Alojamiento, String> colNombre;
     @FXML private TableColumn<Alojamiento, String> colServicios;
     @FXML private TableColumn<Alojamiento, String > colTipo;
     @FXML private TableColumn<Alojamiento, String> colValor;
     @FXML private TableView<Alojamiento> tablaAlojamientos;
-    @FXML private DatePicker fechaInstanciaPicker;
     @FXML private TextField txtCapacidadMaxima;
     @FXML private TextArea txtDescripcion;
     @FXML private TextField txtNombre;
@@ -86,15 +84,11 @@ public class CrearAlojamientoControlador implements Observable, Initializable {
 
     private boolean validarCampos() {
         if (txtNombre.getText().isEmpty() || txtDescripcion.getText().isEmpty() ||
-                txtCapacidadMaxima.getText().isEmpty() || txtValorNoche.getText().isEmpty() ||
-                fechaInstanciaPicker.getValue() == null || cbCiudad.getValue() == null ||
+                txtCapacidadMaxima.getText().isEmpty() || txtValorNoche.getText().isEmpty()
+                || cbCiudad.getValue() == null ||
                 cbServicios.getValue() == null || cbTipoAlojamiento.getValue() == null ||
                 imagenSeleccionada == null) {
             principalControlador.mostrarAlerta("Ningún campo puede estar vacío", Alert.AlertType.ERROR);
-            return false;
-        }
-        if (fechaInstanciaPicker.getValue().isBefore(LocalDate.now())) {
-            principalControlador.mostrarAlerta("La fecha seleccionada debe ser igual o superior al día de hoy", Alert.AlertType.WARNING);
             return false;
         }
         return true;
@@ -116,7 +110,6 @@ public class CrearAlojamientoControlador implements Observable, Initializable {
                     txtNombre.getText(),
                     txtDescripcion.getText(),
                     imagenSeleccionada,
-                    fechaInstanciaPicker.getValue(),
                     valorNoche,
                     capacidadMaxima,
                     cbServicios.getItems(),
@@ -149,7 +142,6 @@ public class CrearAlojamientoControlador implements Observable, Initializable {
         cbServicios.getSelectionModel().clearSelection();
         imagenCargada = null;
         imagenSeleccionada = null;
-        fechaInstanciaPicker.setValue(null);
     }
 
     public void actualizarTabla(ArrayList<Alojamiento> alojamientos) {
@@ -158,7 +150,6 @@ public class CrearAlojamientoControlador implements Observable, Initializable {
         colCiudad.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTipoCiudad().toString()));
         colDescripcion.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescripcion()));
         colEstado.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().isActivo() ? "Activo" : "Inactivo"));
-        colFecha.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFechaEstancia().toString()));
         colNombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
         colServicios.setCellValueFactory(cellData -> new SimpleStringProperty(String.join(", ", cellData.getValue().getServiciosIncluidos())));
         colTipo.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTipoAlojamiento().toString()));
