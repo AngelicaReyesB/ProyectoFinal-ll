@@ -89,7 +89,7 @@ public class BookYourStay implements ServiciosEmpresa {
 
     //si se hace uso en el controlador de registro cliente
     @Override
-    public Cliente registrarCliente(String cedula, String nombre, String telefono, String email, String password) throws Exception {
+    public Cliente registrarCliente(String nombre, String cedula, String telefono, String email, String password) throws Exception {
         if(cedula.isEmpty() || cedula.isBlank() ){
             throw new Exception("El número de identificación es obligatorio");
         }
