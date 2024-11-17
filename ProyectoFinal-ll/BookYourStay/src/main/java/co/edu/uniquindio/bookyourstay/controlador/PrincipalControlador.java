@@ -341,4 +341,9 @@ public class PrincipalControlador implements ServiciosEmpresa {
         return bookYourStay.validarCodigoVerificacion(codigoIngresado);
     }
 
+    @Override
+    public String verificarSaldoDisponible(Cliente cliente, double total) throws Exception {
+        return bookYourStay.verificarSaldoDisponible(cliente,total);
+    }
+
 }
