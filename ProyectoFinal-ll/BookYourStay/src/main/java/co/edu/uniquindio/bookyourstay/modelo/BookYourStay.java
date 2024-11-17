@@ -1067,6 +1067,4 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
 
         return true;
     }
-
-
 }
