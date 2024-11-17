@@ -221,11 +221,18 @@ public class CrearAlojamientoControlador implements Observable, Initializable {
         if (cbTipoAlojamiento.getValue() != null) {
             // Ejemplo de lógica para cambiar servicios dependiendo del tipo de alojamiento
             if (cbTipoAlojamiento.getValue() == TipoAlojamiento.CASA) {
-                serviciosActualizados.addAll("WiFi", "Piscina", "Gimnasio");
-                serviciosActualizados.addAll("Piscina","Spa");
+                serviciosActualizados.addAll("WiFi, Piscina, Gimnasio");
+                serviciosActualizados.addAll("Piscina, Spa");
+                serviciosActualizados.addAll("Wifi, Spa, Piscina");
             } else if (cbTipoAlojamiento.getValue() == TipoAlojamiento.APARTAMENTO) {
-                serviciosActualizados.addAll("WiFi", "Parking");
-            }
+                serviciosActualizados.addAll("WiFi, Parking, re");
+                serviciosActualizados.addAll("WiFi, Parking, 43");
+                serviciosActualizados.addAll("WiFi, Parking, 54");
+            } else if (cbTipoAlojamiento.getValue() == TipoAlojamiento.CASA) {
+                    serviciosActualizados.addAll("WiFi, H, re");
+                    serviciosActualizados.addAll("WiFi, Y, 43");
+                    serviciosActualizados.addAll("WiFi, W, 54");
+                }
         }
         cbServicios.setItems(serviciosActualizados);
     }
