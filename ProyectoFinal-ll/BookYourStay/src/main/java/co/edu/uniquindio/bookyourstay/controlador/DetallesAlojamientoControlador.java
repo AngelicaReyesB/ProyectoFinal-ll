@@ -70,9 +70,16 @@ public class DetallesAlojamientoControlador implements Observable, Initializable
             imagenAlojamiento.setImage(new Image(alojamiento.getImagen()));
         }
 
-        // Agregar los servicios al ListView
-        ListaServicios.getItems().addAll(alojamiento.getServiciosIncluidos());
+        // Concatenar los servicios en una cadena
+        StringBuilder serviciosText = new StringBuilder("Servicios incluidos:\n");
+        for (String servicio : alojamiento.getServiciosIncluidos()) {
+            serviciosText.append("- ").append(servicio).append("\n");
+        }
+
+        // Establecer el texto del Label con los servicios
+        labelServicios.setText(serviciosText.toString());
     }
+
     @Override
     public void notificar() {
 
