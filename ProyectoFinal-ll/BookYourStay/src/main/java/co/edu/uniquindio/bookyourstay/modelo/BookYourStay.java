@@ -31,7 +31,6 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 
 @Getter
@@ -1087,4 +1086,26 @@ public class BookYourStay implements ServiciosEmpresa {
 
         return true;
     }
+
+    @Override
+    public String verificarSaldoDisponible(Cliente cliente, double total) throws Exception {
+        if (cliente == null) {
+            throw new Exception("El cliente no puede ser nulo.");
+        }
+
+        BilleteraVirtual billetera = cliente.getBilleteraVirtual();
+        if (billetera == null) {
+            throw new Exception("El cliente no tiene una billetera virtual asociada.");
+        }
+
+        double montoTotal = billetera.getMontoTotal();
+
+        if (montoTotal >= total) {
+            return "Saldo suficiente. Puedes cubrir el total de la factura.";
+        } else {
+            double diferencia = total - total;
+            return "Saldo insuficiente. Te faltan $" + diferencia + " para cubrir el total de la factura.";
+        }
+    }
+
 }
