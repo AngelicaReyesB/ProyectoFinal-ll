@@ -3,10 +3,8 @@ package co.edu.uniquindio.bookyourstay.controlador;
 import co.edu.uniquindio.bookyourstay.controlador.observador.Observable;
 import co.edu.uniquindio.bookyourstay.modelo.Alojamiento;
 import co.edu.uniquindio.bookyourstay.modelo.Cliente;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,11 +16,10 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-
 public class InicioControlador implements Observable, Initializable {
 
-    @FXML private HBox HBoxAlojamientosAleatorios;
     @FXML private Button btnIngresar;
+    @FXML private Button btnVer;
     @FXML private TableColumn<Alojamiento, String> colCiudad;
     @FXML private TableColumn<Alojamiento, ImageView> colImagen;
     @FXML private TableColumn<Alojamiento, ImageView> colImagenOfertas;
@@ -56,40 +53,45 @@ public class InicioControlador implements Observable, Initializable {
                 boolean administrador = principalControlador.validarIngresoAdministrador(correo.getText(), password.getText());
                 if (administrador) {
                     principalControlador.getSesion().setAdministrador(true);
+                    principalControlador.notificarObservadores();
                     principalControlador.navegarVentana("/panelAdministrador.fxml", "Panel del administrador.");
                     principalControlador.cerrarVentana(correo);
                 } else {
-                    Cliente cliente = principalControlador.validarUsuario(correo.getText(), password.getText());
+                    Cliente cliente = principalControlador.obtenerUsuario(correo.getText());
                     if (cliente != null) {
                         validarCliente(cliente);
+                    } else {
+                        principalControlador.mostrarAlerta("El cliente con el correo proporcionado no existe.", Alert.AlertType.WARNING);
+                        correo.clear();
+                        password.clear();
                     }
                 }
                 correo.clear();
                 password.clear();
             } catch (Exception e) {
                 principalControlador.mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
-                correo.clear();
-                password.clear();
             }
         }
     }
 
-    private void validarCliente(Cliente cliente){
-        if(cliente.getCedula().equals(correo.getText()) && cliente.getPassword().equals(password.getText())){
-            if(cliente.isEstadoCuenta()){
+    private void validarCliente(Cliente cliente) {
+        // Corregimos la condición añadiendo el paréntesis que falta
+        if (cliente.getEmail().equals(correo.getText()) && cliente.getPassword().equals(password.getText())) {
+            if (cliente.isEstadoCuenta()) {
                 principalControlador.getSesion().setCliente(cliente);
-                principalControlador.navegarVentana("/panelCliente.fxml", "Panel del Cliente.");
+                principalControlador.navegarVentana("/panelUsuario.fxml", "Panel usuario");
                 principalControlador.cerrarVentana(correo);
-            }else {
+            } else {
                 principalControlador.getSesion().setCliente(cliente);
-                principalControlador.navegarVentana("/activarCuenta.fxml", "Activar Cuenta");
+                principalControlador.navegarVentana("activarCuenta.fxml", "Activar cuenta");
             }
-        }else {
+        } else {
             principalControlador.mostrarAlerta("Los datos de ingreso son incorrectos", Alert.AlertType.WARNING);
             correo.clear();
             password.clear();
         }
     }
+
 
     @FXML
     public void recuperacionPassword() {
@@ -97,90 +99,46 @@ public class InicioControlador implements Observable, Initializable {
         principalControlador.cerrarVentana(olvidoPasswordLink);
     }
 
-    private void alojamientosAleatorios() {
+    private void alojamientoRandom() {
         try {
             if (!principalControlador.getBookYourStay().getAlojamientos().isEmpty()) {
-                // Obtener la lista de alojamientos
-                List<Alojamiento> alojamientos = principalControlador.getBookYourStay().getAlojamientos();
-
-                // Seleccionar dos índices aleatorios sin repetir
-                int indice1 = (int) Math.floor(Math.random() * alojamientos.size());
-                int indice2;
-                do {
-                    indice2 = (int) Math.floor(Math.random() * alojamientos.size());
-                } while (indice1 == indice2); // Asegurar que los índices sean diferentes
-
-                // Obtener los alojamientos seleccionados
-                Alojamiento alojamiento1 = alojamientos.get(indice1);
-                Alojamiento alojamiento2 = alojamientos.get(indice2);
-
-                // Configurar las columnas de la tabla
+                // Seleccionar un alojamiento aleatorio
+                int indice = (int) Math.floor(Math.random() * principalControlador.getBookYourStay().getAlojamientos().size());
+                alojamientoRandom = principalControlador.getBookYourStay().getAlojamientos().get(indice);
                 colNombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
                 colCiudad.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTipoCiudad().toString()));
                 colPrecio.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getValorNoche())));
+
                 colImagen.setCellValueFactory(cellData -> {
-                    ImageView imageView = new ImageView(cellData.getValue().getImagen());
-                    imageView.setFitWidth(200);
-                    imageView.setFitHeight(200);
+                    ImageView imageView = new ImageView(cellData.getValue().getImagen()); // Ajustar según tipo de dato de imagen
+                    imageView.setFitWidth(400); // Ajustar tamaño
+                    imageView.setFitHeight(400);
                     return new SimpleObjectProperty<>(imageView);
                 });
 
-                // Mostrar los dos alojamientos aleatorios en la tabla
+                // Mostrar el alojamiento aleatorio en la tabla
                 tablaAlojamientosAleatoria.getItems().clear();
-                tablaAlojamientosAleatoria.getItems().addAll(alojamiento1, alojamiento2);
+                tablaAlojamientosAleatoria.getItems().add(alojamientoRandom);
 
-                System.out.println("ALOJAMIENTOS RANDOM: " + alojamiento1 + ", " + alojamiento2);
+                System.out.println("ALOJAMIENTO RANDOM: " + alojamientoRandom);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    //private void mostrarOfertasAlojamientos() {
-    //        try {
-    //            // Obtener los alojamientos con ofertas especiales
-    //            ObservableList<Alojamiento> alojamientosConOfertas = principalControlador.getBookYourStay().listarOfertasEspeciales();
-    //
-    //            if (!alojamientosConOfertas.isEmpty()) {
-    //                // Configurar la columna de imagen de ofertas
-    //                colImagenOfertas.setCellValueFactory(cellData -> {
-    //                    ImageView imageView = new ImageView(cellData.getValue().getImagen()); // Usamos el campo imagen
-    //                    imageView.setFitWidth(200); // Ajusta el tamaño
-    //                    imageView.setFitHeight(200);
-    //                    return new SimpleObjectProperty<>(imageView);
-    //                });
-    //
-    //                // Configurar otras columnas (si es necesario)
-    //                colNombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
-    //                colCiudad.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTipoCiudad().toString()));
-    //                colPrecio.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getValorNoche())));
-    //
-    //                // Llenar la tabla con los datos
-    //                tablaOfertasAlojamientos.getItems().clear();
-    //                tablaOfertasAlojamientos.setItems(alojamientosConOfertas);
-    //
-    //                System.out.println("ALOJAMIENTOS CON OFERTAS: " + alojamientosConOfertas);
-    //            } else {
-    //                System.out.println("No hay alojamientos con ofertas especiales disponibles.");
-    //            }
-    //        } catch (Exception e) {
-    //            e.printStackTrace();
-    //        }
-    //    }
+    @FXML
+    public void verDetallesAlojamiento() {
+        // Aquí va la lógica para ver detalles del alojamiento
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        alojamientosAleatorios();
-        //mostrarOfertasAlojamientos(); // Llamamos al método para mostrar las ofertas
+        alojamientoRandom();
     }
-
-
 
     @Override
     public void notificar() {
-
-    }
-
-    public void verDetallesAlojamiento(ActionEvent actionEvent) {
+        // Implementación del patrón Observer
     }
 }

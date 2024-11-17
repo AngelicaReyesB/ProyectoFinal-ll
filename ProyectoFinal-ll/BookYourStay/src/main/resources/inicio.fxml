@@ -46,9 +46,9 @@
                      </HBox.margin>
                   </TableView>
                </children></HBox>
-            <HBox prefHeight="61.0" prefWidth="1266.0">
+            <HBox prefHeight="81.0" prefWidth="1265.0">
                <children>
-                  <Button fx:id="btnVer" mnemonicParsing="false" onAction="#verDetallesAlojamiento" prefHeight="26.0" prefWidth="98.0" style="-fx-background-color: #006600;" text="Ver" textFill="WHITE" />
+                  <Button fx:id="btnVer" mnemonicParsing="false" onAction="#verDetallesAlojamiento" prefHeight="50.0" prefWidth="98.0" style="-fx-background-color: #006600;" text="Ver" textFill="WHITE" />
                </children>
             </HBox>
          </children>

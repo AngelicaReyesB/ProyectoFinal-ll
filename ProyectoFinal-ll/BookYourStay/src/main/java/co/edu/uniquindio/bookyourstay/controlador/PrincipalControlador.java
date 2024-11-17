@@ -122,8 +122,8 @@ public class PrincipalControlador implements ServiciosEmpresa {
     }
 
     @Override
-    public Cliente validarUsuario(String email, String password) throws Exception {
-        return bookYourStay.validarUsuario(email, password);
+    public Cliente validarUsuario(String cedula, String password) throws Exception {
+        return bookYourStay.validarUsuario(cedula, password);
     }
 
     @Override

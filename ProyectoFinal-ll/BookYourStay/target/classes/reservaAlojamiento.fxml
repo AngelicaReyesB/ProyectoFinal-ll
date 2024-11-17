@@ -89,42 +89,7 @@
                <ComboBox fx:id="cbNumHuespedes" prefHeight="26.0" prefWidth="170.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             </children>
          </GridPane>
-
-            <Label alignment="CENTER" prefHeight="48.0" prefWidth="809.0" style="-fx-background-color: #d8dbe2; -fx-font-weight: BOLD; -fx-font-size: 15;" text="INFORMACIÓN DE PAGO">
-                <font>
-                    <Font size="14.0" />
-                </font>
-                <VBox.margin>
-                    <Insets left="32.0" right="32.0" top="32.0" />
-                </VBox.margin></Label>
-            <GridPane alignment="CENTER" hgap="10.0" prefHeight="262.0" prefWidth="375.0" style="-fx-text-fill: white;" vgap="10.0">
-
-                <Label alignment="CENTER" prefHeight="18.0" prefWidth="116.0" style="-fx-font-weight: bold;" text="Subtotal" textAlignment="RIGHT" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                <Label fx:id="verSubtotal" disable="true" minHeight="30.0" minWidth="256" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-
-                <Label alignment="CENTER" prefHeight="18.0" prefWidth="116.0" style="-fx-font-weight: BOLD;" text="Descuento" textAlignment="RIGHT" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                <Label fx:id="verDescuento" disable="true" minHeight="30.0" minWidth="256" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-
-                <Label alignment="CENTER" prefHeight="18.0" prefWidth="116.0" style="-fx-font-weight: BOLD;" text="Total" textAlignment="RIGHT" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                <Label fx:id="verTotal" disable="true" minHeight="30.0" minWidth="256" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                <Button fx:id="btnPagar" disable="true" minHeight="30.0" minWidth="124.0" onAction="#confirmaReserva" style="-fx-background-color: #006600; -fx-text-fill: white;" text="Pagar" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                <VBox.margin>
-                    <Insets />
-                </VBox.margin>
-                <padding>
-                    <Insets bottom="16.0" top="16.0" />
-                </padding>
-                <columnConstraints>
-                    <ColumnConstraints />
-                    <ColumnConstraints />
-                    <ColumnConstraints />
-                </columnConstraints>
-                <rowConstraints>
-                    <RowConstraints />
-                    <RowConstraints />
-                    <RowConstraints />
-                </rowConstraints>
-            </GridPane>
+         <Button fx:id="btnPagar" mnemonicParsing="false" onAction="#realizarPago" prefHeight="35.0" prefWidth="138.0" text="Pagar" />
 
             <HBox.margin>
                 <Insets bottom="24.0" right="24.0" top="24.0" />

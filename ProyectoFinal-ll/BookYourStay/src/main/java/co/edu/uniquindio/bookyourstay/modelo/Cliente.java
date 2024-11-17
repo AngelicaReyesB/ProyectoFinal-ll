@@ -14,11 +14,12 @@ public class Cliente {
     private String telefono;
     private String email;
     private String password;
-    private boolean estadoCuenta;
+    private boolean estadoCuenta;  // Cambiado de boolean a Boolean
     private String codigoActivacion;
     private BilleteraVirtual billeteraVirtual;
+
     public Cliente(String cedula, String nombre, String telefono, String email,
-                   String password, boolean estadoCuenta, String codigoActivacion) {
+                   String password, Boolean estadoCuenta, String codigoActivacion) {
         this.cedula = cedula;
         this.nombre = nombre;
         this.telefono = telefono;
@@ -29,6 +30,7 @@ public class Cliente {
         // Inicializa la billetera virtual por defecto
         this.billeteraVirtual = new BilleteraVirtual();
     }
+
     public static class ClienteBuilder {
         public ClienteBuilder billeteraVirtual(BilleteraVirtual billeteraVirtual) {
             if (billeteraVirtual == null) {

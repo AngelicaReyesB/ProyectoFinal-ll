@@ -27,34 +27,38 @@ public class ActivarCuentaControlador implements Observable, Initializable {
     @FXML
     public void activarCuenta() {
         try {
-            Cliente cliente = principalControlador.getSesion().getCliente();
+            Cliente cliente = principalControlador.getSesion().getCliente(); // Obtener cliente de la sesión
 
+            // Verifica si la cuenta ya está activada
             if (cliente.isEstadoCuenta()) {
                 principalControlador.mostrarAlerta("La cuenta ya está activada", Alert.AlertType.INFORMATION);
                 return;
             }
+
+            // Verificar si el código ingresado es el correcto
             boolean cuentaActivada = principalControlador.activarUsuario(codigoActivacion.getText(), cliente);
-            System.out.println("cuenta activada: " + cuentaActivada);
 
             if (cuentaActivada) {
-                principalControlador.getSesion().setCliente(cliente);
-                if (observable != null) {
-                    principalControlador.registrarObservador(observable);
-                }
+                // Si la cuenta se activa, actualiza el estado en la sesión y en la vista
+                cliente.setEstadoCuenta(true);  // Activar la cuenta
+                principalControlador.getSesion().setCliente(cliente);  // Actualiza el cliente en la sesión
 
+                // Mostrar mensaje de éxito
                 principalControlador.mostrarAlerta("Cuenta activada con éxito", Alert.AlertType.INFORMATION);
-                principalControlador.navegarVentana("/panelUsuario.fxml", "Panel del usuario");
+
+                // Navegar a la vista del usuario
+                principalControlador.navegarVentana("/inicio.fxml", "Panel del usuario");
                 principalControlador.cerrarVentana(codigoActivacion);
                 navegar();
             } else {
                 principalControlador.mostrarAlerta("Los datos de usuario y código no coinciden. Intenta nuevamente", Alert.AlertType.WARNING);
             }
-
         } catch (Exception e) {
             principalControlador.mostrarAlerta("Hubo un error al activar la cuenta: " + e.getMessage(), Alert.AlertType.ERROR);
             e.printStackTrace();
         }
     }
+
 
     private void navegar() {
         Alojamiento reservaAlojamiento = principalControlador.getSesion().getReservarAlojamiento();

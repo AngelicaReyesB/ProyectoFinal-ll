@@ -16,7 +16,7 @@ public interface ServiciosEmpresa {
     //Cliente iniciarSesion(String email, String password) throws Exception;
     boolean eliminarCuentaCliente(String cedulaCliente) throws  Exception;
     Cliente obtenerCliente(String cedula) throws Exception;
-    Cliente validarUsuario(String email, String password) throws Exception;
+    Cliente validarUsuario(String cedula, String password) throws Exception;
     Cliente obtenerUsuario(String email) throws Exception;
     boolean activarUsuario(String codigoActivacion, Cliente cliente) throws Exception;
     void enviarCodigoActivacion(Cliente cliente) throws Exception;

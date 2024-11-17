@@ -44,13 +44,13 @@ public class BookYourStay implements ServiciosEmpresa {
     private Administrador administrador;
     Persistencia persistencia = new Persistencia();
 
-    public BookYourStay(){
+    public BookYourStay() {
         try {
             clientes = new ArrayList<>();
             alojamientos = new ArrayList<>();
             facturas = new ArrayList<>();
             //cargarDatosEmpresa();
-        }catch ( Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
@@ -90,32 +90,32 @@ public class BookYourStay implements ServiciosEmpresa {
     //si se hace uso en el controlador de registro cliente
     @Override
     public Cliente registrarCliente(String nombre, String cedula, String telefono, String email, String password) throws Exception {
-        if(cedula.isEmpty() || cedula.isBlank() ){
+        if (cedula.isEmpty() || cedula.isBlank()) {
             throw new Exception("El número de identificación es obligatorio");
         }
 
-        if(obtenerCliente(cedula) != null){
-            if(!obtenerCliente(cedula).getPassword().equals(password)){
+        if (obtenerCliente(cedula) != null) {
+            if (!obtenerCliente(cedula).getPassword().equals(password)) {
                 throw new Exception("Los datos de usuario y contraseña no coinciden");
             }
-            throw new Exception("Ya existe un usuario con el número de identificación: "+cedula);
+            throw new Exception("Ya existe un usuario con el número de identificación: " + cedula);
         }
 
-        if(nombre.isEmpty() || nombre.isBlank()){
+        if (nombre.isEmpty() || nombre.isBlank()) {
             throw new Exception("El nombre es obligatorio");
         }
 
-        if(email.isEmpty() || email.isBlank()){
+        if (email.isEmpty() || email.isBlank()) {
             throw new Exception("El correo electrónico es obligatorio");
         }
 
-        if(password.isEmpty() || password.isBlank()){
+        if (password.isEmpty() || password.isBlank()) {
             throw new Exception("La contraseña es obligatoria");
         }
 
         Cliente cliente;
         String codigoActivacion = UUID.randomUUID().toString();
-        try{
+        try {
             cliente = Cliente.builder()
                     .nombre(nombre)
                     .cedula(cedula)
@@ -129,7 +129,7 @@ public class BookYourStay implements ServiciosEmpresa {
             //guardarDatosEmpresa();
             System.out.println("Código de activación generado para el usuario " + nombre + ": " + codigoActivacion);
 
-        } catch(Exception e){
+        } catch (Exception e) {
             throw new Exception("No se puede agregar el nuevo cliente");
         }
         return cliente;
@@ -159,21 +159,14 @@ public class BookYourStay implements ServiciosEmpresa {
     //se hace uso en inicio controlador
     @Override
     public Cliente validarUsuario(String email, String password) throws Exception {
-        if (email == null || email.isEmpty() || password == null || password.isEmpty()) {
-            throw new Exception("Correo y contraseña no pueden estar vacíos.");
-        }
-
-        // Obtener el cliente mediante el correo
         Cliente cliente = obtenerCliente(email);
         if (cliente != null) {
             // Verificamos que la billetera virtual esté asociada
             if (cliente.getBilleteraVirtual() == null) {
                 cliente.setBilleteraVirtual(new BilleteraVirtual()); // Asignamos una billetera vacía si no está asociada
             }
-
-            // Validamos la contraseña
             if (cliente.getPassword().equals(password)) {
-                return cliente;
+                return cliente; // Retornamos el cliente sin importar si la cuenta está activada o no
             } else {
                 throw new Exception("Los datos de ingreso son incorrectos.");
             }
@@ -181,6 +174,7 @@ public class BookYourStay implements ServiciosEmpresa {
             throw new Exception("El usuario no existe.");
         }
     }
+
 
     //se hace uso en recuperar contraseña
     @Override
@@ -191,18 +185,18 @@ public class BookYourStay implements ServiciosEmpresa {
                 System.out.println("Código de verificación para el usuario " + cliente.getNombre() + ": " + codigoVerificacion);
                 String asunto = "Código de verificación - BookYourStay";
                 String mensaje = """
-                    Hola %s,
-                    
-                    Hemos recibido una solicitud para restablecer tu contraseña. 
-                    Utiliza el siguiente código para completar el proceso:
-                    
-                    Código: %s
-                    
-                    Si no solicitaste este cambio, por favor ignora este correo.
-                    
-                    Saludos,
-                    Equipo de BookYourStay
-                    """.formatted(cliente.getNombre(), codigoVerificacion);
+                        Hola %s,
+                                            
+                        Hemos recibido una solicitud para restablecer tu contraseña. 
+                        Utiliza el siguiente código para completar el proceso:
+                                            
+                        Código: %s
+                                            
+                        Si no solicitaste este cambio, por favor ignora este correo.
+                                            
+                        Saludos,
+                        Equipo de BookYourStay
+                        """.formatted(cliente.getNombre(), codigoVerificacion);
                 EnvioEmail envioEmail = new EnvioEmail(email, asunto, mensaje);
                 envioEmail.enviarNotificacion();
                 return cliente;
@@ -225,21 +219,21 @@ public class BookYourStay implements ServiciosEmpresa {
 
     //no se hace euso y debe de usarse en nueva contraseña
     @Override
-    public void enviarCorreoRecuperacion(String email) throws Exception{
+    public void enviarCorreoRecuperacion(String email) throws Exception {
         String codigo = generarCodigoVerificacion();
         String mensaje = """
-        Hola,
-        
-        Hemos recibido una solicitud para restablecer la contraseña de tu cuenta de administrador. 
-        Si realizaste esta solicitud, utiliza el siguiente código de verificación:
-        
-        Código: """ + codigo + """
-        
-        Si no realizaste esta solicitud, ignora este correo.
-        
-        Saludos,
-        Equipo de BookYourStay
-        """;
+                Hola,
+                        
+                Hemos recibido una solicitud para restablecer la contraseña de tu cuenta de administrador. 
+                Si realizaste esta solicitud, utiliza el siguiente código de verificación:
+                        
+                Código: """ + codigo + """
+                        
+                Si no realizaste esta solicitud, ignora este correo.
+                        
+                Saludos,
+                Equipo de BookYourStay
+                """;
         EnvioEmail envioEmail = new EnvioEmail(email, "Recuperación contraseña", mensaje);
         try {
             envioEmail.enviarNotificacion();
@@ -304,7 +298,7 @@ public class BookYourStay implements ServiciosEmpresa {
 
     @Override
     public ArrayList<Cliente> listarClientes() throws Exception {
-        return new ArrayList<>(clientes);
+        return new ArrayList<Cliente>(clientes);
     }
 
     //hace uso de otro método
@@ -324,25 +318,18 @@ public class BookYourStay implements ServiciosEmpresa {
         String email = cliente.getEmail();
         String mensajeActivacion = "Recuerde activar la cuenta para poder realizar sus reservas en BookYourStay. Código de activación: " +
                 cliente.getCodigoActivacion();
-        enviarNotificacion(email, "BookYourStay: Código de activación", mensajeActivacion );
+        enviarNotificacion(email, "BookYourStay: Código de activación", mensajeActivacion);
     }
 
     //se hace uso en el controlador de activar cuenta
-    @Override
-    public boolean activarUsuario(String codigoActivacion, Cliente cliente) throws Exception {
-        Cliente usuarioEncontrado = validarUsuario(cliente.getCedula(), cliente.getPassword());
-        if(usuarioEncontrado != null){
-            if(usuarioEncontrado.getCodigoActivacion().equals(codigoActivacion)){
-                usuarioEncontrado.setEstadoCuenta(true);
-                //guardarDatosEmpresa();
-                return true;
-            }else {
-                throw new Exception("El código de activación no coincide");
-            }
-        }else {
-            throw new Exception("El usuario no existe");
+    public boolean activarUsuario(String codigoActivacion, Cliente cliente) {
+        if (cliente != null && cliente.getCodigoActivacion().equals(codigoActivacion)) {
+            cliente.setEstadoCuenta(true);  // Activa la cuenta
+            return true;
         }
+        return false;
     }
+
 
     //se hace uso en inicio controlador
     @Override
@@ -518,11 +505,18 @@ public class BookYourStay implements ServiciosEmpresa {
     //se hace uso en el controlador de reserva
     @Override
     public Reserva realizarReserva(Cliente cliente, Alojamiento alojamiento, LocalDate fechaInicio, LocalDate fechaFin, int numHuespedes, Factura factura) throws Exception {
+        System.out.println("Cliente: " + cliente);
+        System.out.println("Alojamiento: " + alojamiento);
+        System.out.println("Fecha Inicio: " + fechaInicio);
+        System.out.println("Fecha Fin: " + fechaFin);
+        System.out.println("Factura: " + factura);
+
         if (cliente == null || alojamiento == null || fechaInicio == null || fechaFin == null || factura == null) {
             throw new IllegalArgumentException("Todos los campos deben estar completos.");
+
         }
 
-        if (fechaFin.isBefore(fechaInicio) || fechaInicio.isBefore(LocalDate.now())) {
+            if (fechaFin.isBefore(fechaInicio) || fechaInicio.isBefore(LocalDate.now())) {
             throw new Exception("Las fechas de la reserva no son válidas.");
         }
 
@@ -1041,10 +1035,8 @@ public class BookYourStay implements ServiciosEmpresa {
 
     @Override
     public String enviarFacturaQR(Reserva reserva) throws Exception {
-        // Primero, generamos la factura para la reserva
         Factura factura = generarFactura(reserva);
 
-        // Generar el código QR de la factura
         String codigoQRFilePath = generarCodigoQR(factura); // Usamos tu método para generar el QR
 
         // Crear el mensaje del correo

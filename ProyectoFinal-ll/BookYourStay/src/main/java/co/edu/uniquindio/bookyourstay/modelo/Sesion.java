@@ -36,7 +36,7 @@ public class Sesion implements Serializable {
         reservarAlojamiento = null;
         alojamientoAleatorio = null;
         alojamientoDetalle = null;
-        clientes = null;
+        clientes = new ArrayList<>();
         alojamientos = null;
         administrador = false;
     }
