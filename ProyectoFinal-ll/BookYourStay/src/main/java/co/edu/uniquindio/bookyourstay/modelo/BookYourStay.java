@@ -1056,7 +1056,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
     }
 
     @Override
-    public boolean validarCodigo(String codigoIngresado) throws Exception {
+    public boolean validarCodigoVerificacion(String codigoIngresado) throws Exception {
         if (codigoIngresado == null || codigoIngresado.isEmpty()) {
             throw new Exception("El código ingresado no puede estar vacío.");
         }

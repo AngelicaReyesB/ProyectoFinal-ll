@@ -333,8 +333,8 @@ public class PrincipalControlador implements ServiciosEmpresa {
     }
 
     @Override
-    public boolean validarCodigo(String codigoIngresado) throws Exception {
-        return false;
+    public boolean validarCodigoVerificacion(String codigoIngresado) throws Exception {
+        return bookYourStay.validarCodigoVerificacion(codigoIngresado);
     }
 
 }
