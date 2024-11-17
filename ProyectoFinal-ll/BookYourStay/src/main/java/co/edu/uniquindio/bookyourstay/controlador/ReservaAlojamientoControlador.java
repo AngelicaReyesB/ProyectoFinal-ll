@@ -67,10 +67,45 @@ public class ReservaAlojamientoControlador implements Observable, Initializable 
         return numHuespedes;
     }
 
+    //@FXML
+    //    public void realizarPago() {
+    //        try {
+    //            Cliente cliente = principalControlador.getSesion().getCliente();
+    //            if (cliente == null) {
+    //                principalControlador.mostrarAlerta("Debe iniciar sesión para confirmar la reserva.", Alert.AlertType.ERROR);
+    //                return;
+    //            }
+    //            if (alojamiento == null || !alojamiento.isActivo()) {
+    //                principalControlador.mostrarAlerta("El alojamiento seleccionado no está disponible.", Alert.AlertType.ERROR);
+    //                return;
+    //            }
+    //            LocalDate fechaInicio = obtenerFechaInicio();
+    //            LocalDate fechaFin = obtenerFechaFin();
+    //            int numHuespedes = obtenerNumeroHuespedes();
+    //            Factura factura = null;
+    //            Reserva reserva = principalControlador.realizarReserva(cliente, alojamiento, fechaInicio, fechaFin, numHuespedes, factura);
+    //
+    //            if (reserva != null) {
+    //                factura = principalControlador.generarFactura(reserva);
+    //                reserva.setFactura(factura);
+    //                reserva.setPagado(true);
+    //                String codigoQR = principalControlador.enviarFacturaQR(reserva);
+    //                reserva.setCodigoQR(codigoQR);
+    //                principalControlador.mostrarAlerta("Reserva confirmada exitosamente. Se ha enviado un correo con el QR.", Alert.AlertType.INFORMATION);
+    //            } else {
+    //                principalControlador.mostrarAlerta("No se pudo completar la reserva. Inténtelo más tarde.", Alert.AlertType.ERROR);
+    //            }
+    //        } catch (Exception e) {
+    //            e.printStackTrace();
+    //            principalControlador.mostrarAlerta("Ocurrió un error al confirmar la reserva: " + e.getMessage(), Alert.AlertType.ERROR);
+    //        }
+    //    }
+
     @FXML
-    public void realizarPago() {
+    void realizarPago() {
         try {
             Cliente cliente = principalControlador.getSesion().getCliente();
+
             if (cliente == null) {
                 principalControlador.mostrarAlerta("Debe iniciar sesión para confirmar la reserva.", Alert.AlertType.ERROR);
                 return;
@@ -79,21 +114,42 @@ public class ReservaAlojamientoControlador implements Observable, Initializable 
                 principalControlador.mostrarAlerta("El alojamiento seleccionado no está disponible.", Alert.AlertType.ERROR);
                 return;
             }
+
             LocalDate fechaInicio = obtenerFechaInicio();
             LocalDate fechaFin = obtenerFechaFin();
             int numHuespedes = obtenerNumeroHuespedes();
+
+            // Realizar la reserva
             Factura factura = null;
             Reserva reserva = principalControlador.realizarReserva(cliente, alojamiento, fechaInicio, fechaFin, numHuespedes, factura);
+            if (reserva == null) {
+                principalControlador.mostrarAlerta("No se pudo completar la reserva. Inténtelo más tarde.", Alert.AlertType.ERROR);
+                return;
+            }
 
-            if (reserva != null) {
-                factura = principalControlador.generarFactura(reserva);
-                reserva.setFactura(factura);
+            float costoReserva = principalControlador.calcularCostoReserva(reserva);
+            verSubtotal.setText(String.valueOf(costoReserva));
+
+            // Generar factura
+            factura = principalControlador.generarFactura(reserva);
+            reserva.setFactura(factura);
+
+            // Verificar saldo disponible
+            String resultado = principalControlador.verificarSaldoDisponible(cliente, factura.getTotal());
+            if (resultado.contains("Saldo suficiente")) {
+                // Realizar el pago
+                cliente.getBilleteraVirtual().setMontoTotal(
+                        cliente.getBilleteraVirtual().getMontoTotal() - factura.getTotal()
+                );
                 reserva.setPagado(true);
+
+                // Enviar código QR
                 String codigoQR = principalControlador.enviarFacturaQR(reserva);
                 reserva.setCodigoQR(codigoQR);
+
                 principalControlador.mostrarAlerta("Reserva confirmada exitosamente. Se ha enviado un correo con el QR.", Alert.AlertType.INFORMATION);
             } else {
-                principalControlador.mostrarAlerta("No se pudo completar la reserva. Inténtelo más tarde.", Alert.AlertType.ERROR);
+                principalControlador.mostrarAlerta("Saldo insuficiente: " + resultado, Alert.AlertType.ERROR);
             }
         } catch (Exception e) {
             e.printStackTrace();
