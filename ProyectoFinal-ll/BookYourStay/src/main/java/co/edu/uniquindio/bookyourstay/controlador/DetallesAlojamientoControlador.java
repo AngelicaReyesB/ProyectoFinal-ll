@@ -12,13 +12,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
 public class DetallesAlojamientoControlador implements Observable, Initializable {
 
     @FXML private Label CiudadAlojamiento;
-    @FXML private ListView<?> ListaServicios;
+    @FXML private Label labelServicios;
     @FXML private Label ValorAlojamiento;
     @FXML private Button btnRegresar;
     @FXML private Button btnReservarAhora;
@@ -55,6 +56,23 @@ public class DetallesAlojamientoControlador implements Observable, Initializable
         principalControlador.navegarVentana("/reservaAlojamiento.fxml", "Reservar alojamiento.");
         principalControlador.cerrarVentana(btnReservarAhora);
     }
+
+    private void cargarDetallesAlojamiento(Alojamiento alojamiento) {
+        // Establecer los valores en la vista
+        nombreAlojamiento.setText(alojamiento.getNombre());
+        descripcionAlojamiento.setText(alojamiento.getDescripcion());
+        ValorAlojamiento.setText(String.valueOf(alojamiento.getValorNoche()));
+        capacidadMaxima.setText(String.valueOf(alojamiento.getCapacidadMaxima()));
+        CiudadAlojamiento.setText(alojamiento.getTipoCiudad().toString());
+
+        // Configurar la imagen
+        if (alojamiento.getImagen() != null && !alojamiento.getImagen().isEmpty()) {
+            imagenAlojamiento.setImage(new Image(alojamiento.getImagen()));
+        }
+
+        // Agregar los servicios al ListView
+        ListaServicios.getItems().addAll(alojamiento.getServiciosIncluidos());
+    }
     @Override
     public void notificar() {
 
@@ -63,5 +81,11 @@ public class DetallesAlojamientoControlador implements Observable, Initializable
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        Alojamiento alojamiento = principalControlador.getSesion().getAlojamientoDetalle();
+
+        if (alojamiento != null) {
+            // Configurar los detalles del alojamiento
+            cargarDetallesAlojamiento(alojamiento);
+        }
     }
 }

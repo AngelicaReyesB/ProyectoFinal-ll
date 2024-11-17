@@ -53,18 +53,39 @@ public class ActualizarDatosClienteControlador implements Observable, Initializa
     @FXML
     public void actualizarDatos() {
         if (cliente != null) {
-            try {
-                principalControlador.editarCuenta(cedula.getText(), nombre.getText(), telefono.getText(), correo.getText(), password.getText());
-                limpiarCampos();
-                principalControlador.mostrarAlerta("Cuenta actualizada correctamente", AlertType.CONFIRMATION);
-                principalControlador.navegarVentana("/inicio.fxml", "Inicio");
-                principalControlador.cerrarVentana(btnGuardarCambios);
-            } catch (Exception e) {
-                principalControlador.mostrarAlerta("Error al actualizar la cuenta", AlertType.ERROR);
-                e.printStackTrace();
+            if (camposValidos()) {
+                try {
+                    cliente.setNombre(nombre.getText());
+                    cliente.setCedula(cedula.getText());
+                    cliente.setTelefono(telefono.getText());
+                    cliente.setEmail(correo.getText());
+                    cliente.setPassword(password.getText());
+                    principalControlador.editarCuenta(cliente.getCedula(), cliente.getNombre(),
+                            cliente.getTelefono(), cliente.getEmail(),
+                            cliente.getPassword());
+                    principalControlador.mostrarAlerta("Cuenta actualizada correctamente", AlertType.CONFIRMATION);
+                    limpiarCampos();
+                    principalControlador.navegarVentana("/inicio.fxml", "Inicio");
+                    principalControlador.cerrarVentana(btnGuardarCambios);
+                } catch (Exception e) {
+                    principalControlador.mostrarAlerta("Error al actualizar la cuenta: " + e.getMessage(), AlertType.ERROR);
+                    e.printStackTrace();
+                }
+            } else {
+                principalControlador.mostrarAlerta("Por favor, completa todos los campos antes de guardar.", AlertType.WARNING);
             }
+        } else {
+            principalControlador.mostrarAlerta("No se encontró información del cliente.", AlertType.ERROR);
         }
     }
+
+    private boolean camposValidos() {
+        return !nombre.getText().isBlank() && !cedula.getText().isBlank() &&
+                !telefono.getText().isBlank() && !correo.getText().isBlank() &&
+                !password.getText().isBlank();
+    }
+
+
 
 
     public void limpiarCampos(){
@@ -81,7 +102,15 @@ public class ActualizarDatosClienteControlador implements Observable, Initializa
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        if (cliente != null) {
+            nombre.setText(cliente.getNombre());
+            cedula.setText(cliente.getCedula());
+            telefono.setText(cliente.getTelefono());
+            correo.setText(cliente.getEmail());
+            password.setText(cliente.getPassword());
+        }
     }
+
 
 }
 

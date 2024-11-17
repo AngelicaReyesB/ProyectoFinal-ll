@@ -433,6 +433,24 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         return listarAlojamientos();
     }
 
+    @Override
+    public List<Alojamiento> listarAlojamientosDisponibles(List<Alojamiento> alojamientos, TipoCiudad tipoCiudad, TipoAlojamiento tipoAlojamiento, int capacidadMinima, float precioMaximo) {
+
+        List<Alojamiento> alojamientosDisponibles = new ArrayList<>();
+
+        for (Alojamiento alojamiento : alojamientos) {
+            if (alojamiento.isActivo() &&
+                    alojamiento.getTipoCiudad() == tipoCiudad &&
+                    alojamiento.getTipoAlojamiento() == tipoAlojamiento &&
+                    alojamiento.getCapacidadMaxima() >= capacidadMinima &&
+                    alojamiento.getValorNoche() <= precioMaximo) {
+                alojamientosDisponibles.add(alojamiento);
+            }
+        }
+
+        return alojamientosDisponibles;
+    }
+
     //no se hace uso y debe de usar en AlojamientosPopularesControlador
     @Override
     public ArrayList<Alojamiento> listaPopularesPorCiudad(String ciudad) throws Exception {
@@ -1019,7 +1037,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
     }
 
     @Override
-    public void enviarFacturaQR(Reserva reserva) throws Exception {
+    public String enviarFacturaQR(Reserva reserva) throws Exception {
         // Primero, generamos la factura para la reserva
         Factura factura = generarFactura(reserva);
 
@@ -1051,6 +1069,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
 
         // Enviar el correo
         envioEmail.enviarNotificacion();
+        return codigoQRFilePath;
     }
 
 

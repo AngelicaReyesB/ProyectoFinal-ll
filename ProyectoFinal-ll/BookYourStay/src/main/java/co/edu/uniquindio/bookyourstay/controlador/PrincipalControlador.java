@@ -12,7 +12,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import lombok.Getter;
 
@@ -283,6 +282,11 @@ public class PrincipalControlador implements ServiciosEmpresa {
     }
 
     @Override
+    public List<Alojamiento> listarAlojamientosDisponibles(List<Alojamiento> alojamientos, TipoCiudad tipoCiudad, TipoAlojamiento tipoAlojamiento, int capacidadMinima, float precioMaximo) {
+        return bookYourStay.listarAlojamientosDisponibles(alojamientos, tipoCiudad, tipoAlojamiento, capacidadMinima, precioMaximo);
+    }
+
+    @Override
     public ArrayList<Alojamiento> listaPopularesPorCiudad(String ciudad) throws Exception {
         return bookYourStay.listaPopularesPorCiudad(ciudad);
     }
@@ -328,8 +332,8 @@ public class PrincipalControlador implements ServiciosEmpresa {
     }
 
     @Override
-    public void enviarFacturaQR(Reserva reserva) throws Exception {
-
+    public String enviarFacturaQR(Reserva reserva) throws Exception {
+        return bookYourStay.enviarFacturaQR(reserva);
     }
 
 }

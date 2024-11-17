@@ -1,6 +1,5 @@
 package co.edu.uniquindio.bookyourstay.servicio;
 
-import co.edu.uniquindio.bookyourstay.controlador.observador.Observable;
 import co.edu.uniquindio.bookyourstay.modelo.*;
 import co.edu.uniquindio.bookyourstay.modelo.enums.TipoAlojamiento;
 import co.edu.uniquindio.bookyourstay.modelo.enums.TipoCiudad;
@@ -25,7 +24,6 @@ public interface ServiciosEmpresa {
     void enviarCorreoRecuperacion(String email) throws Exception;
     String generarCodigoVerificacion();
     void editarCuenta(String cedula, String nombre, String telefono, String email, String password) throws Exception;
-    boolean validarCodigoActivacion(String email, String codigo) throws Exception;
     boolean validarIngresoAdministrador(String email, String password) throws Exception;
     CreacionAlojamiento crearAlojamiento(TipoAlojamiento tipoAlojamiento) throws Exception;
     Alojamiento crearAlojamiento(String nombre, String descripcion, String imagen, LocalDate fechaEstancia, float valorNoche, int numHuespedes, List<String> serviciosIncluidos, TipoAlojamiento tipoAlojamiento, TipoCiudad tipoCiudad, boolean activo) throws Exception;
@@ -53,6 +51,7 @@ public interface ServiciosEmpresa {
     float aplicarDescuentos(Alojamiento alojamiento, float porcentaje) throws Exception;
     float crearTarifaDescuento(Alojamiento alojamiento, LocalDate fechaInicio, LocalDate fechaFin, float descuento) throws Exception;
     int verEstadisticas(String ciudad) throws Exception;
+    List<Alojamiento> listarAlojamientosDisponibles(List<Alojamiento> alojamientos, TipoCiudad tipoCiudad, TipoAlojamiento tipoAlojamiento, int capacidadMinima, float precioMaximo);
     ArrayList<Alojamiento> listaPopularesPorCiudad(String ciudad) throws Exception;
     ArrayList<Reserva> listaMasRentables(int limite) throws Exception;
     Administrador cambiarPassword(String email, String nuevaPassword) throws Exception;
@@ -62,5 +61,5 @@ public interface ServiciosEmpresa {
     String generarCodigoQR(Factura factura) throws Exception;
     boolean verificarCodigoActivacion(String cedula, String codigoActivacion) throws Exception;
 
- void enviarFacturaQR(Reserva reserva) throws Exception;
+ String enviarFacturaQR(Reserva reserva) throws Exception;
 }

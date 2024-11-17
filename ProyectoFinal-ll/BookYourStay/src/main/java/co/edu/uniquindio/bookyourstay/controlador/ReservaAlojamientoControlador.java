@@ -91,7 +91,7 @@ public class ReservaAlojamientoControlador implements Observable, Initializable 
                 reserva.setFactura(factura);
                 reserva.setPagado(true);
 
-                String codigoQR = principalControlador.enviarCodigoQR(factura, cliente.getEmail());
+                String codigoQR = principalControlador.enviarFacturaQR(reserva);
                 reserva.setCodigoQR(codigoQR);
 
                 principalControlador.mostrarAlerta("Reserva confirmada exitosamente. Se ha enviado un correo con el QR.", Alert.AlertType.INFORMATION);

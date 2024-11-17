@@ -8,6 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -34,10 +35,18 @@ public class PanelUsuarioControlador implements Observable, Initializable {
     }
 
     @FXML
-    void irDetallesAlojamiento(ActionEvent event) {
-        principalControlador.navegarVentana("/detallesAlojamiento.fxml", "Detalles de alojamiento");
+    void irDetallesAlojamiento() {
+        Alojamiento alojamientoSeleccionado = tablaAlojamientosDisponibles.getSelectionModel().getSelectedItem();
+        if (alojamientoSeleccionado == null) {
+            principalControlador.mostrarAlerta("Debes seleccionar un alojamiento antes de continuar.", Alert.AlertType.WARNING);
+            return;
+        }
+        principalControlador.getSesion().setAlojamientoDetalle(alojamientoSeleccionado);
+        principalControlador.navegarVentana("/detallesAlojamiento.fxml", "Detalles del alojamiento");
         principalControlador.cerrarVentana(verDetalles);
     }
+
+
 
     private void configurarTabla() {
         colNombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
@@ -73,40 +82,3 @@ public class PanelUsuarioControlador implements Observable, Initializable {
         actualizarTabla();
     }
 }
-
-
-
-
-
-
-//    @FXML private GridPane AlojamientosDisponiblesGridPane;
-//    @FXML private HBox ofertasAlojamientosHbox;
-//    @FXML private VBox mainVBox;
-//
-//    private void cargarAlojamientosDisponibles() {
-//
-//        for (int i = 0; i < 3; i++) {
-//            for (int j = 0; j < 3; j++) {
-//                AlojamientosDisponiblesGridPane.add(new Label("Alojamiento " + (i * 3 + j + 1)), j, i);
-//            }
-//        }
-//    }
-//
-//    private void cargarOfertasAlojamientos() {
-//        String[] ofertas = {
-//                "Oferta 1: Descuento en la primera noche",
-//                "Oferta 2: Estancia de 2x1",
-//                "Oferta 3: Desayuno gratis incluido"
-//        };
-//
-//        for (String oferta : ofertas) {
-//            VBox ofertaBox = new VBox();
-//            ofertaBox.setSpacing(10);
-//            ofertaBox.setStyle("-fx-padding: 10; -fx-background-color: #ffffff; -fx-border-color: #cccccc; -fx-border-width: 1;");
-//
-//            Label ofertaLabel = new Label(oferta);
-//            ofertaBox.getChildren().add(ofertaLabel);
-//
-//            ofertasAlojamientosHbox.getChildren().add(ofertaBox);
-//        }
-//    }
