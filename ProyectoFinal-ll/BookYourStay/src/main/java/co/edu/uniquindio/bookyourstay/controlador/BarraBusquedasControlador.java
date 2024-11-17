@@ -40,42 +40,34 @@ public class BarraBusquedasControlador implements Observable, Initializable {
     }
 
     @FXML
-    public void obtenerTipoAlojamiento(){
-        System.out.println(tipoAlojamiento.getValue());
+    public void obtenerTipoAlojamiento() {
         ArrayList<Alojamiento> alojamientos;
-        TipoAlojamiento tipoAlojamiento1 = tipoAlojamiento.getValue();
+        TipoAlojamiento tipoSeleccionado = tipoAlojamiento.getValue();
         try {
-            alojamientos = principalControlador.listarAlojamientos(tipoAlojamiento1);
+            alojamientos = principalControlador.listarAlojamientos(tipoSeleccionado);
             principalControlador.getSesion().setAlojamientos(alojamientos);
-            navegarInicio();
-        }catch (Exception e){
-            principalControlador.mostrarAlerta("No se pudo realizar la busqueda. " + e.getMessage(), Alert.AlertType.ERROR);
+            notificar(); // Notifica cambios
+        } catch (Exception e) {
+            principalControlador.mostrarAlerta("No se pudo realizar la búsqueda. " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
     @FXML
     public void obtenerAlojamientosCiudad() {
-        System.out.println(ciudadAlojamiento.getValue());
         ArrayList<Alojamiento> alojamientos;
-        TipoCiudad ciudad = ciudadAlojamiento.getValue();
+        TipoCiudad ciudadSeleccionada = ciudadAlojamiento.getValue();
         try {
-            alojamientos = principalControlador.listarAlojamientos(ciudad);
+            alojamientos = principalControlador.listarAlojamientos(ciudadSeleccionada);
             principalControlador.getSesion().setAlojamientos(alojamientos);
-            navegarInicio();
-            System.out.println("ALOJAMIENTOS EN ACCIÓN BARRA NAVEGACIÓN: ");
-            System.out.println(principalControlador.getSesion().getAlojamientos());
-        }catch (Exception e){
+            notificar(); // Notifica cambios
+        } catch (Exception e) {
             principalControlador.mostrarAlerta("No se pudo realizar la búsqueda. " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
     private void navegarInicio(){
-        if(principalControlador.getSesion().isAdministrador()){
-            principalControlador.navegarVentana("/panelAdministrador.fxml", "Panel del administrador.");
-            principalControlador.cerrarVentana(btnTodosAlojamientos);
-        }
         if(!principalControlador.getSesion().isAdministrador() && principalControlador.getSesion().getCliente() == null){
-            principalControlador.navegarVentana("/inicio.fxml", "Inicio");
+            principalControlador.navegarVentana("/panelUsuario.fxml", "Inicio");
             principalControlador.cerrarVentana(btnTodosAlojamientos);
         }
         if(principalControlador.getSesion().isAdministrador() && principalControlador.getSesion().getCliente() == null){
@@ -86,7 +78,7 @@ public class BarraBusquedasControlador implements Observable, Initializable {
 
     @Override
     public void notificar() {
-
+        principalControlador.notificarObservadores();
     }
 
     @Override

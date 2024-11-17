@@ -256,7 +256,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
 
     //se hace uso en actualizar datos clientes
     @Override
-    public Cliente editarCuenta(String cedula, String nombre, String telefono, String email, String password) throws Exception {
+    public void editarCuenta(String cedula, String nombre, String telefono, String email, String password) throws Exception {
 
         if (cedula == null || cedula.isEmpty()) {
             throw new Exception("La cédula es obligatoria para editar la cuenta");
@@ -280,8 +280,12 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
             cliente.setPassword(password);
         }
 
+        cliente.setCedula(cedula);
+        cliente.setNombre(nombre);
+        cliente.setTelefono(telefono);
+        cliente.setEmail(email);
+        cliente.setPassword(password);
         //guardarDatosEmpresa();
-        return cliente;
     }
 
     //si se hace uso en perfil controlador

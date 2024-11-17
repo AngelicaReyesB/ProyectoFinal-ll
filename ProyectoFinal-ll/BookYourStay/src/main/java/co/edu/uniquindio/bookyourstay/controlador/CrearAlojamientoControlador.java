@@ -177,9 +177,6 @@ public class CrearAlojamientoControlador implements Observable, Initializable {
             }
         });
 
-
-
-
         if (alojamientos != null && !alojamientos.isEmpty()) {
             tablaAlojamientos.setItems(FXCollections.observableArrayList(alojamientos));
         } else {
@@ -225,6 +222,7 @@ public class CrearAlojamientoControlador implements Observable, Initializable {
             // Ejemplo de lógica para cambiar servicios dependiendo del tipo de alojamiento
             if (cbTipoAlojamiento.getValue() == TipoAlojamiento.CASA) {
                 serviciosActualizados.addAll("WiFi", "Piscina", "Gimnasio");
+                serviciosActualizados.addAll("Piscina","Spa");
             } else if (cbTipoAlojamiento.getValue() == TipoAlojamiento.APARTAMENTO) {
                 serviciosActualizados.addAll("WiFi", "Parking");
             }

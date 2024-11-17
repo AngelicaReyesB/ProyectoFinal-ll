@@ -21,7 +21,7 @@
                 <Insets right="10.0" />
             </HBox.margin>
         </Button>
-      <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="110.0" style="-fx-background-color: #006600;" text="Cerrar Sesion" textFill="WHITE">
+      <Button fx:id="btnCerrarSesion" mnemonicParsing="false" onAction="#irInicio" prefHeight="40.0" prefWidth="110.0" style="-fx-background-color: #006600;" text="Cerrar Sesion" textFill="WHITE">
          <HBox.margin>
             <Insets right="24.0" />
          </HBox.margin>

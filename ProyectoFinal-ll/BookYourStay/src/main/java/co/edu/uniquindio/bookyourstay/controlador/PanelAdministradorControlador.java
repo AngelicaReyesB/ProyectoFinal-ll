@@ -18,7 +18,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-//funciona, hablar sobre el código de cada alojamiento
+//funciona correctamente
 public class PanelAdministradorControlador implements Observable, Initializable {
 
     @FXML private TableView<Alojamiento> TableAlojamientos;
@@ -78,7 +78,6 @@ public class PanelAdministradorControlador implements Observable, Initializable 
     }
 
     public void actualizarTabla(ArrayList listaAlojamientos){
-        //colCodigo.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCodigo()));
         colNombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
         colCiudad.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTipoCiudad().toString()));
         colCapacidad.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getCapacidadMaxima())));
