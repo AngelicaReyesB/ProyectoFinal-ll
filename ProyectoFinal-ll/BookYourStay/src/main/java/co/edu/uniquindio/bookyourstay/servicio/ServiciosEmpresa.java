@@ -62,4 +62,6 @@ public interface ServiciosEmpresa {
     boolean verificarCodigoActivacion(String cedula, String codigoActivacion) throws Exception;
 
  void enviarFacturaQR(Reserva reserva) throws Exception;
+
+ boolean validarCodigo(String codigoIngresado) throws Exception;
 }

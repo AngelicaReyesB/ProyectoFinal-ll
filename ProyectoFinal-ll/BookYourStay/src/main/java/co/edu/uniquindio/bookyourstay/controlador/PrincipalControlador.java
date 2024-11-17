@@ -341,4 +341,9 @@ public class PrincipalControlador implements ServiciosEmpresa {
 
     }
 
+    @Override
+    public boolean validarCodigo(String codigoIngresado) throws Exception {
+        return false;
+    }
+
 }
