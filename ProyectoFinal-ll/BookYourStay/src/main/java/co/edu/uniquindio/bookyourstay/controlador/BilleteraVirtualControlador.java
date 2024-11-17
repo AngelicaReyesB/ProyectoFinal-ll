@@ -57,7 +57,7 @@ public class BilleteraVirtualControlador implements Observable, Initializable {
     @FXML
     private void regresarPanel(ActionEvent event) {
         try {
-            principalControlador.navegarVentana("/reservaAlojamiento.fxml", "Panel de reservas");
+            principalControlador.navegarVentana("/panelUsuario.fxml", "Panel de usuario");
             principalControlador.cerrarVentana(btnRegresarPanel);
         } catch (Exception e) {
             e.printStackTrace();

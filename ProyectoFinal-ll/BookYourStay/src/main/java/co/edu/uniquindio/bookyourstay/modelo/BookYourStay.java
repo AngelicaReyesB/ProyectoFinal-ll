@@ -514,20 +514,13 @@ public class BookYourStay implements ServiciosEmpresa {
     }
 
     //se hace uso en el controlador de reserva
-    @Override
     public Reserva realizarReserva(Cliente cliente, Alojamiento alojamiento, LocalDate fechaInicio, LocalDate fechaFin, int numHuespedes, Factura factura) throws Exception {
-        System.out.println("Cliente: " + cliente);
-        System.out.println("Alojamiento: " + alojamiento);
-        System.out.println("Fecha Inicio: " + fechaInicio);
-        System.out.println("Fecha Fin: " + fechaFin);
-        System.out.println("Factura: " + factura);
-
+        // Validaciones
         if (cliente == null || alojamiento == null || fechaInicio == null || fechaFin == null || factura == null) {
             throw new IllegalArgumentException("Todos los campos deben estar completos.");
-
         }
 
-            if (fechaFin.isBefore(fechaInicio) || fechaInicio.isBefore(LocalDate.now())) {
+        if (fechaFin.isBefore(fechaInicio) || fechaInicio.isBefore(LocalDate.now())) {
             throw new Exception("Las fechas de la reserva no son válidas.");
         }
 
@@ -544,6 +537,7 @@ public class BookYourStay implements ServiciosEmpresa {
             throw new Exception("Fondos insuficientes en la billetera virtual.");
         }
 
+        // Crear la reserva utilizando el builder
         Reserva nuevaReserva = Reserva.builder()
                 .codigo(java.util.UUID.randomUUID().toString())
                 .cliente(cliente)
@@ -558,11 +552,13 @@ public class BookYourStay implements ServiciosEmpresa {
                 .fechaCreacion(LocalDateTime.now())
                 .build();
 
+        // Actualizar billetera y estado del alojamiento
         cliente.getBilleteraVirtual().setMontoTotal((float) (cliente.getBilleteraVirtual().getMontoTotal() - totalReserva));
         alojamiento.setActivo(false);
 
         return nuevaReserva;
     }
+
 
     //no se hace uso
     @Override

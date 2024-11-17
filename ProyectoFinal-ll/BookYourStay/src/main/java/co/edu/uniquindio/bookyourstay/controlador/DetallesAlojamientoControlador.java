@@ -50,7 +50,6 @@ public class DetallesAlojamientoControlador implements Observable, Initializable
         }
     }
 
-
     private void cargarDetallesAlojamiento(Alojamiento alojamiento) {
         nombreAlojamiento.setText(alojamiento.getNombre());
         descripcionAlojamiento.setText(alojamiento.getDescripcion());

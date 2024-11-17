@@ -23,6 +23,7 @@ public class Sesion implements Serializable {
     private List<Alojamiento> alojamientos;
     private boolean administrador;
     private static Sesion INSTANCIA;
+    private Reserva reservaActual;
 
     public static Sesion getInstancia() {
         if (INSTANCIA == null) {
@@ -39,6 +40,7 @@ public class Sesion implements Serializable {
         clientes = new ArrayList<>();
         alojamientos = null;
         administrador = false;
+        reservaActual = null;
     }
 
     public void cerrarSesion(){
@@ -49,5 +51,6 @@ public class Sesion implements Serializable {
         clientes = null;
         alojamientos = null;
         administrador = false;
+        reservaActual = null;
     }
 }
