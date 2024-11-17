@@ -7,6 +7,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -19,44 +20,36 @@
     </children>
 
 
-    <HBox alignment="CENTER" prefHeight="1023.0" prefWidth="1875.0">
+    <HBox alignment="CENTER" prefHeight="523.0" prefWidth="1875.0">
 
 
-        <VBox alignment="CENTER_LEFT" prefHeight="1005.0" prefWidth="1330.0" spacing="30.0" style="-fx-padding: 32">
+        <VBox alignment="CENTER_LEFT" prefHeight="566.0" prefWidth="1330.0" spacing="30.0" style="-fx-padding: 32">
             <padding>
                 <Insets bottom="32.0" top="32.0" />
             </padding>
          <children>
-            <HBox fx:id="HBoxAlojamientosAleatorios" prefHeight="1012.0" prefWidth="1300.0" VBox.vgrow="ALWAYS">
+            <HBox fx:id="HBoxAlojamientosAleatorios" prefHeight="439.0" prefWidth="1266.0" VBox.vgrow="ALWAYS">
                <children>
-                  <TableView fx:id="tablaOfertasAlojamientos" prefHeight="904.0" prefWidth="281.0" HBox.hgrow="ALWAYS">
-                    <columns>
-                      <TableColumn fx:id="colImagenOfertas" prefWidth="264.79999313354494" text="OFERTAS" />
-                    </columns>
-                  </TableView>
-                  <TableView fx:id="tablaAlojamientosAleatoria" prefHeight="904.0" prefWidth="991.0" HBox.hgrow="ALWAYS">
-                    <columns>
-                      <TableColumn fx:id="colImagen" prefWidth="288.8000060915947" text="IMAGEN" />
-                      <TableColumn fx:id="colNombre" prefWidth="244.79998779296875" text="NOMBRE " />
-                        <TableColumn fx:id="colCiudad" prefWidth="204.00006103515625" text="CIUDAD" />
-                        <TableColumn fx:id="colPrecio" prefWidth="239.20000000000005" text="PRECIO" />
-                    </columns>
+                  <ImageView fitHeight="402.0" fitWidth="597.0" pickOnBounds="true" preserveRatio="true" />
+                  <VBox fx:id="VboxInformacion" alignment="CENTER" prefHeight="402.0" prefWidth="700.0" style="-fx-background-color: #d8dbe2;">
+                     <children>
+                        <Label prefHeight="42.0" prefWidth="228.0" text="Label" />
+                        <Label prefHeight="42.0" prefWidth="228.0" text="Label" />
+                        <Label prefHeight="48.0" prefWidth="227.0" text="Label" />
+                        <Label prefHeight="46.0" prefWidth="225.0" text="Label" />
+                        <Button mnemonicParsing="false" prefHeight="37.0" prefWidth="70.0" style="-fx-background-color: #006600;" text="Ver" textFill="WHITE" />
+                     </children>
                      <HBox.margin>
                         <Insets left="32.0" />
                      </HBox.margin>
-                  </TableView>
+                  </VBox>
                </children></HBox>
-            <HBox prefHeight="81.0" prefWidth="1265.0">
-               <children>
-                  <Button fx:id="btnVer" mnemonicParsing="false" onAction="#verDetallesAlojamiento" prefHeight="50.0" prefWidth="98.0" style="-fx-background-color: #006600;" text="Ver" textFill="WHITE" />
-               </children>
-            </HBox>
          </children>
          <HBox.margin>
             <Insets />
          </HBox.margin>
         </VBox>
-        <VBox alignment="CENTER" prefHeight="456.0" prefWidth="516.0" spacing="30.0" style="-fx-padding: 32; -fx-background-color: #d8dbe2;" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
+        <VBox alignment="CENTER" prefHeight="538.0" prefWidth="514.0" spacing="30.0" style="-fx-padding: 32; -fx-background-color: #d8dbe2;" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
 
             <Label style="-fx-font-size: 20; -fx-font-weight: BOLD;" text="INICIAR SESIÓN" />
 
@@ -91,5 +84,19 @@
             <Insets />
         </VBox.margin>
     </HBox>
+   <HBox prefHeight="778.0" prefWidth="1875.0">
+      <padding>
+         <Insets bottom="15.0" left="32.0" right="32.0" />
+      </padding>
+      <children>
+         <TableView prefHeight="387.0" prefWidth="1862.0">
+           <columns>
+             <TableColumn prefWidth="445.5999565124512" text="NOMBRE" />
+             <TableColumn prefWidth="479.1999816894531" text="TIPO ALOJAMIENTO" />
+               <TableColumn prefWidth="492.800048828125" text="CIUDAD" />
+           </columns>
+         </TableView>
+      </children>
+   </HBox>
 
 </VBox>
