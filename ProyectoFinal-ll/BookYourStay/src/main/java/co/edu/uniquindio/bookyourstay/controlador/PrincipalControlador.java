@@ -336,4 +336,9 @@ public class PrincipalControlador implements ServiciosEmpresa {
         return bookYourStay.enviarFacturaQR(reserva);
     }
 
+    @Override
+    public boolean validarCodigoVerificacion(String codigoIngresado) throws Exception {
+        return bookYourStay.validarCodigoVerificacion(codigoIngresado);
+    }
+
 }

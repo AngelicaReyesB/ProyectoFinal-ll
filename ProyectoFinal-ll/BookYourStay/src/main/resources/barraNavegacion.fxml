@@ -14,15 +14,15 @@
         </HBox.margin>
     </ImageView>
 
-    <HBox alignment="CENTER_RIGHT" prefHeight="102.0" prefWidth="1319.0" spacing="10">
+    <HBox alignment="CENTER_RIGHT" prefHeight="102.0" prefWidth="1530.0" spacing="10">
         <fx:include source="barraBusquedas.fxml" />
         <Button fx:id="btnRegistrarse" minHeight="40.0" minWidth="150.0" onAction="#registrarUsuario" style="-fx-background-color: #006600; -fx-text-fill: white;" text="Registrarse">
             <HBox.margin>
-                <Insets left="24.0" right="24.0" />
+                <Insets right="24.0" />
             </HBox.margin>
         </Button>
         <HBox.margin>
-            <Insets left="316" />
+            <Insets left="190.0" />
         </HBox.margin>
     </HBox>
 </HBox>

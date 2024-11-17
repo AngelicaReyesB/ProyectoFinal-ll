@@ -60,6 +60,6 @@ public interface ServiciosEmpresa {
     ObservableList<Alojamiento> listarOfertasEspeciales() throws Exception;
     String generarCodigoQR(Factura factura) throws Exception;
     boolean verificarCodigoActivacion(String cedula, String codigoActivacion) throws Exception;
-
- String enviarFacturaQR(Reserva reserva) throws Exception;
+    void enviarFacturaQR(Reserva reserva) throws Exception;
+    boolean validarCodigoVerificacion(String codigoIngresado) throws Exception;
 }

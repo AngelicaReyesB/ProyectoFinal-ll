@@ -769,6 +769,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
 
     }
 
+    //si se hace uso
     @Override
     public void editarOferta(Alojamiento alojamiento, LocalDate nuevaFechaInicio, LocalDate nuevaFechaFin, float nuevoDescuento) throws Exception {
         // Verificar si el alojamiento tiene una oferta especial
@@ -790,9 +791,10 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         } else {
             throw new Exception("El alojamiento no tiene una oferta especial para editar.");
         }
-}
+    }
 
 
+    //si se hace uso
     @Override
     public boolean eliminarOferta(String nombreAlojamiento) throws Exception {
         try {
@@ -860,7 +862,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         return "Reseña agregada exitosamente.";
     }
 
-    //Revisar
+    //cambiar metodo
     public int verEstadisticas(String ciudad) throws Exception {
         try {
             if (ciudad == null || ciudad.trim().isEmpty()) {
@@ -1072,7 +1074,16 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         return codigoQRFilePath;
     }
 
+    @Override
+    public boolean validarCodigoVerificacion(String codigoIngresado) throws Exception {
+        if (codigoIngresado == null || codigoIngresado.isEmpty()) {
+            throw new Exception("El código ingresado no puede estar vacío.");
+        }
 
+        if (!codigoIngresado.equals(generarCodigoVerificacion())) {
+            throw new Exception("El código de verificación es incorrecto.");
+        }
 
-
+        return true;
+    }
 }
