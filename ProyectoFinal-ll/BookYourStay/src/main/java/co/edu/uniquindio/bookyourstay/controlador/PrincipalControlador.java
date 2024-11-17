@@ -35,14 +35,14 @@ public class PrincipalControlador implements ServiciosEmpresa {
         inicializarValores();
     }
 
-    public static PrincipalControlador getInstancia(){
-        if(INSTANCIA == null){
-            INSTANCIA =new PrincipalControlador();
+    public static PrincipalControlador getInstancia() {
+        if (INSTANCIA == null) {
+            INSTANCIA = new PrincipalControlador();
         }
         return INSTANCIA;
     }
 
-    private void inicializarValores(){
+    private void inicializarValores() {
         try {
             sesion.setClientes(bookYourStay.listarClientes());
             sesion.setAlojamientos(bookYourStay.listarAlojamientos());
@@ -64,7 +64,7 @@ public class PrincipalControlador implements ServiciosEmpresa {
         }
     }
 
-    public void navegarVentana(String nombreArchivoFxml, String tituloVentana){
+    public void navegarVentana(String nombreArchivoFxml, String tituloVentana) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(nombreArchivoFxml));
             Parent root = loader.load();
@@ -76,27 +76,18 @@ public class PrincipalControlador implements ServiciosEmpresa {
             stage.setMaximized(true);
             stage.show();
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
 
-    public void mostrarAlerta(String mensaje, Alert.AlertType tipo){
+    public void mostrarAlerta(String mensaje, Alert.AlertType tipo) {
         Alert alert = new Alert(tipo);
         alert.setHeaderText(mensaje);
         alert.setHeaderText(null);
         alert.setContentText(mensaje);
         alert.showAndWait();
-    }
-
-    public ButtonType mostrarAlertaConfirmacion(String mensaje, Alert.AlertType tipo){
-        Alert alert = new Alert(tipo);
-        alert.setHeaderText(mensaje);
-        alert.setHeaderText(null);
-        alert.setContentText(mensaje);
-        alert.showAndWait();
-        return alert.getResult();
     }
 
     public void cerrarVentana(Node node){
@@ -167,8 +158,8 @@ public class PrincipalControlador implements ServiciosEmpresa {
     }
 
     @Override
-    public Cliente editarCuenta(String cedula, String nombre, String telefono, String email, String password) throws Exception {
-        return bookYourStay.editarCuenta(cedula, nombre, telefono, email, password);
+    public void editarCuenta(String cedula, String nombre, String telefono, String email, String password) throws Exception {
+        bookYourStay.editarCuenta(cedula, nombre, telefono, email, password);
     }
 
     @Override

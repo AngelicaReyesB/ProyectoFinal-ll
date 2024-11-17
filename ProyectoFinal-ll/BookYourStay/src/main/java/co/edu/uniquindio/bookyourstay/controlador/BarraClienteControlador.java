@@ -13,6 +13,8 @@ import java.util.ResourceBundle;
 public class BarraClienteControlador implements Observable, Initializable {
 
     @FXML private Button btnIrPerfil;
+    @FXML
+    private Button btnCerrarSesion;
     private final PrincipalControlador principalControlador;
 
     public BarraClienteControlador(){
@@ -27,6 +29,12 @@ public class BarraClienteControlador implements Observable, Initializable {
         }catch (Exception e){
             principalControlador.mostrarAlerta(e.getMessage(), Alert.AlertType.ERROR);
         }
+    }
+
+    @FXML
+    void irInicio() {
+        principalControlador.navegarVentana("/inicio.fxml", "Inicio");
+        principalControlador.cerrarVentana(btnCerrarSesion);
     }
 
     @Override

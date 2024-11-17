@@ -14,15 +14,20 @@
         </HBox.margin>
     </ImageView>
 
-    <HBox alignment="CENTER_RIGHT" prefHeight="102.0" prefWidth="1319.0" spacing="10">
+    <HBox alignment="CENTER_RIGHT" prefHeight="102.0" prefWidth="1151.0" spacing="10">
         <fx:include source="barraBusquedas.fxml" />
-        <Button fx:id="btnIrPerfil" minHeight="40.0" minWidth="150.0" onAction="#irPerfil" style="-fx-background-color: #006600; -fx-text-fill: white;" text="Perfil">
+        <Button fx:id="btnIrPerfil" minHeight="40.0" minWidth="104.0" onAction="#irPerfil" prefHeight="40.0" prefWidth="104.0" style="-fx-background-color: #006600; -fx-text-fill: white;" text="Perfil">
             <HBox.margin>
-                <Insets left="24.0" right="24.0" />
+                <Insets right="10.0" />
             </HBox.margin>
         </Button>
+      <Button fx:id="btnCerrarSesion" mnemonicParsing="false" onAction="#irInicio" prefHeight="40.0" prefWidth="110.0" style="-fx-background-color: #006600;" text="Cerrar Sesion" textFill="WHITE">
+         <HBox.margin>
+            <Insets right="24.0" />
+         </HBox.margin>
+      </Button>
         <HBox.margin>
-            <Insets left="316" />
+            <Insets left="180.0" />
         </HBox.margin>
     </HBox>
 </HBox>

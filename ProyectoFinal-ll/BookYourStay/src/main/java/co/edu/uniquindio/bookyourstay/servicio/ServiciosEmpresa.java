@@ -24,7 +24,7 @@ public interface ServiciosEmpresa {
     void obtenerAdministrador(String email) throws Exception;
     void enviarCorreoRecuperacion(String email) throws Exception;
     String generarCodigoVerificacion();
-    Cliente editarCuenta(String cedula, String nombre, String telefono, String email, String password) throws Exception;
+    void editarCuenta(String cedula, String nombre, String telefono, String email, String password) throws Exception;
     boolean validarCodigoActivacion(String email, String codigo) throws Exception;
     boolean validarIngresoAdministrador(String email, String password) throws Exception;
     CreacionAlojamiento crearAlojamiento(TipoAlojamiento tipoAlojamiento) throws Exception;

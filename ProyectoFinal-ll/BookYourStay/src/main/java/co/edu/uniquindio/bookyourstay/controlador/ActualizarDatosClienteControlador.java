@@ -41,7 +41,7 @@ public class ActualizarDatosClienteControlador implements Observable, Initializa
     }
 
     @FXML
-    private void irPerfil() {
+    public void irPerfil() {
         try {
             principalControlador.navegarVentana("/perfil.fxml", "Perfil");
             principalControlador.cerrarVentana(btnRegresar);
@@ -51,13 +51,14 @@ public class ActualizarDatosClienteControlador implements Observable, Initializa
     }
 
     @FXML
-    private void actualizarDatos() {
+    public void actualizarDatos() {
         if (cliente != null) {
             try {
                 principalControlador.editarCuenta(cedula.getText(), nombre.getText(), telefono.getText(), correo.getText(), password.getText());
                 limpiarCampos();
                 principalControlador.mostrarAlerta("Cuenta actualizada correctamente", AlertType.CONFIRMATION);
                 principalControlador.navegarVentana("/inicio.fxml", "Inicio");
+                principalControlador.cerrarVentana(btnGuardarCambios);
             } catch (Exception e) {
                 principalControlador.mostrarAlerta("Error al actualizar la cuenta", AlertType.ERROR);
                 e.printStackTrace();
@@ -66,7 +67,7 @@ public class ActualizarDatosClienteControlador implements Observable, Initializa
     }
 
 
-    private void limpiarCampos(){
+    public void limpiarCampos(){
         nombre.clear();
         cedula.clear();
         telefono.clear();

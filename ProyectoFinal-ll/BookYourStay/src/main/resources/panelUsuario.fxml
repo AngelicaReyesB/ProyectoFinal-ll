@@ -24,12 +24,12 @@
                 <Insets />
             </HBox.margin>
          <children>
-            <TableView prefHeight="456.0" prefWidth="574.0">
+            <TableView fx:id="tablaAlojamientosDisponibles" prefHeight="456.0" prefWidth="574.0">
               <columns>
-                <TableColumn prefWidth="227.99997329711914" text="NOMBRE" />
-                <TableColumn prefWidth="192.79998779296875" text="TIPO ALOJAMIENTO" />
-                  <TableColumn prefWidth="180.0" text="PRECIO" />
-                  <TableColumn prefWidth="292.8000854492187" text="IMAGEN" />
+                <TableColumn fx:id="colNombre" prefWidth="227.99997329711914" text="NOMBRE" />
+                <TableColumn fx:id="colTipoAlojamiento" prefWidth="192.79998779296875" text="TIPO ALOJAMIENTO" />
+                  <TableColumn fx:id="colPrecio" prefWidth="180.0" text="PRECIO" />
+                  <TableColumn fx:id="colImagen" prefWidth="292.8000854492187" text="IMAGEN" />
               </columns>
                <VBox.margin>
                   <Insets left="250.0" right="250.0" />
@@ -37,7 +37,7 @@
             </TableView>
             <HBox alignment="CENTER_RIGHT" prefHeight="59.0" prefWidth="1129.0">
                <children>
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="42.0" prefWidth="94.0" style="-fx-background-color: #006600;" text="Ver" textFill="WHITE" />
+                  <Button fx:id="verDetalles" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#irDetallesAlojamiento" prefHeight="42.0" prefWidth="94.0" style="-fx-background-color: #006600;" text="Ver" textFill="WHITE" />
                </children>
                <VBox.margin>
                   <Insets left="250.0" right="250.0" />
