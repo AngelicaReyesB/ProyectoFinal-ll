@@ -9,17 +9,11 @@ import co.edu.uniquindio.bookyourstay.servicio.CreacionAlojamiento;
 import co.edu.uniquindio.bookyourstay.servicio.ServiciosEmpresa;
 import co.edu.uniquindio.bookyourstay.utils.EnvioEmail;
 import co.edu.uniquindio.bookyourstay.utils.Persistencia;
-import jakarta.activation.DataSource;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lombok.Getter;
 import lombok.Setter;
-import org.simplejavamail.api.email.Email;
-import org.simplejavamail.api.mailer.Mailer;
-import org.simplejavamail.email.EmailBuilder;
-import org.simplejavamail.mailer.MailerBuilder;
 
-import java.io.File;
 import java.nio.file.FileSystems;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -140,25 +134,6 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         return cliente;
     }
 
-    //se hace uso en el controlador de inicio
-  //  @Override
-    //    public Cliente iniciarSesion(String email, String password) throws Exception {
-    //        if (email == null || email.isEmpty() || password == null || password.isEmpty()) {
-    //            throw new Exception("Correo y contraseña no pueden estar vacíos.");
-    //        }
-    //
-    //        for (Cliente cliente : clientes) {
-    //            if (cliente.getEmail().equals(email)) {
-    //                if (cliente.getPassword() != null && cliente.getPassword().equals(password)) {
-    //                    return cliente;
-    //                } else {
-    //                    throw new Exception("Correo o contraseña incorrectos.");
-    //                }
-    //            }
-    //        }
-    //        throw new Exception("Correo o contraseña incorrectos.");
-    //    }
-
     //se hace uso en inicio controlador
     @Override
     public Cliente obtenerCliente(String cedula) throws Exception {
@@ -206,8 +181,6 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         }
     }
 
-
-
     //se hace uso en recuperar contraseña
     @Override
     public Cliente obtenerUsuario(String email) throws Exception {
@@ -249,6 +222,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
 
     }
 
+    //no se hace euso y debe de usarse en nueva contraseña
     @Override
     public void enviarCorreoRecuperacion(String email) throws Exception{
         String codigo = generarCodigoVerificacion();
@@ -274,6 +248,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         }
     }
 
+    //no se hace uso y se hace uso en el metodo anterior
     @Override
     public String generarCodigoVerificacion() {
         return String.valueOf((int) (Math.random() * 900000) + 100000);
@@ -313,14 +288,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         //guardarDatosEmpresa();
     }
 
-
-    //FALTAAAA
-    @Override
-    public boolean validarCodigoActivacion(String email, String codigo) throws Exception {
-        return false;
-    }
-
-    //hay que añadir un botón para este método
+    //si se hace uso en perfil controlador
     @Override
     public boolean eliminarCuentaCliente(String cedulaCliente) throws Exception {
         for (Cliente cliente : clientes) {
@@ -331,6 +299,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         }
         throw new Exception("No se encontró un cliente con la cédula " + cedulaCliente);
     }
+
 
     @Override
     public ArrayList<Cliente> listarClientes() throws Exception {
@@ -451,7 +420,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         return alojamientosPorCiudad;
     }
 
-    //no se hace uso, se hace uso en el controlador de crear ofertas
+    // se hace uso en el controlador de crear ofertas
     @Override
     public ArrayList<Alojamiento> listarAlojamientos(String nombreAlojamiento) throws Exception {
         ArrayList<Alojamiento> alojamientosPorNombre = new ArrayList<>();
@@ -464,7 +433,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         return listarAlojamientos();
     }
 
-    //no se hace uso
+    //no se hace uso y debe de usar en AlojamientosPopularesControlador
     @Override
     public ArrayList<Alojamiento> listaPopularesPorCiudad(String ciudad) throws Exception {
         ArrayList<Alojamiento> alojamientosPopulares = new ArrayList<>();
@@ -496,7 +465,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         return numeroDeReservas;
     }
 
-    //no se hace uso
+    //si se hace uso en crear oferta
     @Override
     public ObservableList<Alojamiento> listarOfertasEspeciales() throws Exception {
         List<Alojamiento> alojamientosConOferta = new ArrayList<>();
@@ -511,7 +480,6 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         // Convertir a ObservableList antes de devolver
         return FXCollections.observableArrayList(alojamientosConOferta);
     }
-
 
     //se hace uso en el controlador de crear alojamientos
     @Override
@@ -572,7 +540,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         return nuevaReserva;
     }
 
-    //no se hace uso, no sé si se necesite
+    //no se hace uso
     @Override
     public ArrayList<Reserva> listarReservas() throws Exception {
         if (reservas == null || reservas.isEmpty()) {
@@ -618,7 +586,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         return reservasPersona;
     }
 
-    //no se hace uso, se debe hacer uso en el mismo controlador que el de arriba
+    //si se hace uso en perfil controlador
     @Override
     public boolean cancelarReserva(Reserva reserva) throws Exception {
         if (reserva == null) {
@@ -757,7 +725,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         }
     }
 
-    //no se hace uso, controlador de crear oferta
+    //si se hace uso, controlador de crear oferta
     @Override
     public void crearOfertaEspecial(Alojamiento alojamiento, LocalDate fechaInicio, LocalDate fechaFin, float descuento) throws Exception {
         if (alojamiento == null) {
@@ -945,81 +913,6 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         }
     }
 
-    // Método para generar un código QR a partir del código de la factura
-    @Override
-    public String generarCodigoQR(Factura factura) throws Exception {
-        if (factura == null || factura.getCodigo() == null) {
-            throw new Exception("La factura no puede ser nula o tener un código nulo.");
-        }
-
-        String codigoFactura = factura.getCodigo(); // Código único de la factura
-        String filePath = "codigoQR_" + codigoFactura + ".png"; // Ruta para guardar el archivo
-        int width = 300; // Ancho del QR
-        int height = 300; // Alto del QR
-
-        // Configuración para la codificación del QR
-        Map<EncodeHintType, Object> hints = new HashMap<>();
-        hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
-
-        try {
-            // Crear el QR
-            QRCodeWriter qrCodeWriter = new QRCodeWriter();
-            BitMatrix bitMatrix = qrCodeWriter.encode(
-                    codigoFactura,
-                    BarcodeFormat.QR_CODE,
-                    width,
-                    height,
-                    hints
-            );
-
-            // Guardar el QR en el sistema de archivos
-            Path path = FileSystems.getDefault().getPath(filePath);
-            MatrixToImageWriter.writeToPath(bitMatrix, "PNG", path);
-
-            return filePath; // Devuelve la ruta del archivo generado
-
-        } catch (WriterException | IOException e) {
-            throw new Exception("Error al generar el código QR: " + e.getMessage(), e);
-        }
-    }
-
-    @Override
-    public String enviarCodigoQR(Factura factura, String rutaQR) throws Exception {
-        if (factura == null || factura.getCliente() == null) {
-            throw new Exception("La factura o el cliente no pueden ser nulos.");
-        }
-
-        String emailCliente = factura.getCliente().getEmail(); // Suponiendo que Cliente tiene un método getEmail()
-        if (emailCliente == null || emailCliente.isEmpty()) {
-            throw new Exception("El cliente no tiene un correo electrónico válido.");
-        }
-
-        // Validar que la ruta del archivo QR sea válida
-        File archivoQR = new File(rutaQR);
-        if (!archivoQR.exists()) {
-            throw new Exception("El archivo del código QR no existe en la ruta especificada.");
-        }
-
-        // Crear el email con Simple Java Mail
-        Email email = EmailBuilder.startingBlank()
-                .from("BookYourStay", "no-reply@bookyourstay.com")
-                .to(factura.getCliente().getNombre(), emailCliente)
-                .withSubject("Factura de BookYourStay - Código QR")
-                .withPlainText("Estimado " + factura.getCliente().getNombre() + ",\n\nAdjuntamos el código QR correspondiente a su factura. Gracias por usar BookYourStay.")
-                .withAttachment("codigoQR.png", (DataSource) archivoQR) // Adjuntar el archivo QR
-                .buildEmail();
-
-        // Configurar el mailer
-        Mailer mailer = MailerBuilder
-                .withSMTPServer("smtp.gmail.com", 587, "bookyourstay11@gmail.com", "bkic fjkw kzjm cyuj") // Configuración del servidor SMTP
-                .withTransportStrategy(org.simplejavamail.api.mailer.config.TransportStrategy.SMTP_TLS) // Usar TLS
-                .buildMailer();
-
-        // Enviar el correo
-        mailer.sendMail(email);
-        return emailCliente;
-    }
-
     //no se hace uso
     @Override
     public Administrador cambiarPassword(String email, String nuevaPassword) throws Exception {
@@ -1085,6 +978,79 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
         // guardarDatosEmpresa();
 
         return cliente;
+    }
+
+    // Método para generar un código QR a partir del código de la factura
+    @Override
+    public String generarCodigoQR(Factura factura) throws Exception {
+        if (factura == null || factura.getCodigo() == null) {
+            throw new Exception("La factura no puede ser nula o tener un código nulo.");
+        }
+
+        String codigoFactura = factura.getCodigo(); // Código único de la factura
+        String filePath = "codigoQR_" + codigoFactura + ".png"; // Ruta para guardar el archivo
+        int width = 300; // Ancho del QR
+        int height = 300; // Alto del QR
+
+        // Configuración para la codificación del QR
+        Map<EncodeHintType, Object> hints = new HashMap<>();
+        hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
+
+        try {
+            // Crear el QR
+            QRCodeWriter qrCodeWriter = new QRCodeWriter();
+            BitMatrix bitMatrix = qrCodeWriter.encode(
+                    codigoFactura,
+                    BarcodeFormat.QR_CODE,
+                    width,
+                    height,
+                    hints
+            );
+
+            // Guardar el QR en el sistema de archivos
+            Path path = FileSystems.getDefault().getPath(filePath);
+            MatrixToImageWriter.writeToPath(bitMatrix, "PNG", path);
+
+            return filePath; // Devuelve la ruta del archivo generado
+
+        } catch (WriterException | IOException e) {
+            throw new Exception("Error al generar el código QR: " + e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public void enviarFacturaQR(Reserva reserva) throws Exception {
+        // Primero, generamos la factura para la reserva
+        Factura factura = generarFactura(reserva);
+
+        // Generar el código QR de la factura
+        String codigoQRFilePath = generarCodigoQR(factura); // Usamos tu método para generar el QR
+
+        // Crear el mensaje del correo
+        String mensaje = "Hola " + reserva.getCliente().getNombre() + ",\n\n"
+                + "Gracias por realizar tu reserva con nosotros. A continuación, encontrarás los detalles de tu reserva:\n\n"
+                + "Código de Factura: " + factura.getCodigo() + "\n"
+                + "Subtotal: " + factura.getSubtotal() + "\n"
+                + "Descuento: " + factura.getDescuento() + "\n"
+                + "Total: " + factura.getTotal() + "\n\n"
+                + "Detalles de la reserva:\n"
+                + "Alojamiento: " + reserva.getAlojamiento().getNombre() + "\n"
+                + "Fecha de inicio: " + reserva.getFechaInicio() + "\n"
+                + "Fecha de fin: " + reserva.getFechaFin() + "\n"
+                + "Número de huéspedes: " + reserva.getNumHuespedes() + "\n\n"
+                + "Adjuntamos el código QR de tu factura para tu referencia.\n\n"
+                + "¡Esperamos que disfrutes tu estancia con nosotros!\n\n"
+                + "Saludos cordiales,\n"
+                + "El equipo de BookYourStay";
+
+        // Crear un objeto de EnvioEmail, pasando el archivo QR como adjunto
+        EnvioEmail envioEmail = new EnvioEmail(
+                reserva.getCliente().getEmail(),
+                "Confirmación de Reserva y Factura",
+                codigoQRFilePath);  // Pasamos la ruta del archivo QR
+
+        // Enviar el correo
+        envioEmail.enviarNotificacion();
     }
 
 

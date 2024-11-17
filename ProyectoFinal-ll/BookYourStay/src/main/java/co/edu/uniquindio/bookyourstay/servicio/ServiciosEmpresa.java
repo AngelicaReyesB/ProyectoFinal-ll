@@ -59,8 +59,8 @@ public interface ServiciosEmpresa {
     Factura generarFactura(Reserva reserva) throws Exception;
     void crearOfertaEspecial(Alojamiento alojamiento, LocalDate fechaInicio, LocalDate fechaFin, float descuento) throws Exception;
     ObservableList<Alojamiento> listarOfertasEspeciales() throws Exception;
-    String enviarCodigoQR(Factura factura, String rutaQR) throws Exception;
     String generarCodigoQR(Factura factura) throws Exception;
     boolean verificarCodigoActivacion(String cedula, String codigoActivacion) throws Exception;
 
+ void enviarFacturaQR(Reserva reserva) throws Exception;
 }
