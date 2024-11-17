@@ -29,17 +29,17 @@
          <children>
             <HBox fx:id="HBoxAlojamientosAleatorios" prefHeight="1012.0" prefWidth="1300.0">
                <children>
-                  <TableView prefHeight="904.0" prefWidth="281.0" HBox.hgrow="ALWAYS">
+                  <TableView fx:id="tablaOfertasAlojamientos" prefHeight="904.0" prefWidth="281.0" HBox.hgrow="ALWAYS">
                     <columns>
-                      <TableColumn prefWidth="249.60001754760742" text="OFERTAS" />
+                      <TableColumn fx:id="colImagenOfertas" prefWidth="249.60001754760742" text="OFERTAS" />
                     </columns>
                   </TableView>
-                  <TableView prefHeight="904.0" prefWidth="991.0" HBox.hgrow="ALWAYS">
+                  <TableView fx:id="tablaAlojamientosAleatoria" prefHeight="904.0" prefWidth="991.0" HBox.hgrow="ALWAYS">
                     <columns>
-                      <TableColumn prefWidth="288.8000060915947" text="IMAGEN" />
-                      <TableColumn prefWidth="244.79998779296875" text="NOMBRE " />
-                        <TableColumn prefWidth="204.00006103515625" text="CIUDAD" />
-                        <TableColumn prefWidth="223.2000732421875" text="PRECIO" />
+                      <TableColumn fx:id="colImagen" prefWidth="288.8000060915947" text="IMAGEN" />
+                      <TableColumn fx:id="colNombre" prefWidth="244.79998779296875" text="NOMBRE " />
+                        <TableColumn fx:id="colCiudad" prefWidth="204.00006103515625" text="CIUDAD" />
+                        <TableColumn fx:id="colPrecio" prefWidth="223.2000732421875" text="PRECIO" />
                     </columns>
                      <HBox.margin>
                         <Insets left="32.0" />

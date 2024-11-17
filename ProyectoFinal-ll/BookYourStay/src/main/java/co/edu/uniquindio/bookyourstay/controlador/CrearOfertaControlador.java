@@ -39,18 +39,18 @@ public class CrearOfertaControlador implements Observable, Initializable {
         if(alojamientoSeleccionado.getItems().isEmpty() || fechaInicioPicker.getValue() == null ||
                 fechaFinPicker.getValue() == null){
             principalControlador.mostrarAlerta("Ningún campo puede estar vacío", Alert.AlertType.ERROR);
-            return false;
+            return true;
         }
         if (fechaInicioPicker.getValue().isBefore(LocalDate.now()) || fechaFinPicker.getValue().isBefore(LocalDate.now())) {
             principalControlador.mostrarAlerta("La fecha seleccionada debe ser igual o superior al día de hoy", Alert.AlertType.WARNING);
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     @FXML
     public void crearOferta() {
-        if (!validarCampos()) return;
+        if (validarCampos()) return;
 
         try {
             Alojamiento alojamiento = alojamientoSeleccionado.getValue();
@@ -71,7 +71,7 @@ public class CrearOfertaControlador implements Observable, Initializable {
 
     @FXML
     public void editarOferta() {
-        if (!validarCampos()) return;
+        if (validarCampos()) return;
         try {
             Alojamiento alojamiento = alojamientoSeleccionado.getValue();
             LocalDate nuevaFechaInicio = fechaInicioPicker.getValue();

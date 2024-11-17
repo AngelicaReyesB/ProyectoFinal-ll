@@ -2,7 +2,6 @@ package co.edu.uniquindio.bookyourstay.factory;
 
 import co.edu.uniquindio.bookyourstay.modelo.Alojamiento;
 import co.edu.uniquindio.bookyourstay.modelo.Habitacion;
-import co.edu.uniquindio.bookyourstay.modelo.Resena;
 import co.edu.uniquindio.bookyourstay.modelo.enums.TipoAlojamiento;
 import co.edu.uniquindio.bookyourstay.modelo.enums.TipoCiudad;
 import co.edu.uniquindio.bookyourstay.modelo.enums.TipoHabitacion;
@@ -24,7 +23,7 @@ public class AlojamientoHotel implements CreacionAlojamiento  {
                 .tipoHabitacion(TipoHabitacion.DOBLE_ESTANDAR)
                 .build();
         Habitacion suitePresencial = Habitacion.builder()
-                .tipoHabitacion(TipoHabitacion.SUITE_PRESENCIAL)
+                .tipoHabitacion(TipoHabitacion.SUITE_PRESIDENCIAL)
                 .build();
         Habitacion suiteEjecutiva = Habitacion.builder()
                 .tipoHabitacion(TipoHabitacion.SUITE_EJECUTIVA)

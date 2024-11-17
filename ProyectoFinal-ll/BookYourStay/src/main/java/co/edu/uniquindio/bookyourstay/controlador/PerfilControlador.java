@@ -46,7 +46,6 @@ public class PerfilControlador implements Observable, Initializable {
         }
     }
 
-
     @FXML
     public void detallesAlojamiento() {
         principalControlador.navegarVentana("/detallesAlojamiento.fxml", "Detalles de los alojamientos");
@@ -74,7 +73,6 @@ public class PerfilControlador implements Observable, Initializable {
             principalControlador.mostrarAlerta("No hay ningún cliente logueado", Alert.AlertType.ERROR);
         }
     }
-
 
     @FXML
     public void irActualizarDatosCliente(ActionEvent event) {

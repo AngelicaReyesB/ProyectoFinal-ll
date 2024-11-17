@@ -29,8 +29,7 @@ public interface ServiciosEmpresa {
     Alojamiento crearAlojamiento(String nombre, String descripcion, String imagen, float valorNoche, int numHuespedes, List<String> serviciosIncluidos, TipoAlojamiento tipoAlojamiento, TipoCiudad tipoCiudad, boolean activo) throws Exception;
     Alojamiento obtenerAlojamiento(String codigo) throws Exception;
     Alojamiento actualizarAlojamiento(Alojamiento alojamiento) throws Exception;
-    //void actualizarAlojamiento(Reserva reserva) throws Exception;
-    ArrayList<Alojamiento> listarAlojamientos() throws Exception;
+    List<Alojamiento> listarAlojamientos();
     ArrayList<Alojamiento> listarAlojamientos(TipoAlojamiento tipoAlejamiento) throws Exception;
     ArrayList<Alojamiento> listarAlojamientos(TipoCiudad tipoCiudad) throws Exception;
     ArrayList<Alojamiento> listarAlojamientos(String nombreAlojamiento) throws Exception;
@@ -62,4 +61,7 @@ public interface ServiciosEmpresa {
     boolean verificarCodigoActivacion(String cedula, String codigoActivacion) throws Exception;
     String enviarFacturaQR(Reserva reserva) throws Exception;
     boolean validarCodigoVerificacion(String codigoIngresado) throws Exception;
+
+
+
 }

@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -52,31 +53,33 @@ public class DetallesAlojamientoControlador implements Observable, Initializable
     }
 
     public void reservarAlojamiento() {
-        //principalControlador.getSesion().setReservarAlojamiento(alojamientoRandom);
-        principalControlador.navegarVentana("/reservaAlojamiento.fxml", "Reservar alojamiento.");
-        principalControlador.cerrarVentana(btnReservarAhora);
+        Alojamiento alojamientoSeleccionado = principalControlador.getSesion().getAlojamientoDetalle();
+        if (alojamientoSeleccionado != null) {
+            principalControlador.getSesion().setReservarAlojamiento(alojamientoSeleccionado);
+            principalControlador.navegarVentana("/reservaAlojamiento.fxml", "Reservar alojamiento.");
+            principalControlador.cerrarVentana(btnReservarAhora);
+        } else {
+            principalControlador.mostrarAlerta("No se ha seleccionado un alojamiento.", Alert.AlertType.ERROR);
+        }
     }
 
+
     private void cargarDetallesAlojamiento(Alojamiento alojamiento) {
-        // Establecer los valores en la vista
         nombreAlojamiento.setText(alojamiento.getNombre());
         descripcionAlojamiento.setText(alojamiento.getDescripcion());
         ValorAlojamiento.setText(String.valueOf(alojamiento.getValorNoche()));
         capacidadMaxima.setText(String.valueOf(alojamiento.getCapacidadMaxima()));
         CiudadAlojamiento.setText(alojamiento.getTipoCiudad().toString());
 
-        // Configurar la imagen
         if (alojamiento.getImagen() != null && !alojamiento.getImagen().isEmpty()) {
             imagenAlojamiento.setImage(new Image(alojamiento.getImagen()));
         }
 
-        // Concatenar los servicios en una cadena
         StringBuilder serviciosText = new StringBuilder("Servicios incluidos:\n");
         for (String servicio : alojamiento.getServiciosIncluidos()) {
             serviciosText.append("- ").append(servicio).append("\n");
         }
 
-        // Establecer el texto del Label con los servicios
         labelServicios.setText(serviciosText.toString());
     }
 
@@ -91,7 +94,6 @@ public class DetallesAlojamientoControlador implements Observable, Initializable
         Alojamiento alojamiento = principalControlador.getSesion().getAlojamientoDetalle();
 
         if (alojamiento != null) {
-            // Configurar los detalles del alojamiento
             cargarDetallesAlojamiento(alojamiento);
         }
     }

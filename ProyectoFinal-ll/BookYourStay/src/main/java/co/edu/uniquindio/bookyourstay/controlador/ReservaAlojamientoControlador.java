@@ -9,8 +9,9 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 
-import javax.swing.text.html.ImageView;
+import javafx.scene.image.ImageView;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
@@ -23,7 +24,7 @@ public class ReservaAlojamientoControlador implements Observable, Initializable 
     @FXML private Button btnRegresar;
     @FXML private Label ciudadAlojamiento;
     @FXML private Label capacidadAlojamiento;
-    @FXML private ImageView imagenEvento;
+    @FXML private ImageView imagen;
     @FXML private Label nombreAlojamiento;
     @FXML private Label verDescuento;
     @FXML private Label verSubtotal;
@@ -42,13 +43,14 @@ public class ReservaAlojamientoControlador implements Observable, Initializable 
         System.out.println("COMPRA:" + alojamiento);
     }
 
-    private void obtenerAlojamientoAleatorio(){
+    private void obtenerAlojamiento() {
         alojamiento = principalControlador.getSesion().getReservarAlojamiento();
         nombreAlojamiento.setText(alojamiento.getNombre());
         ciudadAlojamiento.setText(alojamiento.getTipoCiudad().toString());
         capacidadAlojamiento.setText(String.valueOf(alojamiento.getCapacidadMaxima()));
-        //serviciosAlojamiento.setText(alojamiento.getServiciosIncluidos());
+        imagen.setImage(new Image(alojamiento.getImagen()));
     }
+
 
     private LocalDate obtenerFechaInicio() {
         return fechaInicioPicker.getValue();
@@ -129,7 +131,7 @@ public class ReservaAlojamientoControlador implements Observable, Initializable 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        obtenerAlojamientoAleatorio();
+        obtenerAlojamiento();
         cbNumHuespedes.setItems(FXCollections.observableArrayList());
         //mostrarUsuario();
     }

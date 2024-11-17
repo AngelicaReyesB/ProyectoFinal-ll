@@ -31,11 +31,12 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Getter
 @Setter
-public class BookYourStay extends Persistencia implements ServiciosEmpresa {
+public class BookYourStay implements ServiciosEmpresa {
     private List<Cliente> clientes;
     private List<Alojamiento> alojamientos;
     private List<Factura> facturas;
@@ -386,7 +387,7 @@ public class BookYourStay extends Persistencia implements ServiciosEmpresa {
 
     //se hace uso en el controlador de búsquedas
     @Override
-    public ArrayList<Alojamiento> listarAlojamientos() throws Exception {
+    public ArrayList<Alojamiento> listarAlojamientos() {
         ArrayList<Alojamiento> alojamientosActivos = new ArrayList<>();
         for (Alojamiento alojamiento: alojamientos){
             if(alojamiento.isActivo()){

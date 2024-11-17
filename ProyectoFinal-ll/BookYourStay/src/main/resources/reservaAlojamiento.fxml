@@ -33,7 +33,7 @@
     <HBox prefHeight="906.0" prefWidth="1290.0">
 
         <VBox alignment="CENTER" prefHeight="858.0" prefWidth="698.0" spacing="30.0" style="-fx-padding: 32; -fx-background-color: #d8dbe2;">
-            <ImageView fx:id="imagenEvento" fitHeight="435.0" fitWidth="438.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imagen" fitHeight="435.0" fitWidth="438.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
 
             </ImageView>
             <VBox maxHeight="250.0" maxWidth="438.0" style="-fx-background-color: #C0C0C0; -fx-text-fill: white;">

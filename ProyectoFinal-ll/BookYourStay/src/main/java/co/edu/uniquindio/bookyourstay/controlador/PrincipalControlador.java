@@ -187,7 +187,7 @@ public class PrincipalControlador implements ServiciosEmpresa {
     }
 
     @Override
-    public ArrayList<Alojamiento> listarAlojamientos() throws Exception {
+    public ArrayList<Alojamiento> listarAlojamientos() {
         return bookYourStay.listarAlojamientos();
     }
 

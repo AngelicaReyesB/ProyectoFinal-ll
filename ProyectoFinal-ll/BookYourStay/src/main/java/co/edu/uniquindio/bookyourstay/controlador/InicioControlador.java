@@ -6,6 +6,7 @@ import co.edu.uniquindio.bookyourstay.modelo.Cliente;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
@@ -16,13 +17,18 @@ import java.util.ResourceBundle;
 //hecho, solo falta des comentar cuando se añada en el panel
 public class InicioControlador implements Observable, Initializable {
 
-    @FXML private GridPane AlojamientosDisponiblesGridPane;
-    @FXML private GridPane InicioSesion;
+    @FXML private HBox HBoxAlojamientosAleatorios;
     @FXML private Button btnIngresar;
+    @FXML private TableColumn<Alojamiento, String> colCiudad;
+    @FXML private TableColumn<Alojamiento, ImageView> colImagen;
+    @FXML private TableColumn<Alojamiento, ImageView> colImagenOfertas;
+    @FXML private TableColumn<Alojamiento, String> colNombre;
+    @FXML private TableColumn<Alojamiento, String> colPrecio;
     @FXML private TextField correo;
-    @FXML private HBox ofertasAlojamientosHbox;
     @FXML private Hyperlink olvidoPasswordLink;
     @FXML private TextField password;
+    @FXML private TableView<Alojamiento> tablaAlojamientosAleatoria;
+    @FXML private TableView<Alojamiento> tablaOfertasAlojamientos;
     private final PrincipalControlador principalControlador;
 
     public InicioControlador() {
@@ -63,7 +69,6 @@ public class InicioControlador implements Observable, Initializable {
         }
     }
 
-
     private void validarCliente(Cliente cliente){
         if(cliente.getCedula().equals(correo.getText()) && cliente.getPassword().equals(password.getText())){
             if(cliente.isEstadoCuenta()){
@@ -81,47 +86,6 @@ public class InicioControlador implements Observable, Initializable {
         }
     }
 
-    private void alojamientoRandom(){
-        try{
-            if(!principalControlador.getBookYourStay().getAlojamientos().isEmpty()){
-                int indice = (int)Math.floor (Math.random() * principalControlador.getBookYourStay().getAlojamientos().size());
-                Alojamiento alojamientoRandom = principalControlador.getBookYourStay().getAlojamientos().get(indice);
-                principalControlador.getSesion().setAlojamientoAleatorio(alojamientoRandom);
-                System.out.println("EVENTO RAMDON: " + alojamientoRandom);
-                //nombreAlojamiento.setText(alojamientoRandom.getNombre());
-                //descripcionAlojamiento.setText(alojamientoRandom.getDescripcion());
-                //valorNocheAlojamiento.setText(alojamientoRandom.getValorNoche());
-                //capacidadMaximaAlojamiento.setText(alojamientoRandom.getCapacidadMaxima());
-                //ciudadAojamiento.setText(alojamientoRandom.getTipoCiudad().toString());
-                //imagenEvento.setImage(new javafx.scene.image.Image((alojamientoRandom.getImagen())));
-            }
-        }catch (Exception e){
-            System.out.println("Error al buscar alojamiento aleatorio");
-        }
-    }
-
-    private void mostrarAlojamientos(){
-        try{
-            llamarAlojamientos();
-        }catch (Exception ignored){
-        }
-    }
-
-    private void llamarAlojamientos(){
-        try{
-            ArrayList<Alojamiento> listaAlojamientos = new ArrayList<>();
-            if (principalControlador.getSesion().getAlojamientos() != null){
-                 listaAlojamientos = (ArrayList<Alojamiento>) principalControlador.getSesion().getAlojamientos();
-            }else {
-                principalControlador.getSesion().setAlojamientos(principalControlador.getBookYourStay().getAlojamientos());
-                listaAlojamientos = (ArrayList<Alojamiento>) principalControlador.getSesion().getAlojamientos();
-            }
-
-        }catch (Exception e){
-            System.out.println("Error al llamar los eventos" + e.getMessage());
-        }
-    }
-
     @FXML
     public void recuperacionPassword() {
         principalControlador.navegarVentana("/recuperacionPassword.fxml", "Recuperar contraseña");
@@ -130,8 +94,6 @@ public class InicioControlador implements Observable, Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        alojamientoRandom();
-        mostrarAlojamientos();
     }
 
     @Override

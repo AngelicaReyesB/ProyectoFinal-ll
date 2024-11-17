@@ -12,8 +12,12 @@ import java.util.List;
 public class Sesion implements Serializable {
 
     private Cliente cliente;
+    @Getter
+    @Setter
     private Alojamiento reservarAlojamiento;
     private Alojamiento alojamientoAleatorio;
+    @Getter
+    @Setter
     private Alojamiento alojamientoDetalle;
     private ArrayList<Cliente> clientes;
     private List<Alojamiento> alojamientos;
