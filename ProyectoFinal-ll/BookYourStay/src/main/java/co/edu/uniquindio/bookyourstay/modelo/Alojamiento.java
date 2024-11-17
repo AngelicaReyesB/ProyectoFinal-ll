@@ -21,7 +21,6 @@ public class Alojamiento {
     private String nombre;
     private String descripcion;
     private String imagen;
-    private LocalDate fechaEstancia; //no
     private float valorNoche;
     private int capacidadMaxima;
     private List<String> serviciosIncluidos;

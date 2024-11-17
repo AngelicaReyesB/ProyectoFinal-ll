@@ -167,8 +167,8 @@ public class PrincipalControlador implements ServiciosEmpresa {
     }
 
     @Override
-    public Alojamiento crearAlojamiento(String nombre, String descripcion, String imagen, LocalDate fechaEstancia, float valorNoche, int numHuespedes, List<String> serviciosIncluidos, TipoAlojamiento tipoAlojamiento, TipoCiudad tipoCiudad, boolean activo) throws Exception {
-        return bookYourStay.crearAlojamiento(nombre, descripcion, imagen, fechaEstancia, valorNoche, numHuespedes, serviciosIncluidos, tipoAlojamiento, tipoCiudad, activo);
+    public Alojamiento crearAlojamiento(String nombre, String descripcion, String imagen, float valorNoche, int numHuespedes, List<String> serviciosIncluidos, TipoAlojamiento tipoAlojamiento, TipoCiudad tipoCiudad, boolean activo) throws Exception {
+        return bookYourStay.crearAlojamiento(nombre, descripcion, imagen, valorNoche, numHuespedes, serviciosIncluidos, tipoAlojamiento, tipoCiudad, activo);
     }
 
     @Override
