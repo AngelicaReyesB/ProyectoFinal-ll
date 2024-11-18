@@ -121,7 +121,8 @@ public class BookYourStay implements ServiciosEmpresa {
 
     @Override
     public boolean activarUsuario(String codigoActivacion, Cliente cliente) {
-        if (cliente != null && cliente.getCodigoActivacion().equals(codigoActivacion)) {
+        // Verificamos si el correo del cliente es válido
+        if (cliente != null && esCorreoValido(cliente.getEmail()) && cliente.getCodigoActivacion().equals(codigoActivacion)) {
             cliente.setEstadoCuenta(true); // Activa la cuenta
 
             // Asociamos una billetera virtual al cliente si no tiene una
@@ -133,7 +134,22 @@ public class BookYourStay implements ServiciosEmpresa {
         }
         return false;
     }
-    
+
+
+    //Metodo para Validar el correo Electronico
+    @Override
+    public boolean esCorreoValido(String email) {
+        String emailRegex = "^[a-zA-Z0-9_+&-]+(?:\\.[a-zA-Z0-9_+&-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        Pattern pattern = Pattern.compile(emailRegex);
+        if (email==null) {
+            return false;
+        }
+
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
+
     //se hace uso en inicio controlador
     @Override
     public Cliente validarUsuario(String email, String password) throws Exception {
@@ -1047,17 +1063,5 @@ public class BookYourStay implements ServiciosEmpresa {
         }
     }
 
-    //Metodo para Validar el correo Electronico
-    @Override
-    public boolean esCorreoValido(String email) {
-        String emailRegex = "^[a-zA-Z0-9_+&-]+(?:\\.[a-zA-Z0-9_+&-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
-        Pattern pattern = Pattern.compile(emailRegex);
-        if (email==null) {
-            return false;
-        }
-
-        Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
-    }
 
 }

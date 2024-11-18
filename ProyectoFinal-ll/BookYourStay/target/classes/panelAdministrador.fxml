@@ -15,7 +15,6 @@
 <?import javafx.scene.text.Font?>
 
 <VBox alignment="center" prefHeight="669.0" prefWidth="1274.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.bookyourstay.controlador.PanelAdministradorControlador">
-
     <HBox spacing="10" style="-fx-background-color: #009900; -fx-min-height: 102.0;">
         <ImageView fitHeight="47.0" fitWidth="196.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
             <Image url="@Img/Logo.png" />
@@ -23,6 +22,10 @@
                 <Insets left="32.0" right="20.0" top="28.0" />
             </HBox.margin>
         </ImageView>
+
+        <children>
+            <fx:include source="barraBusquedas.fxml" />
+        </children>
 
         <HBox alignment="CENTER_RIGHT" spacing="10" HBox.hgrow="ALWAYS">
             <Button fx:id="btnCerrarSesion" minHeight="40.0" minWidth="110.0" onAction="#cerrarSesion" style="-fx-background-color: #006600; -fx-text-fill: white;" text="Cerrar Sesion">
