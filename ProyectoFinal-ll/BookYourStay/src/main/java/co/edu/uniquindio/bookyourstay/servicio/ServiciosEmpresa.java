@@ -10,10 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface ServiciosEmpresa {
-   // void cargarDatosEmpresa() throws Exception;
-    //void guardarDatosEmpresa() throws Exception;
     Cliente registrarCliente(String cedula, String nombre, String telefono, String email, String password) throws Exception;
-    //Cliente iniciarSesion(String email, String password) throws Exception;
     boolean eliminarCuentaCliente(String cedulaCliente) throws  Exception;
     Cliente obtenerCliente(String cedula) throws Exception;
     Cliente validarUsuario(String cedula, String password) throws Exception;
