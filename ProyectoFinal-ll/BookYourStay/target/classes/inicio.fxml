@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="1125.0" prefWidth="1875.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.bookyourstay.controlador.InicioControlador">
+<VBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="1125.0" prefWidth="1875.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.bookyourstay.controlador.InicioControlador">
     <children>
         <fx:include source="barraNavegacion.fxml" />
     </children>
@@ -23,22 +33,22 @@
                   <ImageView fx:id="imagen" fitHeight="402.0" fitWidth="597.0" pickOnBounds="true" preserveRatio="true" />
                   <VBox fx:id="VboxInformacion" alignment="CENTER" prefHeight="402.0" prefWidth="700.0" style="-fx-background-color: #d8dbe2;">
                      <children>
-                        <Label fx:id="nombre" alignment="CENTER" prefHeight="42.0" prefWidth="228.0" text="Label" textAlignment="CENTER">
+                        <Label fx:id="nombre" alignment="CENTER" prefHeight="42.0" prefWidth="228.0" textAlignment="CENTER">
                            <font>
                               <Font size="24.0" />
                            </font>
                            <VBox.margin>
                               <Insets bottom="10.0" />
                            </VBox.margin></Label>
-                        <Label fx:id="ciudad" alignment="CENTER" prefHeight="42.0" prefWidth="228.0" text="Label">
+                        <Label fx:id="ciudad" alignment="CENTER" prefHeight="42.0" prefWidth="228.0">
                            <font>
                               <Font size="24.0" />
                            </font></Label>
-                        <Label fx:id="precio" alignment="CENTER" prefHeight="48.0" prefWidth="227.0" text="Label">
+                        <Label fx:id="precio" alignment="CENTER" prefHeight="48.0" prefWidth="227.0">
                            <font>
                               <Font size="24.0" />
                            </font></Label>
-                        <Label fx:id="capacidad" alignment="CENTER" prefHeight="46.0" prefWidth="225.0" text="Label">
+                        <Label fx:id="capacidad" alignment="CENTER" prefHeight="46.0" prefWidth="225.0">
                            <font>
                               <Font size="24.0" />
                            </font></Label>
@@ -63,8 +73,8 @@
                 <TextField fx:id="correo" alignment="CENTER" minHeight="30.0" promptText=" Ingrese su Correo" GridPane.columnIndex="0" GridPane.rowIndex="1" />
 
                 <Label alignment="CENTER" prefHeight="40.0" prefWidth="150.0" text="Contraseña" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                <TextField fx:id="password" alignment="CENTER" minHeight="30.0" promptText="Ingrese su contraseña" GridPane.columnIndex="0" GridPane.rowIndex="3" />
             <Hyperlink fx:id="olvidoPasswordLink" alignment="CENTER" contentDisplay="CENTER" onAction="#recuperacionPassword" prefHeight="24.0" prefWidth="153.0" text="¿Olvido su contraseña?" GridPane.rowIndex="4" />
+            <PasswordField fx:id="password" alignment="CENTER" prefHeight="46.0" prefWidth="154.0" promptText="Ingrese su Contraseña" GridPane.rowIndex="3" />
                 <columnConstraints>
                     <ColumnConstraints />
                 </columnConstraints>

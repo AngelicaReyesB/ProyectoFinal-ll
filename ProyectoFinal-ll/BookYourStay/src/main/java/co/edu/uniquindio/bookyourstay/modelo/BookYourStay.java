@@ -104,7 +104,7 @@ public class BookYourStay implements ServiciosEmpresa {
     }
 
 
-    //se hace uso en inicio controlador
+    //se hace uso en otros métodos
     @Override
     public Cliente obtenerCliente(String cedula) throws Exception {
         try {
@@ -123,6 +123,8 @@ public class BookYourStay implements ServiciosEmpresa {
         }
     }
 
+
+    //hace uso en activar cuenta
     @Override
     public boolean activarUsuario(String codigoActivacion, Cliente cliente) {
         // Verificamos si el correo del cliente es válido
@@ -160,10 +162,8 @@ public class BookYourStay implements ServiciosEmpresa {
         if (email == null || email.isEmpty() || password == null || password.isEmpty()) {
             throw new Exception("Correo y contraseña no pueden estar vacíos.");
         }
-        // Obtener el cliente mediante el correo
         Cliente cliente = obtenerCliente(email);
         if (cliente != null) {
-            // Validamos la contraseña
             if (cliente.getPassword().equals(password)) {
                 return cliente;
             } else {
@@ -207,13 +207,12 @@ public class BookYourStay implements ServiciosEmpresa {
     //se hace uso en recuperación contraseña
     @Override
     public void obtenerAdministrador(String email) throws Exception {
-        String usuarioAdministrador = "admin@bookyourstay.com";
+        String usuarioAdministrador = "admin@gmail.com";
         if (!email.equals(usuarioAdministrador)) {
             throw new Exception("Administrador no encontrado con el email proporcionado.");
         }
         enviarCorreoRecuperacion(email);
-        System.out.println("Código de verificación para el usuario " + administrador.getEmail() + ": " + generarCodigoVerificacion());
-
+        System.out.println("Código de verificación para el administrador " + administrador.getEmail() + ": " + generarCodigoVerificacion());
     }
 
     //no se hace euso y debe de usarse en nueva contraseña
@@ -328,7 +327,7 @@ public class BookYourStay implements ServiciosEmpresa {
     //se hace uso en inicio controlador
     @Override
     public boolean validarIngresoAdministrador(String email, String password) throws Exception {
-        String usuarioAdministrador = "admin";
+        String usuarioAdministrador = "admin@gmail.com";
         String passwordAdministrador = "admin123";
         return email.equals(usuarioAdministrador) && password.equals(passwordAdministrador);
     }
@@ -898,7 +897,7 @@ public class BookYourStay implements ServiciosEmpresa {
     //no se hace uso
     @Override
     public Administrador cambiarPassword(String email, String nuevaPassword) throws Exception {
-        String usuarioAdministrador = "admin@bookyourstay.com";
+        String usuarioAdministrador = "admin@gmail.com";
 
         if (!email.equals(usuarioAdministrador)) {
             throw new Exception("Administrador no encontrado con el email proporcionado.");

@@ -26,7 +26,6 @@ public class DetallesAlojamientoControlador implements Observable, Initializable
     @FXML private ComboBox<String> cbCalificacion;
     @FXML private Label descripcionAlojamiento;
     @FXML private ImageView imagenAlojamiento;
-    @FXML private Label labelServicios;
     @FXML private Label nombreAlojamiento;
     @FXML private ListView<Resena> tablaResena;
     @FXML private TextArea tctResena;
@@ -46,7 +45,7 @@ public class DetallesAlojamientoControlador implements Observable, Initializable
             principalControlador.mostrarAlerta("No se ha seleccionado un alojamiento.", Alert.AlertType.ERROR);
         }
     }
-    
+
     private void cargarDetallesAlojamiento(Alojamiento alojamiento) {
         nombreAlojamiento.setText(alojamiento.getNombre());
         descripcionAlojamiento.setText(alojamiento.getDescripcion());
@@ -57,13 +56,6 @@ public class DetallesAlojamientoControlador implements Observable, Initializable
         if (alojamiento.getImagen() != null && !alojamiento.getImagen().isEmpty()) {
             imagenAlojamiento.setImage(new Image(alojamiento.getImagen()));
         }
-
-        StringBuilder serviciosText = new StringBuilder("Servicios incluidos:\n");
-        for (String servicio : alojamiento.getServiciosIncluidos()) {
-            serviciosText.append("- ").append(servicio).append("\n");
-        }
-
-        labelServicios.setText(serviciosText.toString());
     }
 
     @Override
@@ -82,4 +74,12 @@ public class DetallesAlojamientoControlador implements Observable, Initializable
         cbCalificacion.getSelectionModel().select(0);
     }
 
+    public void irInicio() {
+        principalControlador.navegarVentana("/inicio.fxml", "Inicio");
+        principalControlador.cerrarVentana(btnRegresar);
+
+    }
+
+    public void enviarResena() {
+    }
 }
