@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER_LEFT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="912.0" prefWidth="1836.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.bookyourstay.controlador.PanelUsuarioControlador">
+<VBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" prefHeight="912.0" prefWidth="1836.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.bookyourstay.controlador.PanelUsuarioControlador">
     <children>
         <fx:include source="barraCliente.fxml" />
     </children>

@@ -30,6 +30,8 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 @Getter
@@ -1063,6 +1065,19 @@ public class BookYourStay implements ServiciosEmpresa {
             double diferencia = total - total;
             return "Saldo insuficiente. Te faltan $" + diferencia + " para cubrir el total de la factura.";
         }
+    }
+
+    //Metodo para Validar el correo Electronico
+    @Override
+    public boolean esCorreoValido(String email) {
+        String emailRegex = "^[a-zA-Z0-9_+&-]+(?:\\.[a-zA-Z0-9_+&-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        Pattern pattern = Pattern.compile(emailRegex);
+        if (email==null) {
+            return false;
+        }
+
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
     }
 
 }

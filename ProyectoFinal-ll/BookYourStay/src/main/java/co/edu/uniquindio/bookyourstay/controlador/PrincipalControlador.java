@@ -349,4 +349,9 @@ public class PrincipalControlador implements ServiciosEmpresa {
         return bookYourStay.verificarSaldoDisponible(cliente,total);
     }
 
+    @Override
+    public boolean esCorreoValido(String email) {
+        return bookYourStay.esCorreoValido(email);
+    }
+
 }

@@ -18,8 +18,6 @@
     <children>
         <fx:include source="barraNavegacion.fxml" />
     </children>
-
-
     <HBox alignment="CENTER" prefHeight="523.0" prefWidth="1875.0">
 
 
@@ -37,7 +35,6 @@
                         <Label fx:id="ciudad" prefHeight="42.0" prefWidth="228.0" text="Label" />
                         <Label fx:id="precio" prefHeight="48.0" prefWidth="227.0" text="Label" />
                         <Label fx:id="capacidad" prefHeight="46.0" prefWidth="225.0" text="Label" />
-                        <Button mnemonicParsing="false" prefHeight="37.0" prefWidth="70.0" style="-fx-background-color: #006600;" text="Ver" textFill="WHITE" />
                      </children>
                      <HBox.margin>
                         <Insets left="32.0" />

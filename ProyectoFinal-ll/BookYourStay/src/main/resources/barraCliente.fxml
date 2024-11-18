@@ -14,8 +14,8 @@
         </HBox.margin>
     </ImageView>
 
-    <HBox alignment="CENTER_RIGHT" prefHeight="102.0" prefWidth="1151.0" spacing="10">
-        <fx:include source="barraBusquedas.fxml" />
+    <HBox alignment="CENTER_RIGHT" prefHeight="102.0" prefWidth="1343.0" spacing="10">
+        <fx:include source="barraBusquedas.fxml" HBox.hgrow="ALWAYS" />
         <Button fx:id="btnIrPerfil" minHeight="40.0" minWidth="104.0" onAction="#irPerfil" prefHeight="40.0" prefWidth="104.0" style="-fx-background-color: #006600; -fx-text-fill: white;" text="Perfil">
             <HBox.margin>
                 <Insets right="10.0" />
@@ -27,7 +27,7 @@
          </HBox.margin>
       </Button>
         <HBox.margin>
-            <Insets left="180.0" />
+            <Insets left="10.0" />
         </HBox.margin>
     </HBox>
 </HBox>

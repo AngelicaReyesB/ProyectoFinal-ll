@@ -62,4 +62,5 @@ public interface ServiciosEmpresa {
     String enviarFacturaQR(Reserva reserva) throws Exception;
     boolean validarCodigoVerificacion(String codigoIngresado) throws Exception;
     String verificarSaldoDisponible(Cliente cliente, double total) throws Exception;
+    boolean esCorreoValido(String email);
 }
