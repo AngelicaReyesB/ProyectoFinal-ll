@@ -53,11 +53,9 @@ public class ReservaAlojamientosControlador implements Observable, Initializable
     private LocalDate obtenerFechaInicio() {
         return fechaInicioPicker.getValue();
     }
-
     private LocalDate obtenerFechaFin() {
         return fechaFinPicker.getValue();
     }
-
     private int obtenerNumeroHuespedes() {
         int numHuespedes = cbNumHuespedes.getValue();
         if (numHuespedes < 1 || numHuespedes > alojamiento.getCapacidadMaxima()) {
