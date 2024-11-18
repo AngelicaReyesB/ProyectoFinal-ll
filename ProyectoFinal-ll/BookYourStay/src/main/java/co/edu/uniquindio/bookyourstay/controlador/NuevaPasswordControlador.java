@@ -32,7 +32,7 @@ public class NuevaPasswordControlador implements Observable, Initializable {
 
             if (principalControlador.getSesion().isAdministrador()) {
                 String emailAdmin = "admin@bookyourstay.com";
-                Administrador admin = principalControlador.cambiarPassword(emailAdmin, nuevaPassword);
+                Administrador administrador = principalControlador.cambiarPassword(emailAdmin, nuevaPassword);
                 mensajeLabel.setText("Contraseña del administrador actualizada exitosamente.");
             } else {
                 String cedulaCliente = principalControlador.getSesion().getCliente().getCedula();

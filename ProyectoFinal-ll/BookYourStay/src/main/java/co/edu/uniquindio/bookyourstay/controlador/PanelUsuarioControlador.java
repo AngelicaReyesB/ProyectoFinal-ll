@@ -109,14 +109,8 @@ public class PanelUsuarioControlador implements Observable, Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         listaAlojamientos = FXCollections.observableArrayList();
         tablaAlojamientosDisponibles.setItems(listaAlojamientos);
-
-        // Registrar este panel como observador
         principalControlador.registrarObservador(this);
-
-        // Configurar las columnas de la tabla
         configurarTabla();
-
-        // Llenar la tabla inicial con todos los alojamientos
         actualizarTabla();
     }
 

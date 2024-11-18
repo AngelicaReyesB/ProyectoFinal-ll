@@ -23,7 +23,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 
-//no funciona
 public class ActualizarDatosClienteControlador implements Observable, Initializable {
 
     @FXML private Button btnRegresar;

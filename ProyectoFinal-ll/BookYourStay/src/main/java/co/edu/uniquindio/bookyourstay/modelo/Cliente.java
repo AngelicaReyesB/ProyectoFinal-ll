@@ -14,7 +14,7 @@ public class Cliente {
     private String telefono;
     private String email;
     private String password;
-    private boolean estadoCuenta;  // Cambiado de boolean a Boolean
+    private boolean estadoCuenta;
     private String codigoActivacion;
     private BilleteraVirtual billeteraVirtual;
 

@@ -14,21 +14,19 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
-//solo muestra el último alojamiento
 public class CrearOfertaControlador implements Observable, Initializable {
 
     @FXML private ComboBox<Alojamiento> alojamientoSeleccionado;
     @FXML private DatePicker fechaInicioPicker;
     @FXML private DatePicker fechaFinPicker;
     @FXML private ComboBox<Float> porcentajeDescuento;
-    @FXML private Button btnCrearOferta;
-    @FXML private Button btnEliminarOferta;
     @FXML private Button btnRegresar;
     @FXML private TableView<Alojamiento> tablaOfertas;
     @FXML private TableColumn<Alojamiento, String> colNombre;
     @FXML private TableColumn<Alojamiento, LocalDate> colFechaInicio;
     @FXML private TableColumn<Alojamiento, LocalDate> colFechaFin;
     @FXML private TableColumn<Alojamiento, Float> colDescuento;
+
     private final PrincipalControlador principalControlador;
 
     public CrearOfertaControlador(){
@@ -56,9 +54,10 @@ public class CrearOfertaControlador implements Observable, Initializable {
             Alojamiento alojamiento = alojamientoSeleccionado.getValue();
             LocalDate fechaInicio = fechaInicioPicker.getValue();
             LocalDate fechaFin = fechaFinPicker.getValue();
-            float descuento = porcentajeDescuento.getValue() / 100;
+            float descuento = porcentajeDescuento.getValue();
+            float nuevoValor = principalControlador.aplicarDescuentos(alojamiento, descuento);
+            alojamiento.setValorNoche(nuevoValor);
             principalControlador.crearOfertaEspecial(alojamiento, fechaInicio, fechaFin, descuento);
-
             principalControlador.mostrarAlerta("La oferta se creó exitosamente.", Alert.AlertType.INFORMATION);
             ObservableList<Alojamiento> ofertasEspeciales = principalControlador.listarOfertasEspeciales();
             tablaOfertas.setItems(ofertasEspeciales);
@@ -68,7 +67,6 @@ public class CrearOfertaControlador implements Observable, Initializable {
         }
     }
 
-
     @FXML
     public void editarOferta() {
         if (validarCampos()) return;
@@ -76,7 +74,8 @@ public class CrearOfertaControlador implements Observable, Initializable {
             Alojamiento alojamiento = alojamientoSeleccionado.getValue();
             LocalDate nuevaFechaInicio = fechaInicioPicker.getValue();
             LocalDate nuevaFechaFin = fechaFinPicker.getValue();
-            float nuevoDescuento = porcentajeDescuento.getValue() / 100;
+            float nuevoDescuento = porcentajeDescuento.getValue();
+            float nuevoValor = principalControlador.aplicarDescuentos(alojamiento, nuevoDescuento);
             principalControlador.editarOferta(alojamiento, nuevaFechaInicio, nuevaFechaFin, nuevoDescuento);
             principalControlador.mostrarAlerta("La oferta se actualizó exitosamente.", Alert.AlertType.INFORMATION);
             tablaOfertas.setItems(principalControlador.listarOfertasEspeciales());
@@ -85,7 +84,6 @@ public class CrearOfertaControlador implements Observable, Initializable {
             principalControlador.mostrarAlerta("Error al editar la oferta: " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
-
 
     @FXML
     public void eliminarOferta() throws Exception {
@@ -106,7 +104,12 @@ public class CrearOfertaControlador implements Observable, Initializable {
         colFechaInicio.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getFechaInicioOferta()));
         colFechaFin.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getFechaFinOferta()));
         colDescuento.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getDescuento()));
+
+        TableColumn<Alojamiento, Float> colValorConDescuento = new TableColumn<>("Valor con Descuento");
+        colValorConDescuento.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getValorNoche()));
+        tablaOfertas.getColumns().add(colValorConDescuento);
     }
+
 
     @FXML
     public void irPanelAdmin() {
@@ -146,7 +149,15 @@ public class CrearOfertaControlador implements Observable, Initializable {
                     }
                 }
             });
-            porcentajeDescuento.setItems(FXCollections.observableArrayList(10f, 20f, 30f, 50f));
+
+            // Agregar opciones de descuentos (10f, 20f, 30f, etc.)
+            ObservableList<Float> descuentos = FXCollections.observableArrayList();
+            for (float i = 10f; i <= 100f; i += 10f) {
+                descuentos.add(i);
+            }
+            porcentajeDescuento.setItems(descuentos);
+
+            // Listar las ofertas especiales actuales
             ObservableList<Alojamiento> ofertasEspeciales = principalControlador.listarOfertasEspeciales();
             tablaOfertas.setItems(ofertasEspeciales);
 

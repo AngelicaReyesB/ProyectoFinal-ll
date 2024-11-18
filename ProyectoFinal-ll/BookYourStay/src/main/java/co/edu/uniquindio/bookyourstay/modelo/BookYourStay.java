@@ -669,10 +669,12 @@ public class BookYourStay implements ServiciosEmpresa {
                 throw new Exception("Alojamiento no encontrado.");
             }
 
+            // Validar que el porcentaje de descuento esté entre 0 y 100
             if (porcentaje < 0 || porcentaje > 100) {
                 throw new Exception("El porcentaje de descuento debe estar entre 0 y 100.");
             }
 
+            // Calcular el descuento
             float descuento = (alojamiento.getValorNoche() * porcentaje) / 100;
             float nuevoValor = alojamiento.getValorNoche() - descuento;
 
@@ -682,28 +684,6 @@ public class BookYourStay implements ServiciosEmpresa {
         }
     }
 
-    //no se hace uso
-    @Override
-    public float crearTarifaDescuento(Alojamiento alojamiento, LocalDate fechaInicio, LocalDate fechaFin, float descuento) throws Exception {
-        try {
-            if (!alojamientos.contains(alojamiento)) {
-                throw new Exception("Alojamiento no encontrado.");
-            }
-
-            if (descuento < 0 || descuento > 100) {
-                throw new Exception("El descuento debe estar entre 0 y 100.");
-            }
-
-            LocalDate fechaActual = LocalDate.now();
-            if (fechaActual.isBefore(fechaInicio) || fechaActual.isAfter(fechaFin)) {
-                throw new Exception("El descuento no es válido en esta fecha.");
-            }
-            return aplicarDescuentos(alojamiento, descuento);
-
-        } catch (Exception e) {
-            throw new Exception("Error al crear tarifa con descuento: " + e.getMessage());
-        }
-    }
 
     //si se hace uso, controlador de crear oferta
     @Override
@@ -716,8 +696,8 @@ public class BookYourStay implements ServiciosEmpresa {
             throw new Exception("Las fechas de inicio y fin no pueden ser nulas.");
         }
 
-        if (descuento < 0 || descuento > 1) {  // El descuento debe ser entre 0 y 1 (por ejemplo, 0.10 para un 10% de descuento)
-            throw new Exception("El descuento debe estar entre 0 y 1.");
+        if (descuento < 0 || descuento > 100) {  // El descuento debe estar entre 0 y 100 (por ejemplo, 10 para un 10% de descuento)
+            throw new Exception("El descuento debe estar entre 0 y 100.");
         }
 
         if (fechaInicio.isAfter(fechaFin)) {
@@ -728,8 +708,8 @@ public class BookYourStay implements ServiciosEmpresa {
         alojamiento.setFechaInicioOferta(fechaInicio);
         alojamiento.setFechaFinOferta(fechaFin);
         alojamiento.setDescuento(descuento);
-
     }
+
 
     //si se hace uso
     @Override

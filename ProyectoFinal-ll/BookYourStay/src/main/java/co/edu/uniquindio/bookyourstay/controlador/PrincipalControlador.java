@@ -275,11 +275,6 @@ public class PrincipalControlador implements ServiciosEmpresa {
     }
 
     @Override
-    public float crearTarifaDescuento(Alojamiento alojamiento, LocalDate fechaInicio, LocalDate fechaFin, float descuento) throws Exception {
-        return bookYourStay.crearTarifaDescuento(alojamiento, fechaInicio, fechaFin, descuento);
-    }
-
-    @Override
     public int verEstadisticas(String ciudad) throws Exception {
         return bookYourStay.verEstadisticas(ciudad);
     }

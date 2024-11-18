@@ -10,21 +10,19 @@ import javafx.fxml.Initializable;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 
-//el rango de los precios
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
+
 public class BarraBusquedasControlador implements Observable, Initializable {
 
-    @FXML private Button btnTodosAlojamientos;
     @FXML private ComboBox<TipoCiudad> ciudadAlojamiento;
     @FXML private ComboBox<String> rangoPrecios;
     @FXML private ComboBox<TipoAlojamiento> tipoAlojamiento;
+    @FXML private TextField nombreAlojamiento;
     private final PrincipalControlador principalControlador;
 
 
@@ -39,7 +37,22 @@ public class BarraBusquedasControlador implements Observable, Initializable {
     }
 
     @FXML
-    void mostrarTodosAlojamientos() {
+    public void obtenerNombres() {
+        ArrayList<Alojamiento> alojamientos;
+        try {
+            if(!nombreAlojamiento.getText().isEmpty() || !nombreAlojamiento.getText().isBlank()){
+                alojamientos = principalControlador.listarAlojamientos(nombreAlojamiento.getText());
+                principalControlador.getSesion().setAlojamientos(alojamientos);
+                navegarInicio();
+                System.out.println(principalControlador.getSesion().getAlojamientos());
+            }
+        } catch (Exception e){
+            principalControlador.mostrarAlerta("No se pudo encontrar el alojamiento. " + e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
+
+    @FXML
+    public void mostrarTodosAlojamientos() {
         try {
             ArrayList<Alojamiento> alojamientos = principalControlador.listarAlojamientos();
             principalControlador.getSesion().setAlojamientos(alojamientos);
@@ -50,7 +63,7 @@ public class BarraBusquedasControlador implements Observable, Initializable {
     }
 
     @FXML
-    void obtenerAlojamientosCiudad() {
+    public void obtenerAlojamientosCiudad() {
         System.out.println(ciudadAlojamiento.getValue());
         ArrayList<Alojamiento> alojamientos;
         TipoCiudad ciudad = ciudadAlojamiento.getValue();
@@ -66,7 +79,7 @@ public class BarraBusquedasControlador implements Observable, Initializable {
     }
 
     @FXML
-    void obtenerTipoAlojamiento() {
+    public void obtenerTipoAlojamiento() {
         System.out.println(tipoAlojamiento.getValue());
         ArrayList<Alojamiento> alojamientos;
         TipoAlojamiento tipoAlojamiento1 = tipoAlojamiento.getValue();

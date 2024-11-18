@@ -22,7 +22,6 @@ public class InicioControlador implements Observable, Initializable {
 
 
     @FXML private Label nombre;
-    @FXML private Button btnIngresar;
     @FXML private Label capacidad;
     @FXML private Label ciudad;
     @FXML private TableColumn<Alojamiento, String> colCiudad;

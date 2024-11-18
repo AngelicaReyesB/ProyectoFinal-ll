@@ -79,7 +79,7 @@ public class ReservaAlojamientosControlador implements Observable, Initializable
             }
 
             int numHuespedes = obtenerNumeroHuespedes();
-            if (numHuespedes == -1) return; // Si el número no es válido, ya se mostró la alerta
+            if (numHuespedes == -1) return;
 
             Cliente cliente = principalControlador.getSesion().getCliente();
             if (cliente == null) {
@@ -92,30 +92,21 @@ public class ReservaAlojamientosControlador implements Observable, Initializable
                 principalControlador.mostrarAlerta("No se encontró un alojamiento seleccionado.", Alert.AlertType.ERROR);
                 return;
             }
-
-            // Crear la reserva
             Reserva reserva = principalControlador.realizarReserva(cliente, alojamiento, fechaInicio, fechaFin, numHuespedes, null);
-
             if (reserva == null) {
                 principalControlador.mostrarAlerta("No se pudo realizar la reserva. Faltan datos o parámetros inválidos.", Alert.AlertType.ERROR);
                 return;
             }
-
-            // Generar la factura
             Factura factura = principalControlador.generarFactura(reserva);
             if (factura == null) {
                 principalControlador.mostrarAlerta("No se pudo generar la factura.", Alert.AlertType.ERROR);
                 return;
             }
-
-            // Verificar saldo disponible
             String saldoResultado = principalControlador.verificarSaldoDisponible(cliente, factura.getTotal());
             if (!saldoResultado.startsWith("Saldo suficiente")) {
                 principalControlador.mostrarAlerta(saldoResultado, Alert.AlertType.WARNING);
                 return;
             }
-
-            // Realizar el pago y la actualización de los datos
             cliente.getBilleteraVirtual().setMontoTotal(cliente.getBilleteraVirtual().getMontoTotal() - factura.getTotal());
             principalControlador.getSesion().setCliente(cliente);
 

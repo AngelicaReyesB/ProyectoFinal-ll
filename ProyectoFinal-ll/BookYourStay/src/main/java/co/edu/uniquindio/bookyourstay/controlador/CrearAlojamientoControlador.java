@@ -26,36 +26,56 @@ import javafx.stage.FileChooser;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 
-//modificar los servicios, editar
 public class CrearAlojamientoControlador implements Observable, Initializable {
 
-    @FXML private CheckBox activoCheck;
-    @FXML private Label imagenCargada;
-    @FXML private ComboBox<TipoCiudad> cbCiudad;
-    @FXML private Button btnRegresar;
-    @FXML private ComboBox<String> cbServicios;
-    @FXML private ComboBox<TipoAlojamiento> cbTipoAlojamiento;
-    @FXML private TableColumn<Alojamiento, String> colCapacidad;
-    @FXML private TableColumn<Alojamiento, String> colCiudad;
-    @FXML private TableColumn<Alojamiento, String> colDescripcion;
-    @FXML private TableColumn<Alojamiento, String> colEstado;
-    @FXML TableColumn<Alojamiento, ImageView> colImagen = new TableColumn<>("Imagen");
-    @FXML private TableColumn<Alojamiento, String> colNombre;
-    @FXML private TableColumn<Alojamiento, String> colServicios;
-    @FXML private TableColumn<Alojamiento, String > colTipo;
-    @FXML private TableColumn<Alojamiento, String> colValor;
-    @FXML private TableView<Alojamiento> tablaAlojamientos;
-    @FXML private TextField txtCapacidadMaxima;
-    @FXML private TextArea txtDescripcion;
-    @FXML private TextField txtNombre;
-    @FXML private TextField txtValorNoche;
-    @FXML private ComboBox<TipoHabitacion> cbTipoHabitacion;
+    @FXML
+    private CheckBox activoCheck;
+    @FXML
+    private Label imagenCargada;
+    @FXML
+    private ComboBox<TipoCiudad> cbCiudad;
+    @FXML
+    private Button btnRegresar;
+    @FXML
+    private ComboBox<String> cbServicios;
+    @FXML
+    private ComboBox<TipoAlojamiento> cbTipoAlojamiento;
+    @FXML
+    private TableColumn<Alojamiento, String> colCapacidad;
+    @FXML
+    private TableColumn<Alojamiento, String> colCiudad;
+    @FXML
+    private TableColumn<Alojamiento, String> colDescripcion;
+    @FXML
+    private TableColumn<Alojamiento, String> colEstado;
+    @FXML
+    TableColumn<Alojamiento, ImageView> colImagen = new TableColumn<>("Imagen");
+    @FXML
+    private TableColumn<Alojamiento, String> colNombre;
+    @FXML
+    private TableColumn<Alojamiento, String> colServicios;
+    @FXML
+    private TableColumn<Alojamiento, String> colTipo;
+    @FXML
+    private TableColumn<Alojamiento, String> colValor;
+    @FXML
+    private TableView<Alojamiento> tablaAlojamientos;
+    @FXML
+    private TextField txtCapacidadMaxima;
+    @FXML
+    private TextArea txtDescripcion;
+    @FXML
+    private TextField txtNombre;
+    @FXML
+    private TextField txtValorNoche;
+    @FXML
+    private ComboBox<TipoHabitacion> cbTipoHabitacion;
     private String imagenSeleccionada;
     private Alojamiento alojamientoActual;
     private final PrincipalControlador principalControlador;
 
 
-    public CrearAlojamientoControlador(){
+    public CrearAlojamientoControlador() {
         principalControlador = PrincipalControlador.getInstancia();
     }
 
@@ -188,7 +208,6 @@ public class CrearAlojamientoControlador implements Observable, Initializable {
         }
     }
 
-
     @FXML
     public void editarAlojamiento() {
         alojamientoActual = tablaAlojamientos.getSelectionModel().getSelectedItem();
@@ -261,16 +280,13 @@ public class CrearAlojamientoControlador implements Observable, Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Inicializar el combo box de servicios
         ObservableList<String> serviciosIncluidos = FXCollections.observableArrayList("WiFi", "Desayuno", "Piscina", "Gimnasio", "Parking");
         cbServicios.setItems(serviciosIncluidos);
 
         cbTipoAlojamiento.setOnAction(event -> {
-            actualizarServiciosDisponibles();  // Actualiza los servicios disponibles
-            actualizarTipoHabitacion();  // Actualiza el ComboBox de habitaciones según el tipo de alojamiento
+            actualizarServiciosDisponibles();
+            actualizarTipoHabitacion();
         });
-
-        // El ComboBox de ciudad y tipo de alojamiento se llenan con los valores correspondientes
         cbCiudad.setItems(FXCollections.observableArrayList(TipoCiudad.values()));
         cbTipoAlojamiento.setItems(FXCollections.observableArrayList(TipoAlojamiento.values()));
 

@@ -35,5 +35,5 @@ public class Alojamiento {
     // Nuevos campos para gestionar las ofertas especiales
     private LocalDate fechaInicioOferta;
     private LocalDate fechaFinOferta;
-    private float descuento; // Descuento aplicado en la oferta especial (por ejemplo, 0.10 para 10%)
+    private float descuento;
 }

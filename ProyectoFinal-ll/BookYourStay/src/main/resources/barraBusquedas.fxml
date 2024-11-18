@@ -6,9 +6,15 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 
+<<<<<<< Updated upstream
 <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="1032.0" spacing="10" style="-fx-background-color: #009900;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.bookyourstay.controlador.BarraBusquedasControlador">
    <TextField alignment="CENTER" prefHeight="40.0" prefWidth="150.0" promptText="Ingrese el nombre" />
    <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="119.0" style="-fx-background-color: #006600;" text="Buscar" textFill="WHITE" />
+=======
+<HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="1068.0" spacing="10" style="-fx-background-color: #009900;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.bookyourstay.controlador.BarraBusquedasControlador">
+   <TextField fx:id="nombreAlojamiento" alignment="CENTER" prefHeight="40.0" prefWidth="150.0" promptText="Ingrese el nombre" />
+   <Button fx:id="btnNombre" mnemonicParsing="false" onAction="#obtenerNombres" prefHeight="40.0" prefWidth="119.0" style="-fx-background-color: #006600;" text="Buscar" textFill="WHITE" />
+>>>>>>> Stashed changes
 
     <!-- Selector para el tipo de alojamiento (Casa, Apartamento, Hotel) -->
     <ComboBox fx:id="tipoAlojamiento" minHeight="40.0" onAction="#obtenerTipoAlojamiento" prefHeight="40.0" prefWidth="182.0" promptText="Tipo de alojamiento">

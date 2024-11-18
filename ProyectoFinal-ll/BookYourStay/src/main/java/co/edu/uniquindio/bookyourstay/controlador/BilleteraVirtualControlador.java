@@ -24,7 +24,6 @@ import lombok.Setter;
 public class BilleteraVirtualControlador implements Observable, Initializable {
 
     @FXML private Label labelSaldoDisponible;
-    @FXML private Button btnRecargar;
     @FXML private Button btnRegresarPanel;
     @FXML private TextField txtMontoRecarga;
     private double saldo = 0.0;

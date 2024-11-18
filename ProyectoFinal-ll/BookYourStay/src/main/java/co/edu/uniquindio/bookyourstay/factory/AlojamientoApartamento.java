@@ -23,7 +23,7 @@ public class AlojamientoApartamento implements CreacionAlojamiento {
                 .serviciosIncluidos(serviciosIncluidos)
                 .tipoAlojamiento(TipoAlojamiento.APARTAMENTO)
                 .tipoCiudad(tipoCiudad)
-                .costoAseoMantenimiento(7.000)
+                .costoAseoMantenimiento(7000)
                 .activo(true)
                 .ofertaEspecial(false)
                 .build();

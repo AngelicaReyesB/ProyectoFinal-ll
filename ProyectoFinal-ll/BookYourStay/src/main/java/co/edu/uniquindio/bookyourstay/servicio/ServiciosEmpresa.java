@@ -48,7 +48,6 @@ public interface ServiciosEmpresa {
     void enviarNotificacion(String destinatario, String asunto, String mensaje) throws Exception;
     boolean eliminarAlojamiento(Alojamiento alojamiento) throws Exception;
     float aplicarDescuentos(Alojamiento alojamiento, float porcentaje) throws Exception;
-    float crearTarifaDescuento(Alojamiento alojamiento, LocalDate fechaInicio, LocalDate fechaFin, float descuento) throws Exception;
     int verEstadisticas(String ciudad) throws Exception;
     List<Alojamiento> listarAlojamientosDisponibles(List<Alojamiento> alojamientos, TipoCiudad tipoCiudad, TipoAlojamiento tipoAlojamiento, int capacidadMinima, float precioMaximo);
     ArrayList<Alojamiento> listaPopularesPorCiudad(String ciudad) throws Exception;
