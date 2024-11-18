@@ -75,6 +75,11 @@ public class BookYourStay implements ServiciosEmpresa {
             throw new Exception("El correo electrónico es obligatorio");
         }
 
+        // Validación del correo electrónico
+        if (!esCorreoValido(email)) {
+            throw new Exception("El correo electrónico no es válido");
+        }
+
         if (password.isEmpty() || password.isBlank()) {
             throw new Exception("La contraseña es obligatoria");
         }
@@ -99,6 +104,7 @@ public class BookYourStay implements ServiciosEmpresa {
         }
         return cliente;
     }
+
 
     //se hace uso en inicio controlador
     @Override

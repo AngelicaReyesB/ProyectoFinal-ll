@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.event.ActionEvent;
 
@@ -17,7 +18,7 @@ public class NuevaPasswordControlador implements Observable, Initializable {
 
     @FXML private TextField codigoField;
     @FXML private Label mensajeLabel;
-    @FXML private TextField nuevaPasswordField;
+    @FXML private PasswordField nuevaPasswordField;
     private final PrincipalControlador principalControlador;
 
     public NuevaPasswordControlador() {

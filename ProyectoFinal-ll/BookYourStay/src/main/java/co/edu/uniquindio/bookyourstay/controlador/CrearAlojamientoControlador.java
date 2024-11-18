@@ -244,16 +244,16 @@ public class CrearAlojamientoControlador implements Observable, Initializable {
         if (cbTipoAlojamiento.getValue() != null) {
             if (cbTipoAlojamiento.getValue() == TipoAlojamiento.CASA) {
                 serviciosActualizados.addAll("WiFi, Piscina, Gimnasio");
-                serviciosActualizados.addAll("Piscina, Spa");
+                serviciosActualizados.addAll("Piscina, Spa, Zona de juegos");
                 serviciosActualizados.addAll("Wifi, Spa, Piscina");
             } else if (cbTipoAlojamiento.getValue() == TipoAlojamiento.APARTAMENTO) {
-                serviciosActualizados.addAll("WiFi, Parking, re");
-                serviciosActualizados.addAll("WiFi, Parking, 43");
-                serviciosActualizados.addAll("WiFi, Parking, 54");
+                serviciosActualizados.addAll("WiFi, Parking, Gimnasio");
+                serviciosActualizados.addAll("Zona de juegos, Parking, Piscina");
+                serviciosActualizados.addAll("WiFi, Parking, Desayuno");
             } else if (cbTipoAlojamiento.getValue() == TipoAlojamiento.HOTEL) {
-                    serviciosActualizados.addAll("WiFi, H, re");
-                    serviciosActualizados.addAll("WiFi, Y, 43");
-                    serviciosActualizados.addAll("WiFi, W, 54");
+                    serviciosActualizados.addAll("WiFi, Desayuno, Television");
+                    serviciosActualizados.addAll("WiFi, Jacuzzi, Almuerzo");
+                    serviciosActualizados.addAll("WiFi, Television, Desayuno");
                 }
         }
         cbServicios.setItems(serviciosActualizados);
