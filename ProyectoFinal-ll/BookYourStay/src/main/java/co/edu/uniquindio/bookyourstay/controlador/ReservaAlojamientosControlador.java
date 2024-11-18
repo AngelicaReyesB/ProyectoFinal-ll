@@ -6,6 +6,7 @@ import co.edu.uniquindio.bookyourstay.modelo.Cliente;
 import co.edu.uniquindio.bookyourstay.modelo.Factura;
 import co.edu.uniquindio.bookyourstay.modelo.Reserva;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 //falta
-public class ReservaAlojamientoControlador implements Observable, Initializable {
+public class ReservaAlojamientosControlador implements Observable, Initializable {
 
     @FXML private Button btnRegresar;
     @FXML private Label ciudadAlojamiento;
@@ -33,7 +34,7 @@ public class ReservaAlojamientoControlador implements Observable, Initializable 
     private Alojamiento alojamiento;
 
 
-    public ReservaAlojamientoControlador() {
+    public ReservaAlojamientosControlador() {
         principalControlador = PrincipalControlador.getInstancia();
         Cliente cliente = principalControlador.getSesion().getCliente();
         alojamiento = principalControlador.getSesion().getReservarAlojamiento();
@@ -48,8 +49,6 @@ public class ReservaAlojamientoControlador implements Observable, Initializable 
         capacidadAlojamiento.setText(String.valueOf(alojamiento.getCapacidadMaxima()));
         imagen.setImage(new Image(alojamiento.getImagen()));
     }
-
-
 
     private LocalDate obtenerFechaInicio() {
         return fechaInicioPicker.getValue();
@@ -136,19 +135,18 @@ public class ReservaAlojamientoControlador implements Observable, Initializable 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         obtenerAlojamiento();
-
-        // Obtener la capacidad máxima del alojamiento
         int capacidadMaxima = alojamiento.getCapacidadMaxima();
-
-        // Crear una lista de números que va de 1 a la capacidad máxima
         cbNumHuespedes.setItems(FXCollections.observableArrayList(
                 IntStream.rangeClosed(1, capacidadMaxima)
                         .boxed()
                         .collect(Collectors.toList())
         ));
 
-        // Establecer el valor predeterminado en 1 (puedes ajustarlo según tus necesidades)
         cbNumHuespedes.getSelectionModel().selectFirst();
     }
 
+    public void irInicio() {
+        principalControlador.navegarVentana("/panelUsuario.fxml", "Panel usuario");
+        principalControlador.cerrarVentana(btnRegresar);
+    }
 }

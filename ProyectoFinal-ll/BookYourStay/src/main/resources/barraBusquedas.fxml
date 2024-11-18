@@ -26,7 +26,7 @@
    <ComboBox fx:id="rangoPrecios" minHeight="40.0" prefHeight="40.0" prefWidth="170.0" promptText="Rango de precios" />
 
     <!-- Botón para ver todos los alojamientos disponibles -->
-    <Button fx:id="btnTodosAlojamientos" minHeight="40.0" minWidth="130.0" onAction="#obtenerAlojamientos" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #006600; -fx-text-fill: white;" text="Todos los alojamientos">
+    <Button fx:id="btnTodosAlojamientos" minHeight="40.0" minWidth="130.0" onAction="#mostrarTodosAlojamientos" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #006600; -fx-text-fill: white;" text="Todos los alojamientos">
         <HBox.margin>
             <Insets left="10.0" right="10.0" />
         </HBox.margin>

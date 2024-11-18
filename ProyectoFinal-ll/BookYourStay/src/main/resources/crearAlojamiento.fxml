@@ -69,7 +69,7 @@
                   </GridPane.margin>
                </CheckBox>
                <Label fx:id="imagenCargada" prefHeight="18.0" prefWidth="41.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-               <ComboBox prefHeight="26.0" prefWidth="195.0" promptText="Seleccione el Tipo" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+               <ComboBox fx:id="cbTipoHabitacion" prefHeight="26.0" prefWidth="195.0" promptText="Seleccione el Tipo" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                <Label style="-fx-font-weight: bold;" text="Tipo de Habitacion" GridPane.rowIndex="6" />
             </children>
             <VBox.margin>

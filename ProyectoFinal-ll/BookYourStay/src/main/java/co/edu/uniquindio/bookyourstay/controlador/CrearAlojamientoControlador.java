@@ -4,6 +4,7 @@ import co.edu.uniquindio.bookyourstay.controlador.observador.Observable;
 import co.edu.uniquindio.bookyourstay.modelo.Alojamiento;
 import co.edu.uniquindio.bookyourstay.modelo.enums.TipoAlojamiento;
 import co.edu.uniquindio.bookyourstay.modelo.enums.TipoCiudad;
+import co.edu.uniquindio.bookyourstay.modelo.enums.TipoHabitacion;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -48,6 +49,7 @@ public class CrearAlojamientoControlador implements Observable, Initializable {
     @FXML private TextArea txtDescripcion;
     @FXML private TextField txtNombre;
     @FXML private TextField txtValorNoche;
+    @FXML private ComboBox<TipoHabitacion> cbTipoHabitacion;
     private String imagenSeleccionada;
     private Alojamiento alojamientoActual;
     private final PrincipalControlador principalControlador;
@@ -92,6 +94,17 @@ public class CrearAlojamientoControlador implements Observable, Initializable {
             return false;
         }
         return true;
+    }
+
+    private void actualizarTipoHabitacion() {
+        if (cbTipoAlojamiento.getValue() == TipoAlojamiento.HOTEL) {
+            ObservableList<TipoHabitacion> tiposHabitacion = FXCollections.observableArrayList(TipoHabitacion.values());
+            cbTipoHabitacion.setItems(tiposHabitacion);
+            cbTipoHabitacion.setDisable(false);
+        } else {
+            cbTipoHabitacion.setItems(FXCollections.observableArrayList());
+            cbTipoHabitacion.setDisable(true);
+        }
     }
 
     @FXML
@@ -210,7 +223,6 @@ public class CrearAlojamientoControlador implements Observable, Initializable {
         ObservableList<String> serviciosActualizados = FXCollections.observableArrayList();
 
         if (cbTipoAlojamiento.getValue() != null) {
-            // Ejemplo de lógica para cambiar servicios dependiendo del tipo de alojamiento
             if (cbTipoAlojamiento.getValue() == TipoAlojamiento.CASA) {
                 serviciosActualizados.addAll("WiFi, Piscina, Gimnasio");
                 serviciosActualizados.addAll("Piscina, Spa");
@@ -219,7 +231,7 @@ public class CrearAlojamientoControlador implements Observable, Initializable {
                 serviciosActualizados.addAll("WiFi, Parking, re");
                 serviciosActualizados.addAll("WiFi, Parking, 43");
                 serviciosActualizados.addAll("WiFi, Parking, 54");
-            } else if (cbTipoAlojamiento.getValue() == TipoAlojamiento.CASA) {
+            } else if (cbTipoAlojamiento.getValue() == TipoAlojamiento.HOTEL) {
                     serviciosActualizados.addAll("WiFi, H, re");
                     serviciosActualizados.addAll("WiFi, Y, 43");
                     serviciosActualizados.addAll("WiFi, W, 54");
@@ -239,13 +251,31 @@ public class CrearAlojamientoControlador implements Observable, Initializable {
         actualizarTabla((ArrayList<Alojamiento>) principalControlador.getSesion().getAlojamientos());
     }
 
+    @FXML
+    public void onSeleccionarServicios() {
+        String serviciosSeleccionados = cbServicios.getValue();
+        if (serviciosSeleccionados != null) {
+            System.out.println("Servicios seleccionados: " + serviciosSeleccionados);
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Inicializar el combo box de servicios
         ObservableList<String> serviciosIncluidos = FXCollections.observableArrayList("WiFi", "Desayuno", "Piscina", "Gimnasio", "Parking");
         cbServicios.setItems(serviciosIncluidos);
-        cbTipoAlojamiento.setOnAction(event -> actualizarServiciosDisponibles());
+
+        cbTipoAlojamiento.setOnAction(event -> {
+            actualizarServiciosDisponibles();  // Actualiza los servicios disponibles
+            actualizarTipoHabitacion();  // Actualiza el ComboBox de habitaciones según el tipo de alojamiento
+        });
+
+        // El ComboBox de ciudad y tipo de alojamiento se llenan con los valores correspondientes
         cbCiudad.setItems(FXCollections.observableArrayList(TipoCiudad.values()));
         cbTipoAlojamiento.setItems(FXCollections.observableArrayList(TipoAlojamiento.values()));
+
         PrincipalControlador.getInstancia().registrarObservador(this);
     }
+
+
 }

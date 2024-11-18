@@ -30,13 +30,13 @@
          <children>
             <HBox fx:id="HBoxAlojamientosAleatorios" prefHeight="439.0" prefWidth="1266.0" VBox.vgrow="ALWAYS">
                <children>
-                  <ImageView fitHeight="402.0" fitWidth="597.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imagen" fitHeight="402.0" fitWidth="597.0" pickOnBounds="true" preserveRatio="true" />
                   <VBox fx:id="VboxInformacion" alignment="CENTER" prefHeight="402.0" prefWidth="700.0" style="-fx-background-color: #d8dbe2;">
                      <children>
-                        <Label prefHeight="42.0" prefWidth="228.0" text="Label" />
-                        <Label prefHeight="42.0" prefWidth="228.0" text="Label" />
-                        <Label prefHeight="48.0" prefWidth="227.0" text="Label" />
-                        <Label prefHeight="46.0" prefWidth="225.0" text="Label" />
+                        <Label fx:id="nombre" prefHeight="42.0" prefWidth="228.0" text="Label" />
+                        <Label fx:id="ciudad" prefHeight="42.0" prefWidth="228.0" text="Label" />
+                        <Label fx:id="precio" prefHeight="48.0" prefWidth="227.0" text="Label" />
+                        <Label fx:id="capacidad" prefHeight="46.0" prefWidth="225.0" text="Label" />
                         <Button mnemonicParsing="false" prefHeight="37.0" prefWidth="70.0" style="-fx-background-color: #006600;" text="Ver" textFill="WHITE" />
                      </children>
                      <HBox.margin>
@@ -89,11 +89,11 @@
          <Insets bottom="15.0" left="32.0" right="32.0" />
       </padding>
       <children>
-         <TableView prefHeight="387.0" prefWidth="1862.0">
+         <TableView fx:id="tablaOfertas" prefHeight="387.0" prefWidth="1862.0">
            <columns>
-             <TableColumn prefWidth="445.5999565124512" text="NOMBRE" />
-             <TableColumn prefWidth="479.1999816894531" text="TIPO ALOJAMIENTO" />
-               <TableColumn prefWidth="492.800048828125" text="CIUDAD" />
+             <TableColumn fx:id="colNombre" prefWidth="445.5999565124512" text="NOMBRE" />
+             <TableColumn fx:id="colTipoAlojamiento" prefWidth="479.1999816894531" text="TIPO ALOJAMIENTO" />
+               <TableColumn fx:id="colCiudad" prefWidth="492.800048828125" text="CIUDAD" />
            </columns>
          </TableView>
       </children>

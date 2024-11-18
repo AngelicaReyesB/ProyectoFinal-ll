@@ -8,7 +8,6 @@ import co.edu.uniquindio.bookyourstay.modelo.enums.TipoCiudad;
 import co.edu.uniquindio.bookyourstay.servicio.CreacionAlojamiento;
 import co.edu.uniquindio.bookyourstay.servicio.ServiciosEmpresa;
 import co.edu.uniquindio.bookyourstay.utils.EnvioEmail;
-import co.edu.uniquindio.bookyourstay.utils.Persistencia;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lombok.Getter;
@@ -41,50 +40,16 @@ public class BookYourStay implements ServiciosEmpresa {
     private List<Factura> facturas;
     private List<Reserva> reservas;
     private Administrador administrador;
-    Persistencia persistencia = new Persistencia();
 
     public BookYourStay() {
         try {
             clientes = new ArrayList<>();
             alojamientos = new ArrayList<>();
             facturas = new ArrayList<>();
-            //cargarDatosEmpresa();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
-
-    //@Override
-    //    public void cargarDatosEmpresa() throws Exception {
-    //        try {
-    //            ArrayList<Cliente> clientesCargados = persistencia.cargarClientes();
-    //            ArrayList<Alojamiento> alojamientosCargados = persistencia.cargarAlojamientos();
-    //            ArrayList<Factura> facturasCargados = persistencia.cargarFacturas();
-    //
-    //            if (!clientesCargados.isEmpty()) {
-    //                clientes.addAll(clientesCargados);
-    //            }
-    //            if (!alojamientosCargados.isEmpty()) {
-    //                alojamientos.addAll(alojamientosCargados);
-    //            }
-    //            if (!facturasCargados.isEmpty()) {
-    //                facturas.addAll(facturasCargados);
-    //            }
-    //        }catch (Exception e){
-    //            throw new Exception(e.getMessage());
-    //        }
-    //    }
-    //
-    //    @Override
-    //    public void guardarDatosEmpresa() throws Exception {
-    //        try {
-    //            persistencia.guardarAlojamientos(alojamientos);
-    //            persistencia.guardarClientes(clientes);
-    //            persistencia.guardarFacturas(facturas);
-    //        }catch (Exception e){
-    //            throw new Exception(e.getMessage());
-    //        }
-    //    }
 
     //si se hace uso en el controlador de registro cliente
     @Override
@@ -125,7 +90,6 @@ public class BookYourStay implements ServiciosEmpresa {
                     .codigoActivacion(codigoActivacion)
                     .build();
             clientes.add(cliente);
-            //guardarDatosEmpresa();
             System.out.println("Código de activación generado para el usuario " + nombre + ": " + codigoActivacion);
 
         } catch (Exception e) {
@@ -141,14 +105,13 @@ public class BookYourStay implements ServiciosEmpresa {
             for (Cliente cliente : clientes) {
                 System.out.println("CLIENTE QUE RECORRO EN BUSCAR: " + cliente);
                 if (cliente.getCedula().equals(cedula)) {
-                    // Verificamos si el cliente tiene una billetera virtual
                     if (cliente.getBilleteraVirtual() == null) {
-                        cliente.setBilleteraVirtual(new BilleteraVirtual()); // Asignamos una billetera vacía
+                        cliente.setBilleteraVirtual(new BilleteraVirtual());
                     }
                     return cliente;
                 }
             }
-            return null; // Si no se encuentra el cliente
+            return null;
         } catch (Exception e) {
             throw new Exception("No se puede buscar cliente");
         }
@@ -168,9 +131,7 @@ public class BookYourStay implements ServiciosEmpresa {
         }
         return false;
     }
-
-
-
+    
     //se hace uso en inicio controlador
     @Override
     public Cliente validarUsuario(String email, String password) throws Exception {

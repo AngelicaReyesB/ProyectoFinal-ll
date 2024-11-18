@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.bookyourstay.controlador.ReservaAlojamientoControlador">
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.bookyourstay.controlador.ReservaAlojamientosControlador">
     <HBox alignment="CENTER_RIGHT" style="-fx-background-color: #009900; -fx-min-height: 102.0;">
         <HBox alignment="CENTER_LEFT">
             <ImageView fitHeight="64.0" fitWidth="200.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">

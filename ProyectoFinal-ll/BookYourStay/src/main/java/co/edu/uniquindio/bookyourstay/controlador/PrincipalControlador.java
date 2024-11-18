@@ -63,20 +63,28 @@ public class PrincipalControlador implements ServiciosEmpresa {
         }
     }
 
-    public void navegarVentana(String nombreArchivoFxml, String tituloVentana) {
+    public FXMLLoader navegarVentana(String nombreArchivoFxml, String tituloVentana){
         try {
+            // Cargar la vista
             FXMLLoader loader = new FXMLLoader(getClass().getResource(nombreArchivoFxml));
             Parent root = loader.load();
+
+            // Crear la escena
             Scene scene = new Scene(root);
+
+            // Crear un nuevo escenario (ventana)
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.setResizable(false);
             stage.setTitle(tituloVentana);
             stage.setMaximized(true);
+            // Mostrar la nueva ventana
             stage.show();
+            return loader;
 
-        } catch (Exception e) {
+        }catch (Exception e){
             e.printStackTrace();
+            return  null;
         }
 
     }
@@ -89,17 +97,12 @@ public class PrincipalControlador implements ServiciosEmpresa {
         alert.showAndWait();
     }
 
-    public void cerrarVentana(Node node){
+    public void cerrarVentana(Node node) {
         Stage stage = (Stage) node.getScene().getWindow();
         stage.close();
     }
-    //@Override
-    //    public void cargarDatosEmpresa() throws Exception {
-    //    }
-    //
-    //    @Override
-    //    public void guardarDatosEmpresa() throws Exception {
-    //    }
+
+
 
     @Override
     public Cliente registrarCliente(String cedula, String nombre, String telefono, String email, String password) throws Exception {

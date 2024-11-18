@@ -24,6 +24,8 @@ public class Sesion implements Serializable {
     private boolean administrador;
     private static Sesion INSTANCIA;
     private Reserva reservaActual;
+    private String ciudadSeleccionada;
+    private String tipoAlojamientoSeleccionado;
 
     public static Sesion getInstancia() {
         if (INSTANCIA == null) {

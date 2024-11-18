@@ -5,10 +5,12 @@ import co.edu.uniquindio.bookyourstay.modelo.Alojamiento;
 import co.edu.uniquindio.bookyourstay.modelo.Cliente;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
@@ -18,20 +20,23 @@ import java.util.ResourceBundle;
 
 public class InicioControlador implements Observable, Initializable {
 
+
+    @FXML private Label nombre;
     @FXML private Button btnIngresar;
-    @FXML private Button btnVer;
+    @FXML private Label capacidad;
+    @FXML private Label ciudad;
     @FXML private TableColumn<Alojamiento, String> colCiudad;
-    @FXML private TableColumn<Alojamiento, ImageView> colImagen;
-    @FXML private TableColumn<Alojamiento, ImageView> colImagenOfertas;
     @FXML private TableColumn<Alojamiento, String> colNombre;
-    @FXML private TableColumn<Alojamiento, String> colPrecio;
+    @FXML private TableColumn<Alojamiento, String> colTipoAlojamiento;
     @FXML private TextField correo;
+    @FXML private ImageView imagen;
     @FXML private Hyperlink olvidoPasswordLink;
     @FXML private TextField password;
-    @FXML private TableView<Alojamiento> tablaAlojamientosAleatoria;
-    @FXML private TableView<Alojamiento> tablaOfertasAlojamientos;
+    @FXML private Label precio;
+    @FXML private TableView<Alojamiento> tablaOfertas;
     private Alojamiento alojamientoRandom;
     private final PrincipalControlador principalControlador;
+    private Observable observable;
 
     public InicioControlador() {
         principalControlador = PrincipalControlador.getInstancia();
@@ -75,7 +80,6 @@ public class InicioControlador implements Observable, Initializable {
     }
 
     private void validarCliente(Cliente cliente) {
-        // Corregimos la condición añadiendo el paréntesis que falta
         if (cliente.getEmail().equals(correo.getText()) && cliente.getPassword().equals(password.getText())) {
             if (cliente.isEstadoCuenta()) {
                 principalControlador.getSesion().setCliente(cliente);
@@ -92,7 +96,6 @@ public class InicioControlador implements Observable, Initializable {
         }
     }
 
-
     @FXML
     public void recuperacionPassword() {
         principalControlador.navegarVentana("/recuperacionPassword.fxml", "Recuperar contraseña");
@@ -101,26 +104,16 @@ public class InicioControlador implements Observable, Initializable {
 
     private void alojamientoRandom() {
         try {
-            if (!principalControlador.getBookYourStay().getAlojamientos().isEmpty()) {
-                // Seleccionar un alojamiento aleatorio
-                int indice = (int) Math.floor(Math.random() * principalControlador.getBookYourStay().getAlojamientos().size());
+            if(!principalControlador.getBookYourStay().getAlojamientos().isEmpty()){
+                int indice = (int)Math.floor (Math.random() * principalControlador.getBookYourStay().getAlojamientos().size());
                 alojamientoRandom = principalControlador.getBookYourStay().getAlojamientos().get(indice);
-                colNombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
-                colCiudad.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTipoCiudad().toString()));
-                colPrecio.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getValorNoche())));
-
-                colImagen.setCellValueFactory(cellData -> {
-                    ImageView imageView = new ImageView(cellData.getValue().getImagen()); // Ajustar según tipo de dato de imagen
-                    imageView.setFitWidth(400); // Ajustar tamaño
-                    imageView.setFitHeight(400);
-                    return new SimpleObjectProperty<>(imageView);
-                });
-
-                // Mostrar el alojamiento aleatorio en la tabla
-                tablaAlojamientosAleatoria.getItems().clear();
-                tablaAlojamientosAleatoria.getItems().add(alojamientoRandom);
-
-                System.out.println("ALOJAMIENTO RANDOM: " + alojamientoRandom);
+                principalControlador.getSesion().setAlojamientoAleatorio(alojamientoRandom);
+                System.out.println("Alojamiento random: " + alojamientoRandom);
+                nombre.setText(alojamientoRandom.getNombre());
+                ciudad.setText(String.valueOf(alojamientoRandom.getTipoCiudad()));
+                precio.setText(String.valueOf(alojamientoRandom.getValorNoche()));
+                capacidad.setText(String.valueOf(alojamientoRandom.getCapacidadMaxima()));
+                imagen.setImage(new javafx.scene.image.Image((alojamientoRandom.getImagen())));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -129,16 +122,34 @@ public class InicioControlador implements Observable, Initializable {
 
     @FXML
     public void verDetallesAlojamiento() {
-        // Aquí va la lógica para ver detalles del alojamiento
+
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         alojamientoRandom();
+
+        try {
+            ObservableList<Alojamiento> alojamientosConOferta = principalControlador.getBookYourStay().listarOfertasEspeciales();
+
+            // Configurar las columnas de la tabla
+            colNombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
+            colCiudad.setCellValueFactory(celldata -> new SimpleStringProperty(celldata.getValue().getTipoCiudad().toString()));
+            colTipoAlojamiento.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTipoAlojamiento().toString()));
+
+            tablaOfertas.setItems(alojamientosConOferta);
+        } catch (Exception e) {
+            e.printStackTrace();
+            principalControlador.mostrarAlerta("Error al cargar las ofertas especiales.", Alert.AlertType.ERROR);
+        }
+    }
+
+    public void inicializarObservable(Observable observable) {
+        this.observable = observable;
     }
 
     @Override
     public void notificar() {
-        // Implementación del patrón Observer
+
     }
 }

@@ -11,7 +11,6 @@ public class BookYourStayApp extends Application {
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader(BookYourStayApp.class.getResource("/inicio.fxml"));
         Parent parent = loader.load();
-
         Scene scene = new Scene(parent);
         primaryStage.setScene(scene);
         primaryStage.setTitle("BookYourStay");

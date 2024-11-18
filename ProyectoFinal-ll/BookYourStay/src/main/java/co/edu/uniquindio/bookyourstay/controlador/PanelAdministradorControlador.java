@@ -35,6 +35,7 @@ public class PanelAdministradorControlador implements Observable, Initializable 
     @FXML private TableColumn<Alojamiento, String> colServicios;
     @FXML private TableColumn<Alojamiento, String> colValorNoche;
     private final PrincipalControlador principalControlador;
+    private Observable observable;
 
     public PanelAdministradorControlador(){
         principalControlador = PrincipalControlador.getInstancia();
@@ -106,6 +107,10 @@ public class PanelAdministradorControlador implements Observable, Initializable 
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public void inicializarObservable(Observable observable) {
+        this.observable = observable;
     }
 
     @Override
