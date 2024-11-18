@@ -30,7 +30,7 @@ public class InicioControlador implements Observable, Initializable {
     @FXML private TextField correo;
     @FXML private ImageView imagen;
     @FXML private Hyperlink olvidoPasswordLink;
-    @FXML private TextField password;
+    @FXML private PasswordField password;
     @FXML private Label precio;
     @FXML private TableView<Alojamiento> tablaOfertas;
     private Alojamiento alojamientoRandom;

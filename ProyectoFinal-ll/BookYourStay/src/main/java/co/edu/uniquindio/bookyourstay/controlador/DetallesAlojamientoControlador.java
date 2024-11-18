@@ -2,6 +2,8 @@ package co.edu.uniquindio.bookyourstay.controlador;
 
 import co.edu.uniquindio.bookyourstay.controlador.observador.Observable;
 import co.edu.uniquindio.bookyourstay.modelo.Alojamiento;
+import co.edu.uniquindio.bookyourstay.modelo.Resena;
+import co.edu.uniquindio.bookyourstay.modelo.Reserva;
 import javafx.fxml.Initializable;
 
 import java.net.URL;
@@ -9,28 +11,25 @@ import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 
 public class DetallesAlojamientoControlador implements Observable, Initializable {
 
     @FXML private Label CiudadAlojamiento;
-    @FXML private Label labelServicios;
     @FXML private Label ValorAlojamiento;
     @FXML private Button btnRegresar;
     @FXML private Button btnReservarAhora;
     @FXML private Label capacidadMaxima;
+    @FXML private ComboBox<String> cbCalificacion;
     @FXML private Label descripcionAlojamiento;
     @FXML private ImageView imagenAlojamiento;
+    @FXML private Label labelServicios;
     @FXML private Label nombreAlojamiento;
-
-    @FXML
-    void irInicio(ActionEvent event) {
-
-    }
+    @FXML private ListView<Resena> tablaResena;
+    @FXML private TextArea tctResena;
     private final PrincipalControlador principalControlador;
 
     public DetallesAlojamientoControlador(){
@@ -47,7 +46,7 @@ public class DetallesAlojamientoControlador implements Observable, Initializable
             principalControlador.mostrarAlerta("No se ha seleccionado un alojamiento.", Alert.AlertType.ERROR);
         }
     }
-
+    
     private void cargarDetallesAlojamiento(Alojamiento alojamiento) {
         nombreAlojamiento.setText(alojamiento.getNombre());
         descripcionAlojamiento.setText(alojamiento.getDescripcion());
@@ -79,5 +78,8 @@ public class DetallesAlojamientoControlador implements Observable, Initializable
         if (alojamiento != null) {
             cargarDetallesAlojamiento(alojamiento);
         }
+        cbCalificacion.getItems().addAll("1", "2", "3", "4", "5");
+        cbCalificacion.getSelectionModel().select(0);
     }
+
 }

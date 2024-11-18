@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import lombok.Setter;
 
@@ -18,7 +19,7 @@ public class RegistroClienteControlador implements Observable, Initializable {
     @FXML private TextField cedula;
     @FXML private TextField correo;
     @FXML private TextField nombre;
-    @FXML private TextField password;
+    @FXML private PasswordField password;
     @FXML private TextField telefono;
     @FXML private Hyperlink iniciaSesionHyperlink;
     private PrincipalControlador principalControlador;
